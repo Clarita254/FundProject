@@ -1,0 +1,72 @@
+
+body{
+    background-color:#f5fcf7;
+    font-family:'Roboto', sans-serif;
+    margin:0;
+    color:#2c3e50;
+
+}
+
+.signin-card{
+    background-color:#ffffff;
+    padding:2.5rem;
+    border-radius:12px;
+    width: 100%;
+    max-width:420px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+
+}
+
+.profile-icon i{
+    font-size:70px;
+    color:#218c5e;
+
+}
+
+h3{
+    font-weight:600;
+    color:#2c3e50;
+}
+
+.form-control{
+    border-radius:8px;
+    padding:10px 15px;
+    color:#34495e;
+
+}
+
+.form-control::placeholder{
+    color:#aab7b8;
+
+}
+
+.fomr-control:focus{
+    border-color:#218c5e;
+    box-shadow:0 0 0 0.2rem rgba(33,140,94,0.2)
+
+}
+
+.btn-signin{
+    background-color:#218c5e;
+    color:white;
+    font-weight:600;
+    border-radius:8px;
+}
+
+.btn-signin:hover{
+    background-color:#1b704c;
+}
+
+.forgot-password{
+    color:#218c5e;
+    font-size:0.9rem;
+    text-decoration:none;
+}
+
+.forgot-password:hover{
+    text-decoration:underline;
+}
+
+.form-check-label{
+    color:2c3e50;
+}

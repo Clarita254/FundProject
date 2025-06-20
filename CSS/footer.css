@@ -1,0 +1,60 @@
+.footer {
+  background: linear-gradient(135deg, #198754, #145c41);
+  color: #fff;
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease-in-out;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 0.95rem;
+}
+
+.footer h5 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ffe8a1;
+}
+
+.footer-link {
+  color: #f4f4f4;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  padding: 2px 0;
+}
+
+.footer-link:hover {
+  color: #ffd166;
+  transform: translateX(3px);
+  text-decoration: underline;
+}
+
+.footer p, .footer a {
+  margin-bottom: 0.5rem;
+}
+
+.footer svg,
+.footer i {
+  vertical-align: middle;
+  margin-right: 6px;
+  color: #ffd166;
+}
+
+.footer-bottom {
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
