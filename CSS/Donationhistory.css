@@ -1,0 +1,83 @@
+body{
+    background-color:#f8f9fa;
+    font-family:'Roboto',sans-serif;
+    color:#1b293a;
+    margin:0;
+    padding:0;
+}
+
+.donation-history-page{
+    padding:2rem 0;
+
+}
+
+h2{
+    font-weight:bold;
+    color:#1b293a;
+}
+
+.filters {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.filters input {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+.table-container {
+  margin-top: 1rem;
+}
+
+.card-table {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.table th {
+  background-color: #e9ecef;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f3f5;
+  cursor: pointer;
+}
+
+.no-records {
+  padding: 2rem;
+  font-style: italic;
+  color: #888;
+  text-align: center;
+}
+
+.load-more-container,
+.pagination {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.pagination a {
+  margin: 0 4px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #198754;
+  color: #198754;
+  text-decoration: none;
+  transition: background-color  0.3s ease;
+}
+
+.pagination a.active,
+.pagination a:hover {
+  background-color: #198754;
+  color: #fff;
+}
+

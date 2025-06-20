@@ -4,10 +4,10 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$db_name="Edufund";
+$db_name="Edufund_db";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password,$db_name);
+$conn = new mysqli($host, $username, $password,$db_name);
 
 // Check connection
 if ($conn->connect_error) {
@@ -15,4 +15,3 @@ if ($conn->connect_error) {
 }
 //echo "Connected successfully";
 ?>
-
