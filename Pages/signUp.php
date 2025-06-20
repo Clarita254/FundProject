@@ -18,9 +18,14 @@
   <link rel="stylesheet" href="../CSS/SignUp.css">
   <link rel="stylesheet" href="../CSS/footer.css">
 
+  <!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+ 
 </head>
 <body>
+    <!---Include Header---->
+  <?php include_once("../Templates/nav.php"); ?>
 
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="signup-card">

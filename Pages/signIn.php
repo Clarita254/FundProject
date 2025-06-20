@@ -17,10 +17,13 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../CSS/signIn.css">
   <link rel="stylesheet" href="../CSS/footer.css">
+
   
 </head>
 <body>
-
+<!---Include Header---->
+  <?php include_once("../Templates/nav.php"); ?>
+  
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="signin-card text-center shadown-sm">
         <div class="profile-icon mb-3">
