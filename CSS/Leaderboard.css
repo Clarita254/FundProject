@@ -1,0 +1,56 @@
+/* Previous styles remain the same */
+
+/* Leaderboard Specific Styles */
+.leaderboard-container {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 1px solid #d6e0ea;
+    overflow-x: auto;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.leaderboard-table th {
+    background-color: #003366;
+    color: white;
+    padding: 1rem;
+    font-weight: 500;
+}
+
+.leaderboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #d6e0ea;
+}
+
+.leaderboard-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.leaderboard-table tr:hover {
+    background-color: #e9ecef;
+}
+
+.loading-message {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .leaderboard-table {
+        font-size: 0.9rem;
+    }
+    
+    .leaderboard-table th, 
+    .leaderboard-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}

@@ -1,0 +1,82 @@
+/* Previous styles from about-us page remain the same */
+
+/* Campaign Page Specific Styles */
+.search-container {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.search-input {
+    padding: 0.8rem 1rem;
+    width: 60%;
+    border: 2px solid #a3b8cc;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    background-color: #e6ecf2;
+}
+
+.search-input:focus {
+    border-color: #003366;
+}
+
+.campaigns-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.campaign-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 1px solid #d6e0ea;
+    transition: transform 0.3s;
+}
+
+.campaign-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 31, 63, 0.1);
+}
+
+.campaign-title {
+    color: #003366;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.raised-amount {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.donate-btn {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.donate-btn:hover {
+    background-color: #001a33;
+}
+
+/* Responsive adjustments for campaign cards */
+@media (max-width: 768px) {
+    .search-input {
+        width: 90%;
+    }
+    
+    .campaigns-container {
+        grid-template-columns: 1fr;
+    }
+}
