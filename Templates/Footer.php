@@ -16,9 +16,9 @@
       <div class="col-md-4 mb-3">
         <h5>Quick Links</h5>
         <ul class="list-unstyled">
-          <li><a href="/campaigns.php" class="footer-link">Campaigns</a></li>
-          <li><a href="/donation-history.php" class="footer-link">Donation History</a></li>
-          <li><a href="/leaderboard.php" class="footer-link">Leaderboard</a></li>
+          <li><a href="/Campaigns.php" class="footer-link">Campaigns</a></li>
+          <li><a href="/Donation-history.php" class="footer-link">Donation History</a></li>
+          <li><a href="/Leaderboard.php" class="footer-link">Leaderboard</a></li>
         </ul>
       </div>
 
@@ -26,10 +26,10 @@
       <div class="col-md-4 mb-3">
         <h5>Company</h5>
         <ul class="list-unstyled">
-          <li><a href="/index.php" class="footer-link">Home</a></li>
-          <li><a href="/about.php" class="footer-link">About Us</a></li>
-          <li><a href="/signup.php" class="footer-link">Sign Up</a></li>
-          <li><a href="/signin.php" class="footer-link">Log In</a></li>
+          <li><a href="/Hndex.php" class="footer-link">Home</a></li>
+          <li><a href="/AboutUs.php" class="footer-link">About Us</a></li>
+          <li><a href="/signUp.php" class="footer-link">Sign Up</a></li>
+          <li><a href="/signIn.php" class="footer-link">Log In</a></li>
         </ul>
       </div>
     </div>

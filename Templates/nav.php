@@ -20,16 +20,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           <a class="nav-link <?= ($currentPage == 'index.php') ? 'active fw-bold text-success' : '' ?>" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'about.php') ? 'active fw-bold text-success' : '' ?>" href="about.php">About Us</a>
+          <a class="nav-link <?= ($currentPage == 'AboutUs.php') ? 'active fw-bold text-success' : '' ?>" href="AboutUs.php">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'campaigns.php') ? 'active fw-bold text-success' : '' ?>" href="campaigns.php">Campaigns</a>
+          <a class="nav-link <?= ($currentPage == 'Campaigns.php') ? 'active fw-bold text-success' : '' ?>" href="Campaigns.php">Campaigns</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'leaderboard.php') ? 'active fw-bold text-success' : '' ?>" href="leaderboard.php">Leaderboard</a>
+          <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-success' : '' ?>" href="Leaderboard.php">Leaderboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'donationHistory.php') ? 'active fw-bold text-success' : '' ?>" href="donationHistory.php">Donation History</a>
+          <a class="nav-link <?= ($currentPage == 'DonationHistory.php') ? 'active fw-bold text-success' : '' ?>" href="DonationHistory.php">Donation History</a>
         </li>
       </ul>
 
