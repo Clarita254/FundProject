@@ -207,14 +207,7 @@ nav ul li a:hover {
     background-color: #001a33;
 }
 
-/* Footer */
-footer {
-    background-color: #001f3f;
-    color: white;
-    text-align: center;
-    padding: 2rem;
-    margin-top: 3rem;
-}
+
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {

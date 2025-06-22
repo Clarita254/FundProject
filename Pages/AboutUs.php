@@ -6,6 +6,10 @@
     <title>EduFund - About Us</title>
 
   <link rel="stylesheet" href="../CSS/AboutUs.css">
+  <link rel="stylesheet" href="../CSS/Footer.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  
+
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
@@ -17,19 +21,6 @@
        <!---Include Header---->
   <?php include_once("../Templates/nav.php"); ?>
   
-    <!-- Header with Navigation -->
-    <header>
-        <div class="logo">EduFund</div>
-        <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="campaigns.php">Campaign</a></li>
-                <li><a href="leaderboard.php">Leaderboard</a></li>
-                <li><a href="donation-history.php">Donation History</a></li>
-                <li><a href="logout.php" class="logout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
     
     <!-- Main Content -->
     <div class="main">

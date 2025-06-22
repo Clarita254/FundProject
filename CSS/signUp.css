@@ -1,8 +1,8 @@
 body {
-  background-color: #f6fef9; /* Match Sign In background */
-  font-family: 'Roboto', sans-serif;
+  background-color: #f5f7fa; /* Match sign-in background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  color: #1b293a; /* Primary dark text color */
+  color: #1b293a; /* Dark text */
 }
 
 .signup-card {
@@ -20,7 +20,7 @@ body {
 }
 
 .signup-card h2 {
-  color: #1b293a;
+  color: #003366;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
@@ -40,7 +40,7 @@ body {
   top: 50%;
   left: 12px;
   transform: translateY(-50%);
-  color: #1b293a;
+  color: #003366;
 }
 
 .input-icon input {
@@ -56,39 +56,38 @@ body {
 }
 
 .form-control:focus {
-  border-color: #198754;
-  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+  border-color: #003366;
+  box-shadow: 0 0 0 0.2rem rgba(0, 51, 102, 0.25);
   color: #1b293a;
 }
 
 label.form-label {
-  color: #1b293a;
+  color: #003366;
   font-weight: 600;
 }
 
 .btn-signup {
-  background-color: #198754;        /* Deep green */
-  color: #ffffff;                   /* White text for contrast */
+  background-color: #003366;        /* Deep blue */
+  color: #ffffff;                   /* White text */
   font-weight: 600;
   border-radius: 10px;
   padding: 10px 0;
   font-size: 1rem;
   border: none;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(25, 135, 84, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 31, 63, 0.2);
 }
 
 .btn-signup:hover {
-  background-color: #157347;       /* Slightly darker green on hover */
-  transform: scale(1.02);          /* Slight zoom effect */
-  box-shadow: 0 6px 14px rgba(25, 135, 84, 0.3);
+  background-color: #001a33;       /* Darker blue */
+  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0, 31, 63, 0.3);
 }
-
 
 .google-btn {
   background-color: #ffffff;
   border: 1px solid #ced4da;
-  color: #1b293a;
+  color: #003366;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -100,13 +99,8 @@ label.form-label {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
 }
 
-.btn-signup,
-.google-btn{
-    letter-spacing:0 5px;
-}
-
 .google-btn:hover {
-  background-color: #e9ecef;       /* Light grey on hover */
+  background-color: #e9ecef;
   transform: scale(1.01);
 }
 
@@ -115,17 +109,21 @@ label.form-label {
   height: 20px;
 }
 
-
 .text-muted {
   color: #6c757d !important;
 }
 
 .btn-link {
-  color: #198754;
+  color: #003366;
   font-weight: 500;
   text-decoration: none;
 }
 
 .btn-link:hover {
   text-decoration: underline;
+}
+
+.btn-signup,
+.google-btn {
+  letter-spacing: 0.5px;
 }

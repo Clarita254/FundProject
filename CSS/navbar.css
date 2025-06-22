@@ -1,0 +1,50 @@
+/* navbar.css - Cool Theme */
+
+.navbar {
+  background: linear-gradient(135deg, #123d51, #145c72) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  color: #7fdbff !important;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-brand:hover {
+  color: #b8f1ff !important;
+}
+
+.navbar-nav .nav-link {
+  color: #e8f6f9 !important;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: #7fdbff !important;
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+
+.btn-outline-success {
+  border-color: #7fdbff;
+  color: #7fdbff;
+}
+
+.btn-outline-success:hover {
+  background-color: #7fdbff;
+  color: #003c58;
+}
+
+.btn-success {
+  background-color: #7fdbff;
+  color: #003c58;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #5bc0de;
+  color: #001f3f;
+}

@@ -72,6 +72,10 @@ $donations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/Donationhistory.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  
+
 
 
   <?php include_once("../Templates/nav.php"); ?>

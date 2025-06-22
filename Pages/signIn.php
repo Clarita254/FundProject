@@ -17,6 +17,8 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../CSS/signIn.css">
   <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  
 
   
 </head>
