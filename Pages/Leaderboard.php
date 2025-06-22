@@ -4,23 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduFund - Leaderboard</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="../CSS/Leaderboard.css">
+=======
+
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+   <link rel="stylesheet" href="../CSS/Leaderboard.css">
+   <link rel="stylesheet" href="../CSS/Footer.css">
+   <link rel="stylesheet" href="../CSS/navbar.css">
+  
+
+
+>>>>>>> 82ff9f7d69db0d53a7f73642fa309487f4502dec
 </head>
 <body>
-    <!-- Header with Navigation -->
-    <header>
-        <div class="logo">EduFund</div>
-        <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about-us.php">About us</a></li>
-                <li><a href="campaigns.php">Campaign</a></li>
-                <li><a href="donation-history.php">Donation History</a></li>
-                <li><a href="logout.php" class="logout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    
+    <!---Include Header---->
+  <?php include_once("../Templates/nav.php"); ?>
     <!-- Main Content -->
     <div class="main">
         <h1 class="page-title">LEADERBOARD</h1>
@@ -45,11 +48,7 @@
         </div>
     </div>
     
-    <!-- Footer -->
-    <footer>
-        <p>&copy; <?php echo date("Y"); ?> EduFund. All rights reserved.</p>
-        <p>Contact us: info@edufund.org</p>
-    </footer>
+   
 
     <!-- JavaScript for API Fetch -->
     <script>
@@ -96,5 +95,7 @@
                 });
         }
     </script>
+
+    <?php include_once("../Templates/Footer.php"); ?>
 </body>
 </html>

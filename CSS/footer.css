@@ -1,6 +1,6 @@
 .footer {
-  background: linear-gradient(135deg, #198754, #145c41);
-  color: #fff;
+  background: linear-gradient(135deg, #001f3f, #003366); /* Deep blue tones */
+  color: #ffffff;
   padding-top: 2rem;
   padding-bottom: 1.5rem;
   animation: fadeInUp 0.8s ease-in-out;
@@ -11,11 +11,11 @@
 .footer h5 {
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #ffe8a1;
+  color: #7fdbff; /* Aqua accent */
 }
 
 .footer-link {
-  color: #f4f4f4;
+  color: #f0f0f0;
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-block;
@@ -23,7 +23,7 @@
 }
 
 .footer-link:hover {
-  color: #ffd166;
+  color: #7fdbff;
   transform: translateX(3px);
   text-decoration: underline;
 }
@@ -36,7 +36,7 @@
 .footer i {
   vertical-align: middle;
   margin-right: 6px;
-  color: #ffd166;
+  color: #7fdbff;
 }
 
 .footer-bottom {

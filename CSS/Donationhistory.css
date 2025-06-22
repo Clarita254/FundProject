@@ -1,19 +1,18 @@
-body{
-    background-color:#f8f9fa;
-    font-family:'Roboto',sans-serif;
-    color:#1b293a;
-    margin:0;
-    padding:0;
+body {
+  background-color: #f5f7fa;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1b293a;
+  margin: 0;
+  padding: 0;
 }
 
-.donation-history-page{
-    padding:2rem 0;
-
+.donation-history-page {
+  padding: 2rem 0;
 }
 
-h2{
-    font-weight:bold;
-    color:#1b293a;
+h2 {
+  font-weight: bold;
+  color: #003366;
 }
 
 .filters {
@@ -27,6 +26,12 @@ h2{
 .filters input {
   border-radius: 8px;
   padding: 0.5rem 1rem;
+  border: 1px solid #ced4da;
+  color: #003366;
+}
+
+.filters input::placeholder {
+  color: #6c757d;
 }
 
 .table-container {
@@ -34,10 +39,10 @@ h2{
 }
 
 .card-table {
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 15px rgba(0, 31, 63, 0.08);
 }
 
 .table th {
@@ -45,10 +50,11 @@ h2{
   position: sticky;
   top: 0;
   z-index: 1;
+  color: #003366;
 }
 
 .table tbody tr:hover {
-  background-color: #f1f3f5;
+  background-color: #eaf1f8;
   cursor: pointer;
 }
 
@@ -69,15 +75,14 @@ h2{
   margin: 0 4px;
   padding: 6px 12px;
   border-radius: 5px;
-  border: 1px solid #198754;
-  color: #198754;
+  border: 1px solid #003366;
+  color: #003366;
   text-decoration: none;
-  transition: background-color  0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .pagination a.active,
 .pagination a:hover {
-  background-color: #198754;
-  color: #fff;
+  background-color: #003366;
+  color: #ffffff;
 }
-

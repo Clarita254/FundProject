@@ -3,19 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>EduFund - Campaigns</title>
     <link rel="stylesheet" href="../CSS/Campaign.css">
     <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel ="stylesheet" href
+=======
+    <title>EduFund Campaigns</title>
+
+
+<link rel="stylesheet" href="../CSS/Campaign.css">
+<link rel="stylesheet" href="../CSS/Footer.css">
+<link rel="stylesheet" href="../CSS/navbar.css">
+  
+  
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+>>>>>>> 82ff9f7d69db0d53a7f73642fa309487f4502dec
 </head>
 <!-- Bootstrap CSS -->
 
 
 <body>
+<<<<<<< HEAD
     <!---Include Header---->
   
     
+=======
+   <!---Include Header---->
+  <?php include_once("../Templates/nav.php"); ?>
+  
+>>>>>>> 82ff9f7d69db0d53a7f73642fa309487f4502dec
     <!-- Main Content -->
     <div class="main">
         <h1 class="page-title">CAMPAIGN</h1>
@@ -58,10 +81,17 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
     <!---Include footer---->
   <?php include '../Templates/Footer.php'; ?>
 
     </footer>
+=======
+    
+
+   <?php include_once("../Templates/Footer.php"); ?>
+
+>>>>>>> 82ff9f7d69db0d53a7f73642fa309487f4502dec
 </body>
 </html>
