@@ -1,0 +1,62 @@
+/* progressReport.css */
+
+/* Restrict styles only to the progress report section to avoid conflicts */
+.progress-report-body {
+  background-color: #f5f7fa;
+  color: #1b293a;
+  font-family: 'Roboto', sans-serif;
+  padding-top: 2rem;
+}
+
+.form-section {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
+.form-title {
+  font-weight: 700;
+  color: #003366;
+  text-align: center;
+}
+
+.form-section .form-label {
+  font-weight: 600;
+  color: #1b293a;
+}
+
+.form-section .form-control {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #1b293a;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+}
+
+.form-section .form-control:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.form-section .btn-primary {
+  background-color: #003366;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.form-section .btn-primary:hover {
+  background-color: #001a33;
+}
+
+@media (max-width: 768px) {
+  .form-section {
+    padding: 2rem 1rem;
+  }
+}

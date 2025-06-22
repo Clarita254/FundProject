@@ -1,13 +1,13 @@
 <?php
 // Get current page filename for active link detection
-$currentPage = strtolower(basename($_SERVER['PHP_SELF']));
+$currentPage=(basename($_SERVER['PHP_SELF']));
 
 ?>
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-3 sticky-top" style="background-color: #001f3f;">
   <div class="container-fluid">
-    <a class="navbar-brand fw-bold" style="color: #7fdbff;" href="index.php">EduFund</a>
+    <a class="navbar-brand fw-bold" style="color: #7fdbff;" href="Home.php">EduFund</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -17,7 +17,7 @@ $currentPage = strtolower(basename($_SERVER['PHP_SELF']));
       <!-- Left Nav Links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'Home.php') ? 'active fw-bold text-success' : '' ?>" href="Home.php">Home</a>
+          <a class="nav-link <?= ($currentPage == 'Home.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Home.php">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'AboutUs.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="AboutUs.php">About Us</a>
@@ -31,6 +31,10 @@ $currentPage = strtolower(basename($_SERVER['PHP_SELF']));
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'Donationhistory.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Donationhistory.php">Donation History</a>
         </li>
+
+         <li class="nav-item">
+          <a class="nav-link <?= ($currentPage == 'ProgressForm.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="ProgressForm.php">Progress Form</a>
+        </li>
       </ul>
 
       <!-- Search Bar -->
@@ -43,8 +47,8 @@ $currentPage = strtolower(basename($_SERVER['PHP_SELF']));
 
       <!-- Auth Buttons -->
       <div class="d-flex">
-        <a href="signUp.php" class="btn btn-outline-info me-2 <?= ($currentPage == 'signUp.php') ? 'fw-bold' : '' ?>">Sign Up</a>
-        <a href="signIn.php" class="btn btn-info text-dark <?= ($currentPage == 'signIn.php') ? 'fw-bold' : '' ?>">Sign In</a>
+        <a href="signup.php" class="btn btn-outline-info me-2 <?= ($currentPage == 'signUp.php') ? 'fw-bold' : '' ?>">Sign Up</a>
+        <a href="signin.php" class="btn btn-info text-dark <?= ($currentPage == 'signIn.php') ? 'fw-bold' : '' ?>">Sign In</a>
       </div>
     </div>
   </div>
