@@ -4,22 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduFund - Campaigns</title>
-    <link rel="stylesheet" href="css/Campaign.css">
+    <link rel="stylesheet" href="../CSS/Campaign.css">
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel ="stylesheet" href
 </head>
+<!-- Bootstrap CSS -->
+
+
 <body>
-    <!-- Header with Navigation -->
-    <header>
-        <div class="logo">EduFund</div>
-        <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about-us.php">About us</a></li>
-                <li><a href="leaderboard.php">Leaderboard</a></li>
-                <li><a href="donation-history.php">Donation History</a></li>
-                <li><a href="logout.php" class="logout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!---Include Header---->
+  
     
     <!-- Main Content -->
     <div class="main">
@@ -63,11 +58,10 @@
             </div>
         </div>
     </div>
-    
-    <!-- Footer -->
-    <footer>
-        <p>&copy; <?php echo date("Y"); ?> EduFund. All rights reserved.</p>
-        <p>Contact us: info@edufund.org</p>
+
+    <!---Include footer---->
+  <?php include '../Templates/Footer.php'; ?>
+
     </footer>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduFund - About Us</title>
-   <link rel="stylesheet" href="/FundProject/css/AboutUs.css"> 
+  <link rel="stylesheet" href="../CSS/AboutUs.css">
 
 </head>
 <body>
