@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php include_once("../Templates/nav.php"); ?>
 
 <div class="container">
-  <div class="form-section">
+  <div class="progress-form-card">
     <h2 class="form-title mb-4">Submit Progress Report</h2>
     <form method="POST" enctype="multipart/form-data">
 

@@ -1,62 +1,87 @@
-/* progressReport.css */
-
-/* Restrict styles only to the progress report section to avoid conflicts */
+/* General Page Styling */
 .progress-report-body {
-  background-color: #f5f7fa;
+  background: linear-gradient(135deg, #d9e8f5, #f5f7fa);
   color: #1b293a;
   font-family: 'Roboto', sans-serif;
   padding-top: 2rem;
+  min-height: 100vh;
 }
 
-.form-section {
-  background-color: #fff;
+/* Centered Form Card */
+.progress-form-card {
+  background-color: #ffffff;
+  border-radius: 16px;
   padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  max-width: 700px;
-  margin: 0 auto;
-  margin-bottom: 3rem;
+  max-width: 720px;
+  margin: 2rem auto;
+  box-shadow: 0 12px 30px rgba(0, 31, 63, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #d6e0ea;
 }
 
-.form-title {
-  font-weight: 700;
+.progress-form-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 31, 63, 0.12);
+}
+
+/* Form Title */
+.progress-form-card h2.form-title {
   color: #003366;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-.form-section .form-label {
+/* Label and Inputs */
+label.form-label {
   font-weight: 600;
   color: #1b293a;
 }
 
-.form-section .form-control {
+.form-control {
   border-radius: 8px;
-  padding: 0.75rem 1rem;
-  color: #1b293a;
+  padding: 0.6rem 1rem;
   border: 1px solid #ccc;
   background-color: #ffffff;
+  color: #1b293a;
+  font-size: 0.95rem;
 }
 
-.form-section .form-control:focus {
-  border-color: #198754;
-  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
 }
 
-.form-section .btn-primary {
+.form-control::placeholder {
+  color: #888;
+}
+
+/* File Upload */
+input[type="file"] {
+  border-radius: 8px;
+  padding: 0.6rem;
+}
+
+/* Submit Button */
+.btn-primary {
   background-color: #003366;
-  border: none;
+  color: #ffffff;
   font-weight: 600;
   border-radius: 8px;
-  padding: 0.75rem;
-  transition: all 0.3s ease;
+  padding: 0.6rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.form-section .btn-primary:hover {
+.btn-primary:hover {
   background-color: #001a33;
+  transform: scale(1.02);
 }
 
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-  .form-section {
-    padding: 2rem 1rem;
+  .progress-form-card {
+    padding: 2rem;
+    margin: 1.5rem;
   }
 }
