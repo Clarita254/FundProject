@@ -52,4 +52,8 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 </nav>
+=======
+</nav>
+>>>>>>> 82ff9f7d69db0d53a7f73642fa309487f4502dec
