@@ -23,7 +23,7 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
           <a class="nav-link <?= ($currentPage == 'AboutUs.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="AboutUs.php">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Campaigns.php">Campaigns</a>
+          <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Campaign.php">Campaigns</a>
         </li>
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Leaderboard.php">Leaderboard</a>

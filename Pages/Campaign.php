@@ -63,12 +63,6 @@
         </div>
     </div> 
 
-    <!---Include footer---->
-  <?php include '../Templates/Footer.php'; ?>
-
-</footer>
-    
-
    <?php include_once("../Templates/Footer.php");?>
 </body>
 </html>

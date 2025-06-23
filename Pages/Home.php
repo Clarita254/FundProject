@@ -1,21 +1,24 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduFund - Home</title>
+
+    <!---CSS----->
     <link rel="stylesheet" href="../CSS/Home.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/footer.css">
+
 </head>
 <body>
-    <!---Include Header---->
+   <!---Include Header---->
   <?php include_once("../Templates/nav.php"); ?>
-    
+
+  
     <!-- Hero Section -->
+
+
     <section class="hero">
         <h1>Fund Education, Change Lives</h1>
         <p>Join our platform to support students in need.</p>
@@ -80,6 +83,7 @@
         </div>
     </section>
     
-<?php include_once("../Templates/Footer.php"); ?>
+    <!------Include footer-->
+   <?php include_once("../Templates/Footer.php"); ?>
 </body>
 </html>

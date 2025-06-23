@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="../CSS/AboutUs.css">
 
-  <link rel="stylesheet" href="../CSS/Footer.css">
+<link rel="stylesheet" href="../CSS/footer.css">
 <link rel="stylesheet" href="../CSS/navbar.css">
 </head>
 <body>
