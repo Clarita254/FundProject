@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduFund - Home</title>
     <link rel="stylesheet" href="../CSS/Home.css">
+    <link rel="stylesheet" href="../CSS/navbar.css">
+    <link rel="stylesheet" href="../CSS/footer.css">
 </head>
 <body>
     <!---Include Header---->

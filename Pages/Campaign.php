@@ -18,9 +18,8 @@
 
 
 <body>
-    <!---Include Header---->
-  
-    
+<!---Include Header---->
+  <?php include_once("../Templates/nav.php"); ?>
     <!-- Main Content -->
     <div class="main">
         <h1 class="page-title">CAMPAIGN</h1>
@@ -62,18 +61,14 @@
                 <button class="donate-btn">Donate</button>
             </div>
         </div>
-    </div>
-<<<<<<< HEAD
+    </div> 
 
     <!---Include footer---->
   <?php include '../Templates/Footer.php'; ?>
 
-    </footer>
-=======
+</footer>
     
 
-   <?php include_once("../Templates/Footer.php"); ?>
-
->>>>>>> 82ff9f7d69db0d53a7f73642fa309487f4502dec
+   <?php include_once("../Templates/Footer.php");?>
 </body>
 </html>
