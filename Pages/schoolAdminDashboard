@@ -1,0 +1,24 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
+    header("Location: ../Pages/signIn.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Admin Dashboard</title>
+    <link rel="stylesheet" href="../CSS/navbar.css">
+</head>
+<body>
+    <?php include_once("../Templates/nav.php"); ?>
+    <div class="container mt-5">
+        <h2>Welcome, <?= htmlspecialchars($_SESSION['username']) ?>!</h2>
+        <p>Role: <?= $_SESSION['role'] ?></p>
+        <p>This is the School Admin dashboard.</p>
+        <a href="../Pages/logout.php">Logout</a>
+    </div>
+</body>
+</html>
