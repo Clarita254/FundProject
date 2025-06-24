@@ -80,3 +80,54 @@
         grid-template-columns: 1fr;
     }
 }
+/* Campaign Create Button Styles */
+.campaign-create-btn {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.campaign-create-btn:hover {
+    background-color: #001a33;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 31, 63, 0.3);
+}
+
+.campaign-create-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.2);
+}
+
+.campaign-create-btn i {
+    transition: transform 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.campaign-create-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* Form container styling */
+.campaign-form-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+#createCampaignForm {
+    margin-top: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d6e0ea;
+}
