@@ -40,37 +40,34 @@ require_once("../includes/db_connect.php");
 
 <h3 class="mb-3">Sign In</h3>
 
-<form action="processSignIn.php" method="POST">
-<!--Username-->
-    <div class="form-group text-start mb-3">
-        <label for="username" class="form-label"><i class="fas fa-user me-2"></i>Username</label>
-        <input type="text"class="form-control"name="username" id="username" placeholder="Enter username"required>
-</div>
+<form action="SignInProcess.php" method="POST">
+  <!-- Username -->
+  <div class="form-group text-start mb-3">
+    <label for="username" class="form-label"><i class="fas fa-user me-2"></i>Username</label>
+    <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required>
+  </div>
 
-<!---Password---->
-<div class="form-group text-start mb-3">
-        <label for="password" class="form-label"><i class="fas fa-lock me-2"></i>Password</label>
-        <input type="passsword"class="form-control"name="Password" id="password" placeholder="Enter password"required>
-</div>
+  <!-- Password -->
+  <div class="form-group text-start mb-3">
+    <label for="password" class="form-label"><i class="fas fa-lock me-2"></i>Password</label>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" required>
+  </div>
 
-
-<!----Remember and Forgot Password----->
-
-<div class="d-flex justify-content-between align-items-center mb-3">
+  <!-- Remember & Forgot -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="rememberMe">
-        <label class="form-check-label" for="rememberMe">Remember me</label>
-</div>
-<a href=""class="forgot-password">Forgot Password?</a>
-</div>
+      <input class="form-check-input" type="checkbox" id="rememberMe">
+      <label class="form-check-label" for="rememberMe">Remember me</label>
+    </div>
+    <a href="#" class="forgot-password">Forgot Password?</a>
+  </div>
 
-
-<!----Submit --->
-
-<div class="d-grid">
-    <button type="submit"class="btn btn-signin">Sign In</button>
-</div>
+  <!-- Submit -->
+  <div class="d-grid">
+    <button type="submit" class="btn btn-signin">Sign In</button>
+  </div>
 </form>
+
 </div>
 </div>
    
