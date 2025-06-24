@@ -1,64 +1,60 @@
 <?php
- require_once('../includes/db_connect.php');
+require_once('../includes/db_connect.php');
+session_start();
 
-//Safe fallback values
+// Ensure only donors can view this page
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
+    header("Location: ../Pages/signIn.php");
+    exit();
+}
+
+$donorId = $_SESSION['user_id'];
 $donations = [];
 $totalPages = 0;
-$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-
-// Pagination setup
 $recordsPerPage = 5;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $startFrom = ($currentPage - 1) * $recordsPerPage;
+$search = $_GET['search'] ?? '';
+$likeSearch = "%$search%";
 
+// Count total
+$countQuery = "SELECT COUNT(*) AS total 
+               FROM donations d
+               JOIN campaigns c ON d.campaign_id = c.campaign_id
+               WHERE d.donor_id = ? 
+                 AND (c.campaign_name LIKE ? 
+                      OR d.payment_mode LIKE ? 
+                      OR d.status LIKE ?)";
 
-// Filter inputs
-$filters = [
-  'date' => $_GET['date'] ?? '',
-  'campaign' => $_GET['campaign'] ?? '',
-  'amount' => $_GET['amount'] ?? '',
-  'search' => $_GET['search'] ?? ''
-];
-
-// Base query
-$query = "SELECT * FROM donations WHERE 1";
-$params = [];
-
-if (!empty($filters['date'])) {
-  $query .= " AND date LIKE ?";
-  $params[] = "%{$filters['date']}%";
-}
-
-if (!empty($filters['campaign'])) {
-  $query .= " AND campaign LIKE ?";
-  $params[] = "%{$filters['campaign']}%";
-}
-
-if (!empty($filters['amount'])) {
-  $query .= " AND amount LIKE ?";
-  $params[] = "%{$filters['amount']}%";
-}
-
-if (!empty($filters['search'])) {
-  $query .= " AND (campaign LIKE ? OR mode LIKE ? OR status LIKE ?)";
-  $params[] = "%{$filters['search']}%";
-  $params[] = "%{$filters['search']}%";
-  $params[] = "%{$filters['search']}%";
-}
-
-/*
-$totalQuery = $conn->prepare($query);
-$totalQuery->execute($params);
-$totalRecords = $totalQuery->rowCount();
+$countStmt = $conn->prepare($countQuery);
+$countStmt->bind_param("isss", $donorId, $likeSearch, $likeSearch, $likeSearch);
+$countStmt->execute();
+$countResult = $countStmt->get_result()->fetch_assoc();
+$totalRecords = $countResult['total'];
 $totalPages = ceil($totalRecords / $recordsPerPage);
+$countStmt->close();
 
-$query .= " ORDER BY date DESC LIMIT $startFrom, $recordsPerPage";
+// Fetch donations for that donor
+$query = "SELECT d.donation_date, c.campaign_name, d.amount, d.payment_mode, d.status 
+          FROM donations d
+          JOIN campaigns c ON d.campaign_id = c.campaign_id
+          WHERE d.donor_id = ?
+            AND (c.campaign_name LIKE ? 
+                 OR d.payment_mode LIKE ? 
+                 OR d.status LIKE ?)
+          ORDER BY d.donation_date DESC
+          LIMIT ?, ?";
+
 $stmt = $conn->prepare($query);
-$stmt->execute($params);
-$donations = $stmt->fetchAll(PDO::FETCH_ASSOC);
-*/
+$stmt->bind_param("isssii", $donorId, $likeSearch, $likeSearch, $likeSearch, $startFrom, $recordsPerPage);
+$stmt->execute();
+$result = $stmt->get_result();
+$donations = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -102,29 +98,30 @@ $donations = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="table-responsive card-table">
     <table class="table table-bordered text-center">
       <thead>
-        <tr>
-          <th>Date</th>
-          <th>Campaign</th>
-          <th>Amount Donated</th>
-          <th>Payment Mode</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php if (count($donations) === 0): ?>
-          <tr><td colspan="5" class="no-records">No donation records found.</td></tr>
-        <?php else: ?>
-          <?php foreach ($donations as $d): ?>
-            <tr>
-              <td><?= htmlspecialchars($d['date']) ?></td>
-              <td><?= htmlspecialchars($d['campaign']) ?></td>
-              <td><?= htmlspecialchars($d['amount']) ?></td>
-              <td><?= htmlspecialchars($d['mode']) ?></td>
-              <td><?= htmlspecialchars($d['status']) ?></td>
-            </tr>
-          <?php endforeach; ?>
-        <?php endif; ?>
-      </tbody>
+  <tr>
+    <th>Date</th>
+    <th>Campaign</th>
+    <th>Amount Donated</th>
+    <th>Payment Mode</th>
+    <th>Status</th>
+  </tr>
+</thead>
+<tbody>
+  <?php if (count($donations) === 0): ?>
+    <tr><td colspan="5" class="text-center">No donation records found.</td></tr>
+  <?php else: ?>
+    <?php foreach ($donations as $d): ?>
+      <tr>
+        <td><?= htmlspecialchars($d['donation_date']) ?></td>
+        <td><?= htmlspecialchars($d['campaign_name']) ?></td>
+        <td><?= 'KES ' . number_format($d['amount'], 2) ?></td>
+        <td><?= htmlspecialchars($d['payment_mode']) ?></td>
+        <td><?= htmlspecialchars($d['status']) ?></td>
+      </tr>
+    <?php endforeach; ?>
+  <?php endif; ?>
+</tbody>
+
     </table>
   </div>
 
