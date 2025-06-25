@@ -32,7 +32,7 @@ $userId = $_SESSION['user_id'];
     <?php include_once("../Templates/nav.php"); ?>
 
     <div class="main">
-        <h1 class="page-title">YOUR CAMPAIGNS</h1>
+        <h1 class="page-title">CAMPAIGNS</h1>
 
         <!-- Campaigns List -->
         <div class="campaigns-container">
@@ -83,7 +83,7 @@ $userId = $_SESSION['user_id'];
                 </div>
             </div>
             <?php endwhile; else: ?>
-                <p class="text-center mt-4">You haven't created any campaigns yet.</p>
+                <p class="text-center mt-4">No campaign records .</p>
             <?php endif; ?>
         </div>
     </div>

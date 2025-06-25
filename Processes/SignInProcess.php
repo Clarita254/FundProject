@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirect based on role
             switch ($user['role']) {
                 case 'schoolAdmin':
-                    header("Location: ../Dashboards/schoolAdminDashboard.php");
+                    header("Location: ../Dashboards/schoolAdmindashboard.php");
                     break;
                 case 'donor':
                     header("Location: ../Dashboards/donorDashboard.php");

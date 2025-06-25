@@ -11,8 +11,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
 $schoolAdminId = $_SESSION['user_id'];
 
 // Fetch campaigns created by this school admin
-$query = "SELECT * FROM campaigns WHERE user_id = ? ORDER BY created_at DESC";
-$stmt = $conn->prepare($query);
+$query = "SELECT * FROM campaigns WHERE schoolAdmin_id = ? ORDER BY created_at DESC";
+$stmt=$conn->prepare($query);
 $stmt->bind_param("i", $schoolAdminId);
 $stmt->execute();
 $result = $stmt->get_result();

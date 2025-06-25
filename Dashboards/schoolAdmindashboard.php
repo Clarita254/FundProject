@@ -18,48 +18,43 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   <title>School Admin Dashboard</title>
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/schoolAdmindashboard.css">
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <style>
-    .dashboard-card {
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-      padding: 20px;
-    }
-    .section-title {
-      font-weight: bold;
-      margin-top: 30px;
-    }
-  </style>
+  
 </head>
 <body>
 
 <?php include_once("../Templates/nav.php"); ?>
 
-<div class="container py-5">
-  <h2 class="text-center text-primary fw-bold mb-4">Welcome, <?= htmlspecialchars($schoolName) ?>!</h2>
+<div class="container py-5" style="background: linear-gradient(to bottom right, #eaf6f9, #f5fafd); border-radius: 15px; padding: 40px;">
+
+  <h2 class="text-center fw-bold mb-4" style="color: #003c58;; font-size: 2.2rem;">
+  👋 Welcome Back, <?= htmlspecialchars($schoolName) ?>!
+</h2>
 
   <!-- Quick Actions -->
   <div class="row text-center mb-5">
     <div class="col-md-4 mb-3">
-      <a href="Campaigncreation.php" class="btn btn-outline-success w-100">
+      <a href="../Pages/Campaigncreation.php" class="btn btn-outline-success w-100">
         <i class="fas fa-plus-circle me-2"></i>Create Campaign
       </a>
     </div>
     <div class="col-md-4 mb-3">
-      <a href="Campaign.php" class="btn btn-outline-info w-100">
+      <a href="../Pages/Campaign.php" class="btn btn-outline-info w-100">
         <i class="fas fa-edit me-2"></i>View  Campaigns
       </a>
     </div>
 
     <div class="col-md-4 mb-3">
-      <a href="manageCampaigns.php" class="btn btn-outline-info w-100">
+      <a href="../Dashboards/manageCampaigns.php" class="btn btn-outline-info w-100">
         <i class="fas fa-edit me-2"></i>Manage Campaign
       </a>
     </div>
 
     <div class="col-md-4 mb-3">
-      <a href="ProgressForm.php" class="btn btn-outline-warning w-100">
+      <a href="../Pages/ProgressForm.php" class="btn btn-outline-warning w-100">
         <i class="fas fa-chart-line me-2"></i>Submit Progress Report
       </a>
     </div>
@@ -98,7 +93,7 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
     <h5 class="section-title">Your Campaigns and Approval Status</h5>
     <?php
       $schoolAdminId = $_SESSION['user_id'];
-      $statusQuery = "SELECT title, status, created_at FROM campaigns WHERE user_id = ?";
+      $statusQuery = "SELECT campaign_name, status, created_at FROM campaigns WHERE schoolAdmin_id = ?";
       $stmt = $conn->prepare($statusQuery);
       $stmt->bind_param("i", $schoolAdminId);
       $stmt->execute();
@@ -117,7 +112,7 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
       <tbody>
         <?php while ($row = $result->fetch_assoc()): ?>
         <tr>
-          <td><?= htmlspecialchars($row['title']) ?></td>
+          <td><?= htmlspecialchars($row['campaign_name']) ?></td>
           <td><span class="badge bg-secondary"><?= htmlspecialchars($row['status']) ?></span></td>
           <td><?= date('d M Y', strtotime($row['created_at'])) ?></td>
         </tr>
