@@ -35,11 +35,6 @@ $stmt->close();
 
 <div class="container py-5">
   <h2 class="fw-bold mb-4 text-primary text-center">My Campaigns</h2>
-  <div class="mb-4 text-end">
-    <a href="Campaigncreation.php" class="btn btn-success">
-      <i class="fas fa-plus me-1"></i> Create New Campaign
-    </a>
-  </div>
 
   <?php if (count($campaigns) > 0): ?>
     <div class="row">
@@ -49,16 +44,16 @@ $stmt->close();
             <div class="card-body">
               <h5 class="card-title"><?= htmlspecialchars($campaign['title']) ?></h5>
               <p class="card-text">Category: <?= htmlspecialchars($campaign['category']) ?></p>
-              <p class="card-text">Target: $<?= number_format($campaign['target_amount']) ?></p>
+              <p class="card-text">Target: KES <?= number_format($campaign['target_amount']) ?></p>
               <p class="card-text">Status: <?= htmlspecialchars($campaign['approval_status'] ?? 'Pending') ?></p>
               <div class="d-flex justify-content-between">
-                <a href="edit_campaign.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-primary btn-sm">
+                <a href="../Processes/editCampaign.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-primary btn-sm">
                   <i class="fas fa-edit"></i> Edit
                 </a>
-                <a href="upload_documents.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-info btn-sm">
+                <a href="../uploads/uploadDocuments.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-info btn-sm">
                   <i class="fas fa-upload"></i> Upload Document
                 </a>
-                <a href="view_donations.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-success btn-sm">
+                <a href="../Processesview_donations.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-success btn-sm">
                   <i class="fas fa-donate"></i> Donations
                 </a>
               </div>
@@ -71,6 +66,7 @@ $stmt->close();
     <p class="text-muted text-center">You haven't created any campaigns yet.</p>
   <?php endif; ?>
 </div>
+
 
 <?php include_once("../Templates/Footer.php"); ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

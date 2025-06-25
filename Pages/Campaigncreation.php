@@ -27,63 +27,68 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
 <?php include_once("../Templates/nav.php"); ?>
 
 <div class="container my-5">
-    <h2 class="mb-4 text-center text-primary">Create New Campaign</h2>
+    <div class="card shadow-lg border-0 rounded-4 px-4 py-5" style="background: linear-gradient(to right, #e3f2fd, #f1f8ff);">
+        <h2 class="text-center fw-bold mb-4" style="color:rgb(33, 53, 67);">📘 Create New Campaign</h2>
 
-    <form action="../Processes/Processcampaign.php" method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="campaignTitle" class="form-label">Campaign Title</label>
-                <input type="text" class="form-control" id="campaignTitle" name="campaignTitle" required>
+        <form action="../Processes/Processcampaign.php" method="POST" enctype="multipart/form-data">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="campaignTitle" class="form-label fw-semibold">Campaign Title</label>
+                    <input type="text" class="form-control shadow-sm" id="campaignTitle" name="campaignTitle" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="campaignCategory" class="form-label fw-semibold">Category</label>
+                    <select class="form-select shadow-sm" id="campaignCategory" name="campaignCategory" required>
+                        <option value="">-- Select Category --</option>
+                        <option value="education">Education</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="scholarship">Scholarship</option>
+                        <option value="resources">Learning Resources</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label for="campaignCategory" class="form-label">Category</label>
-                <select class="form-select" id="campaignCategory" name="campaignCategory" required>
-                    <option value="">-- Select Category --</option>
-                    <option value="education">Education</option>
-                    <option value="infrastructure">Infrastructure</option>
-                    <option value="scholarship">Scholarship</option>
-                    <option value="resources">Learning Resources</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="mb-3">
-            <label for="campaignDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="campaignDescription" name="campaignDescription" rows="4" required></textarea>
-        </div>
+            <div class="mb-4">
+                <label for="campaignDescription" class="form-label fw-semibold">Description</label>
+                <textarea class="form-control shadow-sm" id="campaignDescription" name="campaignDescription" rows="4" required></textarea>
+            </div>
 
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <label for="targetAmount" class="form-label">Target Amount (KES)</label>
-                <input type="number" class="form-control" id="targetAmount" name="targetAmount" min="100" required>
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <label for="targetAmount" class="form-label fw-semibold">Target Amount (KES)</label>
+                    <input type="number" class="form-control shadow-sm" id="targetAmount" name="targetAmount" min="100" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="startDate" class="form-label fw-semibold">Start Date</label>
+                    <input type="date" class="form-control shadow-sm" id="startDate" name="startDate" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="endDate" class="form-label fw-semibold">End Date</label>
+                    <input type="date" class="form-control shadow-sm" id="endDate" name="endDate" required>
+                </div>
             </div>
-            <div class="col-md-4">
-                <label for="startDate" class="form-label">Start Date</label>
-                <input type="date" class="form-control" id="startDate" name="startDate" required>
-            </div>
-            <div class="col-md-4">
-                <label for="endDate" class="form-label">End Date</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" required>
-            </div>
-        </div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="campaignImage" class="form-label">Campaign Image</label>
-                <input type="file" class="form-control" name="campaignImage" id="campaignImage" accept="image/*" required>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="campaignImage" class="form-label fw-semibold">Campaign Image</label>
+                    <input type="file" class="form-control shadow-sm" name="campaignImage" id="campaignImage" accept="image/*" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="supportingDoc" class="form-label fw-semibold">Upload Supporting Document <small>(PDF/Image - e.g. budget, actual needs)</small></label>
+                    <input type="file" class="form-control shadow-sm" name="supportingDoc" id="supportingDoc" accept=".pdf,image/*" required>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label for="supportingDoc" class="form-label">Supporting Document (PDF/Image)</label>
-                <input type="file" class="form-control" name="supportingDoc" id="supportingDoc" accept=".pdf,image/*" required>
-            </div>
-        </div>
 
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Submit Campaign</button>
-        </div>
-    </form>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+                    <i class="fas fa-paper-plane me-1"></i> Submit Campaign
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
 
 <?php include_once("../Templates/Footer.php"); ?>
 
@@ -99,4 +104,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
-</html>
+</html>  Make the campaign form more attractive andchange the create new campaign to a cool shade of blue 

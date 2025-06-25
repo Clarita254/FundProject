@@ -26,7 +26,7 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
 </head>
 <body>
 
-<?php include_once("../Templates/nav.php"); ?>
+<?php include_once("../Templates/navschoolAdmin.php"); ?>
 
 <div class="container py-5" style="background: linear-gradient(to bottom right, #eaf6f9, #f5fafd); border-radius: 15px; padding: 40px;">
 
@@ -55,7 +55,7 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
 
     <div class="col-md-4 mb-3">
       <a href="../Pages/ProgressForm.php" class="btn btn-outline-warning w-100">
-        <i class="fas fa-chart-line me-2"></i>Submit Progress Report
+        <i class="fas fa-chart-line me-2"></i>Submit Fund Utilization Report
       </a>
     </div>
   </div>
@@ -63,32 +63,47 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   <!-- Upload Verification Documents -->
   <div class="dashboard-card mb-4">
     <h5 class="section-title">School Verification Documents</h5>
-    <form action="uploadDocuments.php" method="POST" enctype="multipart/form-data">
+    <form action="../uploads/uploadDocuments.php" method="POST" enctype="multipart/form-data">
       <div class="mb-3">
-        <label for="verificationDoc" class="form-label">Upload Verification Document (PDF, Image):</label>
+        <label for="verificationDoc" class="form-label">Upload Verification Document (PDF, Image i.e school identity):</label>
         <input type="file" name="verificationDoc" class="form-control" required>
       </div>
-      <button type="submit" class="btn btn-primary">Upload</button>
+      <button type="submit" class="btn "style="background-color:#145c72; color: white;">Upload</button>
     </form>
   </div>
 
-  <!-- Fund Utilization Feedback -->
-  <div class="dashboard-card mb-4">
-    <h5 class="section-title">Fund Utilization Report</h5>
-    <form action="uploadUtilization.php" method="POST" enctype="multipart/form-data">
-      <div class="mb-3">
-        <label for="utilizationNote" class="form-label">Summary (How funds were used):</label>
-        <textarea name="utilizationNote" class="form-control" rows="4" required></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="utilizationFile" class="form-label">Upload Supporting File (PDF/Excel/Image):</label>
-        <input type="file" name="utilizationFile" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-success">Submit</button>
-    </form>
-  </div>
+   <!-- Display uploaded document status -->
+<div class="dashboard-card mb-4">
+  <h5 class="section-title">Verification Document Status</h5>
 
-  <!-- Campaign Approval Status -->
+  <?php
+  $stmt = $conn->prepare("SELECT file_name, upload_time, status FROM verification_documents WHERE schoolAdmin_id = ? ORDER BY upload_time DESC LIMIT 1");
+  $stmt->bind_param("i", $schoolAdminId);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0):
+    $doc = $result->fetch_assoc();
+  ?>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>File:</strong> <?= htmlspecialchars($doc['file_name']) ?></li>
+      <li class="list-group-item"><strong>Status:</strong> 
+        <span class="badge 
+          <?= $doc['status'] === 'Approved' ? 'bg-success' : ($doc['status'] === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark') ?>">
+          <?= htmlspecialchars($doc['status']) ?>
+        </span>
+      </li>
+      <li class="list-group-item"><strong>Uploaded:</strong> <?= date('d M Y H:i', strtotime($doc['upload_time'])) ?></li>
+    </ul>
+  <?php else: ?>
+    <p class="text-muted">No verification document uploaded yet.</p>
+  <?php endif; $stmt->close(); ?>
+</div>
+
+
+    </form>
+
+    <!-- Campaign Approval Status -->
   <div class="dashboard-card">
     <h5 class="section-title">Your Campaigns and Approval Status</h5>
     <?php
@@ -125,9 +140,12 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
     <?php $stmt->close(); ?>
   </div>
 
+  </div>
+
+  
   <!-- Logout -->
   <div class="text-center mt-4">
-    <a href="../includes/logout.php" class="btn btn-danger">
+    <a href="../includes/logout.php" class="btn "style="background-color:#145c72; color: white;">
       <i class="fas fa-sign-out-alt me-2"></i>Logout
     </a>
   </div>

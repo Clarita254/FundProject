@@ -1,7 +1,6 @@
 <?php
 // Get current page filename for active link detection
 $currentPage=(basename($_SERVER['PHP_SELF']));
-
 ?>
 
 <!-- Navigation -->
@@ -30,7 +29,7 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
          <li class="nav-item">
        <a class="nav-link <?= ($currentPage == 'CampaignCreation.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="CampaignCreation.php">Create Campaign</a>
        </li>
-       
+
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Leaderboard.php">Leaderboard</a>
         </li>
@@ -41,6 +40,7 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
   <li class="nav-item">
     <a class="nav-link <?= ($currentPage == 'donorDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="donorDashboard.php">Dashboard</a>
   </li>
+
 <?php endif; ?>
 
         </li>
@@ -64,10 +64,15 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
         <a href="signin.php" class="btn btn-info text-dark <?= ($currentPage == 'signIn.php') ? 'fw-bold' : '' ?>">Sign In</a>
       </div>
 
+  
+
       <?php if (isset($_SESSION['user_id'])): ?>
-    <a href="logout.php" class="btn btn-outline-danger ms-2">Logout</a>
+    <a href="../includes logout.php" class="btn btn-outline-info me-2">Logout</a>
+
+    
     <?php endif; ?>
 
+      
     </div>
   </div>
 </nav>

@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container">
   <div class="progress-form-card">
-    <h2 class="form-title mb-4">Submit Progress Report</h2>
+    <h2 class="form-title mb-4">Submit Fund Utilization Report</h2>
     <form method="POST" enctype="multipart/form-data">
 
       <div class="mb-3">
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Report Description</label>
+        <label class="form-label">Fund utilization Description</label>
         <textarea name="report_description" class="form-control" rows="4" required></textarea>
       </div>
 
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Upload Progress Photos</label>
+        <label class="form-label">Upload Supporting Progress Images</label>
         <input type="file" name="progress_photos[]" class="form-control" accept="image/*" multiple>
       </div>
 
