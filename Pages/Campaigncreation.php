@@ -30,7 +30,7 @@ if (isset($_GET['error'])) {
 
         <!-- Back to campaigns list -->
         <div class="mb-3">
-            <a href="campaign.php" class="btn btn-outline-primary"><i class="fas fa-arrow-left me-2"></i>Back to Campaigns</a>
+            <a href="Campaign.php" class="btn btn-outline-primary"><i class="fas fa-arrow-left me-2"></i>Back to Campaigns</a>
         </div>
 
         <!-- Campaign Form -->
