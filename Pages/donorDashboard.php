@@ -36,6 +36,8 @@ $stmt->close();
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
+
+
   <style>
     .dashboard-card {
       border-radius: 12px;
@@ -52,13 +54,13 @@ $stmt->close();
   <!-- Quick Actions -->
   <div class="row text-center mb-4">
     <div class="col-md-4 mb-3">
-      <a href="campaigns.php" class="btn btn-outline-primary w-100"><i class="fas fa-search me-2"></i>Search Campaigns</a>
+      <a href="Campaign.php" class="btn btn-outline-primary w-100"><i class="fas fa-search me-2"></i>Search Campaigns</a>
     </div>
     <div class="col-md-4 mb-3">
-      <a href="donationHistory.php" class="btn btn-outline-success w-100"><i class="fas fa-clock me-2"></i>View Donation History</a>
+      <a href="Donationhistory.php" class="btn btn-outline-success w-100"><i class="fas fa-clock me-2"></i>View Donation History</a>
     </div>
     <div class="col-md-4 mb-3">
-      <a href="leaderboard.php" class="btn btn-outline-warning w-100"><i class="fas fa-trophy me-2"></i>Leaderboard</a>
+      <a href="Leaderboard.php" class="btn btn-outline-warning w-100"><i class="fas fa-trophy me-2"></i>Leaderboard</a>
     </div>
   </div>
 
