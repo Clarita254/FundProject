@@ -1,5 +1,14 @@
 <?php
+session_start();
 require_once("../includes/db_connect.php");
+
+// Ensure user is logged in
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
+    header("Location: ../Pages/signIn.php");
+    exit();
+}
+
+$userId = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +19,7 @@ require_once("../includes/db_connect.php");
 
     <!-- CSS Links -->
     <link rel="stylesheet" href="../CSS/Campaign.css">
-    <link rel="stylesheet" href="../CSS/Footer.css">
+    <link rel="stylesheet" href="../CSS/footer.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
 
     <!-- Bootstrap CSS -->
@@ -23,48 +32,58 @@ require_once("../includes/db_connect.php");
     <?php include_once("../Templates/nav.php"); ?>
 
     <div class="main">
-        <h1 class="page-title">CAMPAIGNS</h1>
-
-        <!-- Search Bar -->
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search for campaigns...">
-            <button class="search-btn"><i class="fas fa-search"></i></button>
-        </div>
+        <h1 class="page-title">YOUR CAMPAIGNS</h1>
 
         <!-- Campaigns List -->
         <div class="campaigns-container">
             <?php
-            $query = "SELECT * FROM campaigns ORDER BY created_at DESC";
+            $query = "SELECT * FROM campaigns WHERE schoolAdmin_id = $userId ORDER BY start_date DESC";
             $result = mysqli_query($conn, $query);
 
             if ($result && mysqli_num_rows($result) > 0):
                 while ($row = mysqli_fetch_assoc($result)):
-                    $title = htmlspecialchars($row['title']);
+                    $title = htmlspecialchars($row['campaign_name']);
                     $description = htmlspecialchars($row['description']);
-                    $target = (int)$row['target_amount'];
-                    $raised = (int)$row['amount_raised'];
+                    $target = (float)$row['target_amount'];
+                    $raised = (float)$row['amount_raised'];
                     $endDate = date('d M Y', strtotime($row['end_date']));
                     $daysLeft = ceil((strtotime($row['end_date']) - time()) / 86400);
-                    $image = $row['image_path'] ? '../uploads/' . $row['image_path'] : 'https://via.placeholder.com/300x200';
+                    $image = (!empty($row['image_path']) && file_exists("../" . $row['image_path']))
+                        ? "../" . $row['image_path']
+                        : "https://via.placeholder.com/300x200";
                     $progress = $target > 0 ? min(100, ($raised / $target) * 100) : 0;
             ?>
             <div class="campaign-card">
                 <div class="campaign-image" style="background-image: url('<?php echo $image; ?>')"></div>
                 <div class="campaign-content">
-                    <h3 class="campaign-title"><?php echo $title; ?></h3>
+                    <h3 class="campaign-title d-flex justify-content-between align-items-center">
+  <?php echo $title; ?>
+  <span class="badge 
+    <?php
+      switch (strtolower($row['status'])) {
+        case 'approved': echo 'bg-success'; break;
+        case 'pending': echo 'bg-warning text-dark'; break;
+        case 'rejected': echo 'bg-danger'; break;
+        default: echo 'bg-secondary';
+      }
+    ?>">
+    <?php echo htmlspecialchars($row['status']); ?>
+  </span>
+</h3>
+
                     <p class="campaign-description"><?php echo $description; ?></p>
                     <div class="progress mb-2">
                         <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $progress; ?>%;" aria-valuenow="<?php echo $progress; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <p class="raised-amount">Raised: $<?php echo number_format($raised); ?> of $<?php echo number_format($target); ?></p>
+                    <p class="raised-amount">Raised: $<?php echo number_format($raised, 2); ?> of $<?php echo number_format($target, 2); ?></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="days-left"><i class="far fa-clock me-1"></i><?php echo $daysLeft > 0 ? $daysLeft . ' days left' : 'Ended'; ?></span>
-                        <a href="donations.php?campaign_id=<?= $row['campaign_id']; ?>" class="btn btn-success donate-btn">Donate </a>
-                   </div>
+                        <a href="Donations.php?campaign_id=<?= $row['campaign_id']; ?>" class="btn btn-success donate-btn">Donate</a>
+                    </div>
                 </div>
             </div>
             <?php endwhile; else: ?>
-                <p class="text-center mt-4">No campaigns available at the moment.</p>
+                <p class="text-center mt-4">You haven't created any campaigns yet.</p>
             <?php endif; ?>
         </div>
     </div>

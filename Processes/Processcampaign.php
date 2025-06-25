@@ -1,0 +1,46 @@
+<?php
+session_start();
+require_once("../includes/db_connect.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id']) && $_SESSION['role'] === 'schoolAdmin') {
+    $schoolAdminId = $_SESSION['user_id'];
+    $campaign_name = mysqli_real_escape_string($conn, $_POST['campaignTitle']);
+    $description = mysqli_real_escape_string($conn, $_POST['campaignDescription']);
+    $category = mysqli_real_escape_string($conn, $_POST['campaignCategory']);
+    $target_amount = floatval($_POST['targetAmount']);
+    $end_date = $_POST['endDate'];
+    $start_date = date('Y-m-d');
+    
+    // Upload image
+    $image_path = null;
+    if (isset($_FILES['campaignImage']) && $_FILES['campaignImage']['error'] === 0) {
+        $upload_dir = "../uploads/campaigns/";
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+        
+        $filename = uniqid() . '_' . basename($_FILES['campaignImage']['name']);
+        $target_file = $upload_dir . $filename;
+
+        if (move_uploaded_file($_FILES['campaignImage']['tmp_name'], $target_file)) {
+            $image_path = "campaigns/" . $filename; // relative to ../uploads/
+        }
+    }
+
+    // Insert query
+    $sql = "INSERT INTO campaigns (schoolAdmin_id, campaign_name, description, target_amount, start_date, end_date, category, image_path)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("issdssss", $schoolAdminId, $campaign_name, $description, $target_amount, $start_date, $end_date, $category, $image_path);
+
+    if ($stmt->execute()) {
+        header("Location: Campaign.php?success=1");
+        exit();
+    } else {
+        header("Location: Campaigncreation.php?error=" . urlencode($stmt->error));
+        exit();
+    }
+} else {
+    header("Location: ../Pages/signIn.php");
+    exit();
+}
+?>

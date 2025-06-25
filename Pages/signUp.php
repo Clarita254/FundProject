@@ -19,7 +19,7 @@ require_once("../includes/db_connect.php");
 <div class="signup-page">
   <div class="signup-container">
     <h2>School Admin Sign Up Form</h2>
-    <form action="signUpProcess.php" method="POST">
+    <form action="../Processes/SignUpProcess.php" method="POST">
 
       <label>School Name</label>
       <input type="text" name="school_name" required>

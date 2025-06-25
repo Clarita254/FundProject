@@ -40,7 +40,7 @@ require_once("../includes/db_connect.php");
 
 <h3 class="mb-3">Sign In</h3>
 
-<form action="SignInProcess.php" method="POST">
+<form action="../Processes/SignInProcess.php"method="POST">
   <!-- Username -->
   <div class="form-group text-start mb-3">
     <label for="username" class="form-label"><i class="fas fa-user me-2"></i>Username</label>
