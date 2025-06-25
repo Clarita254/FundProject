@@ -33,7 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: ../Dashboards/systemAdminDashboard.php");
                     break;
                 default:
-                    echo "<script>alert('Unknown role. Access denied.'); window.location.href='signIn.php';</script>";
+                    // Role not recognized, redirect to home
+                    header("Location: ../Pages/Home.php");
+                    break;
             }
             exit();
         } else {
