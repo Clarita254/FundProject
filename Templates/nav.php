@@ -9,6 +9,8 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" style="color: #7fdbff;" href="Home.php">EduFund</a>
 
+
+    <!----Toggle button for mobile view---->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,6 +32,13 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
         </li>
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'Donationhistory.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Donationhistory.php">Donation History</a>
+
+          <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'donor'): ?>
+  <li class="nav-item">
+    <a class="nav-link <?= ($currentPage == 'donorDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="donorDashboard.php">Dashboard</a>
+  </li>
+<?php endif; ?>
+
         </li>
 
          <li class="nav-item">
@@ -50,6 +59,11 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
         <a href="signup.php" class="btn btn-outline-info me-2 <?= ($currentPage == 'signUp.php') ? 'fw-bold' : '' ?>">Sign Up</a>
         <a href="signin.php" class="btn btn-info text-dark <?= ($currentPage == 'signIn.php') ? 'fw-bold' : '' ?>">Sign In</a>
       </div>
+
+      <?php if (isset($_SESSION['user_id'])): ?>
+    <a href="logout.php" class="btn btn-outline-danger ms-2">Logout</a>
+    <?php endif; ?>
+
     </div>
   </div>
 </nav>
