@@ -83,7 +83,7 @@
 /* Campaign Create Button Styles */
 .campaign-create-btn {
     background-color: #003366;
-    color: white;
+    color: rgb(25, 31, 74);
     border: none;
     padding: 0.8rem 1.8rem;
     border-radius: 25px;
@@ -125,7 +125,7 @@
 
 #createCampaignForm {
     margin-top: 1.5rem;
-    background-color: white;
+    background-color: rgb(15, 16, 78);
     border-radius: 8px;
     padding: 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
