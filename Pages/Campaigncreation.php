@@ -15,7 +15,7 @@ if (isset($_GET['error'])) {
 
     <!-- CSS Links -->
     <link rel="stylesheet" href="../CSS/Campaign.css">
-    <link rel="stylesheet" href="../CSS/Footer.css">
+    <link rel="stylesheet" href="../CSS/footer.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
 
     <!-- Bootstrap CSS -->

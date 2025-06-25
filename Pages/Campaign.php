@@ -59,8 +59,8 @@ require_once("../includes/db_connect.php");
                     <p class="raised-amount">Raised: $<?php echo number_format($raised); ?> of $<?php echo number_format($target); ?></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="days-left"><i class="far fa-clock me-1"></i><?php echo $daysLeft > 0 ? $daysLeft . ' days left' : 'Ended'; ?></span>
-                        <button class="donate-btn">Donate</button>
-                    </div>
+                        <a href="donations.php?campaign_id=<?= $row['campaign_id']; ?>" class="btn btn-success donate-btn">Donate </a>
+                   </div>
                 </div>
             </div>
             <?php endwhile; else: ?>

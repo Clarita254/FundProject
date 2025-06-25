@@ -27,6 +27,10 @@ $currentPage=(basename($_SERVER['PHP_SELF']));
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Campaign.php">Campaigns</a>
         </li>
+         <li class="nav-item">
+       <a class="nav-link <?= ($currentPage == 'CampaignCreation.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="CampaignCreation.php">Create Campaign</a>
+       </li>
+       
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="Leaderboard.php">Leaderboard</a>
         </li>
