@@ -50,10 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id']) && $_SES
     $stmt->bind_param("issdssss", $schoolAdminId, $campaign_name, $description, $target_amount, $start_date, $end_date, $category, $image_path);
 
     if ($stmt->execute()) {
-        header("Location: Campaign.php?success=1");
+        header("Location../Pages/Campaign.php?success=1");
         exit();
     } else {
-        header("Location: Campaigncreation.php?error=" . urlencode($stmt->error));
+        header("Location: ../Pages/Campaigncreation.php?error=" . urlencode($stmt->error));
         exit();
     }
 
