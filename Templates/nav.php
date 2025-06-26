@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 $currentPage = basename($_SERVER['PHP_SELF']);
 $role = $_SESSION['role'] ?? 'guest';
 ?>
@@ -22,13 +22,20 @@ $role = $_SESSION['role'] ?? 'guest';
           <a class="nav-link <?= ($currentPage == 'AboutUs.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/AboutUs.php">About Us</a>
         </li>
 
-        <!-- Role-Specific Links -->
-        <?php if ($role === 'schoolAdmin'): ?>
-          <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Campaign.php">Campaigns</a>
           </li>
-          <li class="nav-item">
+
+         <li class="nav-item">
             <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Leaderboard.php">Leaderboard</a>
+          </li>
+
+        <!-- Role-Specific Links -->
+        <?php if ($role === 'schoolAdmin'): ?>
+          
+
+           <li class="nav-item">
+            <a class="nav-link <?= ($currentPage == 'schoolAdmindashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/schoolAdmindashboard.php">schoolAdminsdashboard</a>
           </li>
         
         <?php elseif ($role === 'donor'): ?>
