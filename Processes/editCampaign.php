@@ -37,7 +37,7 @@ if (!$campaign) {
 <body>
 <div class="container mt-5">
   <h2 class="text-primary text-center mb-4">Edit Campaign</h2>
-  <form action="updateCampaign.php" method="POST">
+  <form action="../Processes/updateCampaign.php" method="POST">
     <input type="hidden" name="campaign_id" value="<?= $campaign['campaign_id'] ?>">
 
     <div class="mb-3">

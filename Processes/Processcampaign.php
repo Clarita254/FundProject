@@ -7,18 +7,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id']) && $_SES
     $schoolAdminId = $_SESSION['user_id'];
 
     // Check if the school is verified
-    $verifyQuery = "SELECT is_verified FROM users WHERE user_id = ?";
-    $verifyStmt = $conn->prepare($verifyQuery);
-    $verifyStmt->bind_param("i", $schoolAdminId);
-    $verifyStmt->execute();
-    $verifyStmt->bind_result($is_verified);
-    $verifyStmt->fetch();
-    $verifyStmt->close();
+    $verifyQuery = "SELECT status FROM verification_documents WHERE schoolAdmin_id = ? ORDER BY upload_time DESC LIMIT 1";
+$verifyStmt = $conn->prepare($verifyQuery);
+$verifyStmt->bind_param("i", $schoolAdminId);
+$verifyStmt->execute();
+$verifyStmt->bind_result($status);
+$verifyStmt->fetch();
+$verifyStmt->close();
 
-    if (!$is_verified) {
-        echo "<script>alert('Your school is not verified. Please upload verification documents.'); window.location.href='../Dashboards/schoolAdmindashboard.php';</script>";
-        exit();
-    }
+if ($status !== 'Approved') {
+    echo "<script>alert('Your school is not verified. Please upload verification documents.'); window.location.href='../Dashboards/schoolAdmindashboard.php';</script>";
+    exit();
+}
+
 
     // Continue with campaign creation
     $campaign_name = mysqli_real_escape_string($conn, $_POST['campaignTitle']);
