@@ -46,7 +46,7 @@ $stmt->close();
   </style>
 </head>
 <body>
-<?php include_once("../Templates/navDonor.php"); ?>
+<?php include_once("../Templates/nav.php"); ?>
 
 <div class="container py-5">
   <h2 class="fw-bold mb-4 text-center text-primary">Welcome, <?= htmlspecialchars($donorName) ?>!</h2>

@@ -26,7 +26,7 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
 </head>
 <body>
 
-<?php include_once("../Templates/navschoolAdmin.php"); ?>
+<?php include_once("../Templates/nav.php"); ?>
 
 <div class="container py-5" style="background: linear-gradient(to bottom right, #eaf6f9, #f5fafd); border-radius: 15px; padding: 40px;">
 
