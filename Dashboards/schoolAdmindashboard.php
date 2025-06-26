@@ -33,6 +33,27 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   <h2 class="text-center fw-bold mb-4" style="color: #003c58;; font-size: 2.2rem;">
   👋 Welcome Back, <?= htmlspecialchars($schoolName) ?>!
 </h2>
+<?php
+$school_id = $_SESSION['user_id']; // Note: 'user_id' is used for school admin ID
+
+// Query any new document status updates not yet shown
+$notificationQuery = $conn->prepare("SELECT id, status FROM verification_documents WHERE schoolAdmin_id = ? AND notified = 0 AND status IN ('Approved', 'Rejected')");
+$notificationQuery->bind_param("i", $school_id);
+$notificationQuery->execute();
+$notificationResult = $notificationQuery->get_result();
+
+while ($doc = $notificationResult->fetch_assoc()) {
+    $statusClass = $doc['status'] === 'Approved' ? 'alert-success' : 'alert-danger';
+    echo "<div class='alert $statusClass'>
+            📄 Your uploaded verification document has been <strong>{$doc['status']}</strong>.
+          </div>";
+
+    // Update the document as notified
+    $updateQuery = $conn->prepare("UPDATE verification_documents SET notified = 1 WHERE id = ?");
+    $updateQuery->bind_param("i", $doc['id']);
+    $updateQuery->execute();
+}
+?>
 
   <!-- Quick Actions -->
   <div class="row text-center mb-5">
