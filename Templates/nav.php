@@ -1,5 +1,4 @@
 <?php
-
 $currentPage = basename($_SERVER['PHP_SELF']);
 $role = $_SESSION['role'] ?? 'guest';
 ?>
@@ -21,37 +20,43 @@ $role = $_SESSION['role'] ?? 'guest';
         <li class="nav-item">
           <a class="nav-link <?= ($currentPage == 'AboutUs.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/AboutUs.php">About Us</a>
         </li>
-
         <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Campaign.php">Campaigns</a>
-          </li>
+          <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Campaign.php">Campaigns</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Leaderboard.php">Leaderboard</a>
+        </li>
 
-         <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Leaderboard.php">Leaderboard</a>
-          </li>
-
-        <!-- Role-Specific Links -->
+        <!-- School Admin Links -->
         <?php if ($role === 'schoolAdmin'): ?>
-          
-
-           <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'schoolAdmindashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/schoolAdmindashboard.php">schoolAdminsdashboard</a>
-          </li>
-        
-        <?php elseif ($role === 'donor'): ?>
           <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Campaign.php">Browse Campaigns</a>
+            <a class="nav-link <?= ($currentPage == 'schoolAdmindashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/schoolAdmindashboard.php">School Dashboard</a>
           </li>
+
+        <!-- Donor Links -->
+        <?php elseif ($role === 'donor'): ?>
           <li class="nav-item">
             <a class="nav-link <?= ($currentPage == 'Donationhistory.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Donationhistory.php">Donation History</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'donorDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/donorDashboard.php">Dashboard</a>
+            <a class="nav-link <?= ($currentPage == 'donorDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/donorDashboard.php">Donor Dashboard</a>
+          </li>
+
+        <!-- System Admin Links -->
+        <?php elseif ($role === 'systemAdmin'): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= ($currentPage == 'systemAdminDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/systemAdminDashboard.php">Admin Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link <?= ($currentPage == 'verify_documents.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/verify_documents.php">Verify Documents</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link <?= ($currentPage == 'verifyCampaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/verifyCampaign.php">Verify Campaigns</a>
           </li>
         <?php endif; ?>
       </ul>
 
-      <!-- Right Side: Auth Buttons or Logout -->
+      <!-- Auth Buttons -->
       <div class="d-flex">
         <?php if (!isset($_SESSION['user_id'])): ?>
           <a href="../Pages/signUp.php" class="btn btn-outline-info me-2">Sign Up</a>

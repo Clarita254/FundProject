@@ -11,8 +11,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
 $schoolAdminId = $_SESSION['user_id'];
 
 // Fetch campaigns created by this school admin
-$query = "SELECT * FROM campaigns WHERE schoolAdmin_id = ? ORDER BY created_at DESC";
-$stmt=$conn->prepare($query);
+$query = "SELECT campaign_id, campaign_name, category, target_amount, status, review_comment FROM campaigns WHERE schoolAdmin_id = ? ORDER BY created_at DESC";
+$stmt = $conn->prepare($query);
 $stmt->bind_param("i", $schoolAdminId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -40,20 +40,34 @@ $stmt->close();
     <div class="row">
       <?php foreach ($campaigns as $campaign): ?>
         <div class="col-md-6 mb-4">
-          <div class="card">
+          <div class="card shadow-sm">
             <div class="card-body">
-              <h5 class="card-title"><?= htmlspecialchars($campaign['title']) ?></h5>
+              <h5 class="card-title"><?= htmlspecialchars($campaign['campaign_name']) ?></h5>
               <p class="card-text">Category: <?= htmlspecialchars($campaign['category']) ?></p>
               <p class="card-text">Target: KES <?= number_format($campaign['target_amount']) ?></p>
-              <p class="card-text">Status: <?= htmlspecialchars($campaign['approval_status'] ?? 'Pending') ?></p>
-              <div class="d-flex justify-content-between">
+              <p class="card-text">
+                Status:
+                <span class="badge 
+                  <?= $campaign['status'] === 'Approved' ? 'bg-success' : 
+                      ($campaign['status'] === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark') ?>">
+                  <?= htmlspecialchars($campaign['status']) ?>
+                </span>
+              </p>
+
+              <?php if ($campaign['status'] === 'Rejected' && !empty($campaign['review_comment'])): ?>
+                <div class="alert alert-warning p-2">
+                  <strong>Feedback:</strong> <?= htmlspecialchars($campaign['review_comment']) ?>
+                </div>
+              <?php endif; ?>
+
+              <div class="d-flex justify-content-between mt-3">
                 <a href="../Processes/editCampaign.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-primary btn-sm">
                   <i class="fas fa-edit"></i> Edit
                 </a>
                 <a href="../uploads/uploadDocuments.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-info btn-sm">
                   <i class="fas fa-upload"></i> Upload Document
                 </a>
-                <a href="../Processesview_donations.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-success btn-sm">
+                <a href="../Processes/view_donations.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-success btn-sm">
                   <i class="fas fa-donate"></i> Donations
                 </a>
               </div>
@@ -66,7 +80,6 @@ $stmt->close();
     <p class="text-muted text-center">You haven't created any campaigns yet.</p>
   <?php endif; ?>
 </div>
-
 
 <?php include_once("../Templates/Footer.php"); ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

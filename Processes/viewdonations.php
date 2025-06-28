@@ -32,6 +32,7 @@ $checkStmt->bind_result($campaignTitle);
 $checkStmt->fetch();
 $checkStmt->close();
 
+
 // Build query with filters
 $filters = [];
 $params = [$campaignId];
