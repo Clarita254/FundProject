@@ -2,13 +2,9 @@
 session_start();
 require_once("../includes/db_connect.php");
 
-// Ensure user is logged in
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
-    header("Location: ../Pages/signIn.php");
-    exit();
-}
+$userId = $_SESSION['user_id'] ?? null;
+$role = $_SESSION['role'] ?? 'guest';
 
-$userId = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +33,7 @@ $userId = $_SESSION['user_id'];
         <!-- Campaigns List -->
         <div class="campaigns-container">
             <?php
-            $query = "SELECT * FROM campaigns WHERE schoolAdmin_id = $userId ORDER BY start_date DESC";
+            $query = "SELECT * FROM campaigns WHERE status = 'Approved' ORDER BY start_date DESC";
             $result = mysqli_query($conn, $query);
 
             if ($result && mysqli_num_rows($result) > 0):
@@ -75,7 +71,7 @@ $userId = $_SESSION['user_id'];
                     <div class="progress mb-2">
                         <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $progress; ?>%;" aria-valuenow="<?php echo $progress; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <p class="raised-amount">Raised: $<?php echo number_format($raised, 2); ?> of $<?php echo number_format($target, 2); ?></p>
+                    <p class="raised-amount">Raised: sh<?php echo number_format($raised, 2); ?> of sh<?php echo number_format($target, 2); ?></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="days-left"><i class="far fa-clock me-1"></i><?php echo $daysLeft > 0 ? $daysLeft . ' days left' : 'Ended'; ?></span>
                         <a href="Donations.php?campaign_id=<?= $row['campaign_id']; ?>" class="btn btn-success donate-btn">Donate</a>

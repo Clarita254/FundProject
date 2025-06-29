@@ -9,23 +9,41 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
 }
 
 $donorId = $_SESSION['user_id'];
-$donorName = $_SESSION['username'] ?? 'Donor';
+$donorName = "Donor"; // default fallback
+$recentDonations = []; // initialize properly
 
-// Fetch recent donations
+// Fetch  donor information from user table
+$nameStmt = $conn->prepare("SELECT username FROM users WHERE user_id = ? AND role = 'donor'");
+$nameStmt->bind_param("i", $donorId);
+$nameStmt->execute();
+$nameStmt->bind_result($donorName);
+$nameStmt->fetch();
+$nameStmt->close();
+
+
+// Fetch recent donations (ensure school_name exists in the joined table)
 $stmt = $conn->prepare("
-    SELECT d.donation_date, c.campaign_name, d.amount 
+    SELECT d.donation_date, c.campaign_name, d.amount, s.school_name
     FROM donations d
     JOIN campaigns c ON d.campaign_id = c.campaign_id
+    JOIN school_profiles s ON c.schoolAdmin_id = s.schoolAdmin_id
     WHERE d.donor_id = ?
     ORDER BY d.donation_date DESC
     LIMIT 5
 ");
+
 $stmt->bind_param("i", $donorId);
 $stmt->execute();
 $result = $stmt->get_result();
-$recentDonations = $result->fetch_all(MYSQLI_ASSOC);
+
+while ($row = $result->fetch_assoc()) {
+    $recentDonations[] = $row;
+}
+
 $stmt->close();
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,11 +88,12 @@ $stmt->close();
     <?php if (count($recentDonations) > 0): ?>
       <ul class="list-group">
         <?php foreach ($recentDonations as $donation): ?>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <?= htmlspecialchars($donation['campaign_name']) ?>
-            <span class="badge bg-primary rounded-pill">KES <?= number_format($donation['amount'], 2) ?></span>
-            <small><?= date('d M Y', strtotime($donation['donation_date'])) ?></small>
-          </li>
+          <li class="list-group-item">
+    <?= htmlspecialchars($donation['campaign_name']) ?> 
+    <br><small><i>School: <?= htmlspecialchars($donation['school_name']) ?></i></small>
+    <span class="badge bg-primary float-end">KES <?= number_format($donation['amount'], 2) ?></span>
+        </li>
+
         <?php endforeach; ?>
       </ul>
     <?php else: ?>

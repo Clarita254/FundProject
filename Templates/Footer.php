@@ -17,7 +17,7 @@
         <h5>Quick Links</h5>
         <ul class="list-unstyled">
           <li><a href="Campaign.php" class="footer-link">Campaigns</a></li>
-          <li><a href="Donationhistory.php" class="footer-link">Donation History</a></li>
+    
           <li><a href="Leaderboard.php" class="footer-link">Leaderboard</a></li>
            <li><a href="ProgressForm.php" class="footer-link">Progress Form</a></li>
         </ul>

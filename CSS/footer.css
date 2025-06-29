@@ -58,3 +58,8 @@
     opacity: 1;
   }
 }
+
+.footer .container {
+  background-color: transparent !important;
+}
+

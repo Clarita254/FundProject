@@ -44,11 +44,12 @@ if ($status !== 'Approved') {
     }
 
     // Insert campaign into DB
-    $sql = "INSERT INTO campaigns (schoolAdmin_id, campaign_name, description, target_amount, start_date, end_date, category, image_path)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    
+    $sql = $sql = "INSERT INTO campaigns (schoolAdmin_id, campaign_name, description, target_amount, start_date, end_date, category, image_path, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
+
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issdssss", $schoolAdminId, $campaign_name, $description, $target_amount, $start_date, $end_date, $category, $image_path);
+   $stmt->bind_param("issdssss", $schoolAdminId, $campaign_name, $description, $target_amount, $start_date, $end_date, $category, $image_path);
+
 
     if ($stmt->execute()) {
         header("Location../Pages/Campaign.php?success=1");

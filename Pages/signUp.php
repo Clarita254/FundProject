@@ -11,7 +11,7 @@ require_once("../includes/db_connect.php");
   <link rel="stylesheet" href="../CSS/SignUp.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <!---Include Header---->
@@ -76,5 +76,7 @@ require_once("../includes/db_connect.php");
 </div>
 
   <?php include_once("../Templates/Footer.php"); ?>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

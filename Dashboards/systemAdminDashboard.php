@@ -24,7 +24,7 @@ $adminName = $_SESSION['username'];
 </head>
 <body>
 
-<?php include_once("../Templates/nav_systemAdmin.php"); ?>
+<?php include_once("../Templates/nav.php"); ?>
 
 <div class="container py-5">
   <h2 class="mb-4 text-primary text-center">👨‍💼 Welcome, <?= htmlspecialchars($adminName) ?>!</h2>
@@ -58,9 +58,9 @@ $adminName = $_SESSION['username'];
           <td><?= date('d M Y H:i', strtotime($doc['upload_time'])) ?></td>
           <td><span class="badge bg-warning text-dark"><?= $doc['status'] ?></span></td>
           <td>
-            <a href="../Processes/verify_campaign.php?action=approve&id=<?= $row['campaign_id'] ?>" class="btn btn-success btn-sm">Approve</a>
-            <a href="../Processes/reject_campaign.php?id=<?= $row['campaign_id'] ?>" class="btn btn-danger btn-sm">Reject</a>
-
+           
+            <a href="../Processes/verify_document.php?action=approve&id=<?= $doc['id'] ?>" class="btn btn-success btn-sm">Approve</a>
+            <a href="../Processes/verify_document.php?action=reject&id=<?= $doc['id'] ?>" class="btn btn-danger btn-sm">Reject</a>
           </td>
         </tr>
         <?php endwhile; else: ?>
@@ -101,8 +101,10 @@ $adminName = $_SESSION['username'];
           <td><?= date('d M Y', strtotime($camp['created_at'])) ?></td>
           <td><span class="badge bg-warning text-dark"><?= $camp['status'] ?></span></td>
           <td>
-            <a href="../Processes/verify_campaign.php?id=<?= $camp['campaign_id'] ?>&action=approve" class="btn btn-success btn-sm">Approve</a>
-            <a href="../Processes/verify_campaign.php?id=<?= $camp['campaign_id'] ?>&action=reject" class="btn btn-danger btn-sm">Reject</a>
+           
+            <a href="../Processes/verify_campaign.php?action=approve&id=<?= $row['campaign_id'] ?>" class="btn btn-success btn-sm">Approve</a>
+            <a href="../Processes/rejectCampaign.php?id=<?= $row['campaign_id'] ?>" class="btn btn-danger btn-sm">Reject</a>
+
           </td>
         </tr>
         <?php endwhile; else: ?>
@@ -115,4 +117,5 @@ $adminName = $_SESSION['username'];
 
 <?php include_once("../Templates/Footer.php"); ?>
 </body>
+
 </html>

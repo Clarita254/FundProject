@@ -47,12 +47,7 @@ $role = $_SESSION['role'] ?? 'guest';
           <li class="nav-item">
             <a class="nav-link <?= ($currentPage == 'systemAdminDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/systemAdminDashboard.php">Admin Dashboard</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'verify_documents.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/verify_documents.php">Verify Documents</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'verifyCampaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/verifyCampaign.php">Verify Campaigns</a>
-          </li>
+          
         <?php endif; ?>
       </ul>
 

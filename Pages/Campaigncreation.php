@@ -28,7 +28,13 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
 
 <div class="container my-5">
     <div class="card shadow-lg border-0 rounded-4 px-4 py-5" style="background: linear-gradient(to right, #e3f2fd, #f1f8ff);">
-        <h2 class="text-center fw-bold mb-4" style="color:rgb(33, 53, 67);">📘 Create New Campaign</h2>
+       <div class="text-center mb-4">
+    <h2 class="fw-bold text-white py-3 px-4 rounded text-center shadow"
+        style="background: linear-gradient(to right, #0077cc, #00bfff); font-family:'Segoe UI', sans-serif; font-size: 2rem;">
+        📘 Create New Campaign
+    </h2>
+</div>
+
 
         <form action="../Processes/Processcampaign.php" method="POST" enctype="multipart/form-data">
             <div class="row mb-4">
@@ -104,4 +110,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
-</html>  Make the campaign form more attractive andchange the create new campaign to a cool shade of blue 
+</html>  

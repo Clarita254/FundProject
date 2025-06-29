@@ -1,0 +1,26 @@
+
+body {
+background: linear-gradient(to right, #e3f2fd, #f1f8ff);
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+        }
+
+.thankyou-card {
+background: white;
+border-radius: 20px;
+padding: 40px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+max-width: 600px;
+text-align: center;
+        }
+.thankyou-icon {
+ font-size: 3rem;
+ color: #28a745;
+        }
+
+.btn-home {
+      margin-top: 20px;
+        }
+    
