@@ -35,9 +35,7 @@ $role = $_SESSION['role'] ?? 'guest';
 
         <!-- Donor Links -->
         <?php elseif ($role === 'donor'): ?>
-          <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'Donationhistory.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Donationhistory.php">Donation History</a>
-          </li>
+          
           <li class="nav-item">
             <a class="nav-link <?= ($currentPage == 'donorDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/donorDashboard.php">Donor Dashboard</a>
           </li>

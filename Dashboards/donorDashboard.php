@@ -12,7 +12,7 @@ $donorId = $_SESSION['user_id'];
 $donorName = "Donor"; // default fallback
 $recentDonations = []; // initialize properly
 
-// Fetch  donor information from user table
+// Fetch  donor information from usertable
 $nameStmt = $conn->prepare("SELECT username FROM users WHERE user_id = ? AND role = 'donor'");
 $nameStmt->bind_param("i", $donorId);
 $nameStmt->execute();
@@ -23,14 +23,15 @@ $nameStmt->close();
 
 // Fetch recent donations (ensure school_name exists in the joined table)
 $stmt = $conn->prepare("
-    SELECT d.donation_date, c.campaign_name, d.amount, s.school_name
+    SELECT d.donation_date, c.campaign_name, d.amount, COALESCE(s.school_name, 'N/A') AS school_name
     FROM donations d
     JOIN campaigns c ON d.campaign_id = c.campaign_id
-    JOIN school_profiles s ON c.schoolAdmin_id = s.schoolAdmin_id
+    LEFT JOIN school_profiles s ON c.schoolAdmin_id = s.schoolAdmin_id
     WHERE d.donor_id = ?
     ORDER BY d.donation_date DESC
     LIMIT 5
 ");
+
 
 $stmt->bind_param("i", $donorId);
 $stmt->execute();
@@ -72,13 +73,13 @@ $stmt->close();
   <!-- Quick Actions -->
   <div class="row text-center mb-4">
     <div class="col-md-4 mb-3">
-      <a href="Campaign.php" class="btn btn-outline-primary w-100"><i class="fas fa-search me-2"></i>Search Campaigns</a>
+      <a href="../Pages/Campaign.php" class="btn btn-outline-primary w-100"><i class="fas fa-search me-2"></i>Search Campaigns</a>
     </div>
     <div class="col-md-4 mb-3">
-      <a href="Donationhistory.php" class="btn btn-outline-success w-100"><i class="fas fa-clock me-2"></i>View Donation History</a>
+      <a href="../Pages/Donationhistory.php" class="btn btn-outline-success w-100"><i class="fas fa-clock me-2"></i>View Donation History</a>
     </div>
     <div class="col-md-4 mb-3">
-      <a href="Leaderboard.php" class="btn btn-outline-warning w-100"><i class="fas fa-trophy me-2"></i>Leaderboard</a>
+      <a href="../Pages/Leaderboard.php" class="btn btn-outline-warning w-100"><i class="fas fa-trophy me-2"></i>Leaderboard</a>
     </div>
   </div>
 

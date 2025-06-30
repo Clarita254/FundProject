@@ -1,56 +1,107 @@
 <?php
+require_once('../includes/db_connect.php');
 session_start();
-require_once("../includes/db_connect.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $campaignId = (int) $_POST['campaign_id'];
-    $fullName = trim($_POST['full_name']);
-    $email = trim($_POST['email']);
-    $amount = (float) $_POST['amount'];
-    $paymentMode = trim($_POST['payment_mode']);
-
-    // Check if donor already exists
-    $stmt = $conn->prepare("SELECT user_id, username FROM users WHERE email = ? AND role = 'donor'");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        // Donor exists, log them in
-        $user = $result->fetch_assoc();
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['role'] = 'donor';
-        $_SESSION['username'] = $user['username'];
-        $donorId = $user['user_id'];
-    } else {
-        // Donor does not exist, auto-register
-        $defaultPassword = password_hash("donor123", PASSWORD_DEFAULT);
-        $insert = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'donor')");
-        $insert->bind_param("sss", $fullName, $email, $defaultPassword);
-        if ($insert->execute()) {
-            $newUserId = $insert->insert_id;
-            $_SESSION['user_id'] = $newUserId;
-            $_SESSION['role'] = 'donor';
-            $_SESSION['username'] = $fullName;
-            $donorId = $newUserId;
-        } else {
-            echo "<div class='alert alert-danger'>Error registering donor. Please try again.</div>";
-            exit();
-        }
-    }
-
-    // Insert the donation
-    $status = 'Pending';
-    $insertDonation = $conn->prepare("INSERT INTO donations (donor_id, campaign_id, amount, donation_date, payment_mode, status) VALUES (?, ?, ?, NOW(), ?, ?)");
-    $insertDonation->bind_param("iisss", $donorId, $campaignId, $amount, $paymentMode, $status);
-
-    if ($insertDonation->execute()) {
-        header("Location: ../Dashboards/donorDashboard.php");
-        exit();
-    } else {
-        echo "<div class='alert alert-danger'>Error processing donation. Please try again.</div>";
-    }
+// Ensure only donors can view this page
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
+    header("Location: ../Pages/signIn.php");
+    exit();
 }
+
+$donorId = $_SESSION['user_id'];
+$donations = [];
+$totalPages = 0;
+$recordsPerPage = 5;
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$startFrom = ($currentPage - 1) * $recordsPerPage;
+
+// Collect filters from GET
+$filters = [
+    'date' => $_GET['date'] ?? '',
+    'campaign' => $_GET['campaign'] ?? '',
+    'amount' => $_GET['amount'] ?? '',
+    'search' => $_GET['search'] ?? ''
+];
+
+// Helper for binding by reference
+function refValues($arr) {
+    $refs = [];
+    foreach ($arr as $key => $value) {
+        $refs[$key] = &$arr[$key];
+    }
+    return $refs;
+}
+
+// Build WHERE clause dynamically
+$whereClauses = ["d.donor_id = ?"];
+$types = "i";
+$values = [$donorId];
+
+if (!empty($filters['date'])) {
+    $whereClauses[] = "DATE(d.donation_date) = ?";
+    $types .= "s";
+    $values[] = $filters['date'];
+}
+
+if (!empty($filters['campaign'])) {
+    $whereClauses[] = "c.campaign_name LIKE ?";
+    $types .= "s";
+    $values[] = "%" . $filters['campaign'] . "%";
+}
+
+if (!empty($filters['amount'])) {
+    $whereClauses[] = "d.amount = ?";
+    $types .= "d";
+    $values[] = (float)$filters['amount'];
+}
+
+if (!empty($filters['search'])) {
+    $whereClauses[] = "(c.campaign_name LIKE ? OR d.payment_mode LIKE ? OR d.status LIKE ?)";
+    $types .= "sss";
+    $values[] = "%" . $filters['search'] . "%";
+    $values[] = "%" . $filters['search'] . "%";
+    $values[] = "%" . $filters['search'] . "%";
+}
+
+$whereSQL = implode(" AND ", $whereClauses);
+
+// Count total records
+$countQuery = "SELECT COUNT(*) AS total 
+               FROM donations d
+               JOIN campaigns c ON d.campaign_id = c.campaign_id
+               WHERE $whereSQL";
+
+$countStmt = $conn->prepare($countQuery);
+$params = array_merge([$types], $values);
+call_user_func_array([$countStmt, 'bind_param'], refValues($params));
+$countStmt->execute();
+$countResult = $countStmt->get_result()->fetch_assoc();
+$totalRecords = $countResult['total'];
+$totalPages = ceil($totalRecords / $recordsPerPage);
+$countStmt->close();
+
+// Fetch paginated data
+$dataQuery = "SELECT d.donation_date, c.campaign_name, d.amount, d.payment_mode, d.status 
+              FROM donations d
+              JOIN campaigns c ON d.campaign_id = c.campaign_id
+              WHERE $whereSQL
+              ORDER BY d.donation_date DESC
+              LIMIT ?, ?";
+
+// Add pagination values
+$types .= "ii";
+$values[] = $startFrom;
+$values[] = $recordsPerPage;
+
+$dataStmt = $conn->prepare($dataQuery);
+$params = array_merge([$types], $values);
+call_user_func_array([$dataStmt, 'bind_param'], refValues($params));
+$dataStmt->execute();
+$result = $dataStmt->get_result();
+$donations = $result->fetch_all(MYSQLI_ASSOC);
+$dataStmt->close();
+?>
+
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="container mt-5">
     <h2 class="mb-4">Make a Donation</h2>
-    <form action="" method="POST">
+    <form action="value=<?= htmlspecialchars($filters['fieldname']) ?>" method="POST">
         <input type="hidden" name="campaign_id" value="<?= htmlspecialchars($_GET['campaign_id'] ?? '') ?>">
 
         <div class="mb-3">
