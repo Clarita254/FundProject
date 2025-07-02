@@ -6,6 +6,8 @@ session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     header("Location: ../Pages/signIn.php");
     exit();
+    
+
 }
 
 $donorId = $_SESSION['user_id'];
@@ -110,14 +112,14 @@ $dataStmt->close();
 
   <!-- Filters -->
   <form class="filters d-flex flex-wrap gap-3 justify-content-center mb-4" method="GET">
-    <input type="text" name="date" class="form-control" placeholder="Date" value="<?= htmlspecialchars($filters['date']) ?>" style="max-width: 160px;">
-    <input type="text" name="campaign" class="form-control" placeholder="Campaign" value="<?= htmlspecialchars($filters['campaign']) ?>" style="max-width: 160px;">
-    <input type="text" name="amount" class="form-control" placeholder="Amount" value="<?= htmlspecialchars($filters['amount']) ?>" style="max-width: 160px;">
+    <input type="text" name="date" class="form-control" placeholder="Search by Date" value="<?= htmlspecialchars($filters['date']) ?>" style="max-width: 160px;">
+    <input type="text" name="campaign" class="form-control" placeholder="Filter by Campaign" value="<?= htmlspecialchars($filters['campaign']) ?>" style="max-width: 160px;">
+    <input type="text" name="amount" class="form-control" placeholder=" Serach by Amount" value="<?= htmlspecialchars($filters['amount']) ?>" style="max-width: 160px;">
     <div class="input-group" style="max-width: 200px;">
       <span class="input-group-text"><i class="fas fa-search"></i></span>
-      <input type="text" name="search" class="form-control" placeholder="Search" value="<?= htmlspecialchars($filters['search']) ?>">
+      <input type="text" name="search" class="form-control" placeholder="Search all Fields" value="<?= htmlspecialchars($filters['search']) ?>">
     </div>
-    <button type="submit" class="btn btn-success">Filter</button>
+    <button type="submit" class="btn btn-success">Search</button>
   </form>
 
   <!-- Table -->

@@ -102,20 +102,24 @@ $donations = $result->fetch_all(MYSQLI_ASSOC);
 $dataStmt->close();
 ?>
 
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Donate to Campaign</title>
     <link rel="stylesheet" href="../CSS/donations.css">
+    <link rel="stylesheet" href="../CSS/navbar.css">
+    <link rel="stylesheet" href="../CSS/footer.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
-<body>
+<body class="donation-page">
+   <!---Include Header---->
+  <?php include_once("../Templates/nav.php"); ?>
 <div class="container mt-5">
     <h2 class="mb-4">Make a Donation</h2>
-    <form action="value=<?= htmlspecialchars($filters['fieldname']) ?>" method="POST">
+    <form action="process_donation.php" method="POST">
+
         <input type="hidden" name="campaign_id" value="<?= htmlspecialchars($_GET['campaign_id'] ?? '') ?>">
 
         <div class="mb-3">
@@ -145,5 +149,7 @@ $dataStmt->close();
         <button type="submit" class="btn btn-success">Donate Now</button>
     </form>
 </div>
+
+ <?php include_once("../Templates/Footer.php"); ?>
 </body>
 </html>

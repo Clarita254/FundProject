@@ -1,37 +1,40 @@
 <?php
 session_start();
-$donorName = $_SESSION['username'] ?? 'Valued Donor';
+
+$donorName = $_SESSION['donor_name'] ?? 'Donor';
+$donatedAmount = $_SESSION['donated_amount'] ?? '0.00';
+$isNew = $_SESSION['is_new_donor'] ?? false;
+$username = $_SESSION['username_generated'] ?? '';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Thank You - EduFund</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Bootstrap & Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <title>Thank You</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="thankyou-page">
+  <div class="thankyou-container">
+    <h2>Thank You, <?= htmlspecialchars($donorName) ?>!</h2>
+    <p>Your donation of <strong>KES <?= number_format((float)$donatedAmount, 2) ?></strong> was successful.</p>
 
-<div class="thankyou-card">
-    <div class="thankyou-icon mb-3">
-        <i class="fas fa-check-circle"></i>
-    </div>
-    <h2 class="text-success fw-bold">Thank You, <?= htmlspecialchars($donorName) ?>! 🎉</h2>
-    <p class="mt-3 fs-5">Your generous donation has been received successfully. <br>
-    Your support helps under-resourced schools get closer to achieving their goals.</p>
+    <?php if ($isNew && $username): ?>
+      <div class="alert alert-info">
+        <p>Welcome, <?= htmlspecialchars($donorName) ?>!<br>
+        Your username is: <strong><?= htmlspecialchars($username) ?></strong><br>
+        Your default password is: <strong>default123</strong><br>
+        Please log in and change your password.</p>
+      </div>
+    <?php endif; ?>
 
-    <a href="../Pages/Campaign.php" class="btn btn-primary btn-home">
-        <i class="fas fa-arrow-left me-2"></i>Back to Campaigns
-    </a>
-    <a href="../Dashboards/donorDashboard.php" class="btn btn-outline-success btn-home">
-        <i class="fas fa-user me-2"></i>Go to Donor Dashboard
-    </a>
-</div>
-
+    <a href="donor_dashboard.php" class="btn btn-primary mt-3">Go to Dashboard</a>
+  </div>
 </body>
+
 </html>
+
+<?php
+// Clear the session messages
+unset($_SESSION['donor_name'], $_SESSION['donated_amount'], $_SESSION['is_new_donor'], $_SESSION['username_generated']);
+?>
