@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Redirect based on role
             if ($user['role'] === 'donor') {
-                header("Location: ../Donor/donor_dashboard.php");
+            header("Location: ../Dashboards/donorDashboard.php");
             } elseif ($user['role'] === 'schoolAdmin') {
-                header("Location: ../School/school_dashboard.php");
+                header("Location: ../Dashboards/schoolAdmindashboard.php");
             } elseif ($user['role'] === 'systemAdmin') {
-                header("Location: ../SystemAdmin/system_dashboard.php");
+                header("Location: ../Dashboards/systemAdminDashboard.php");
             }
             exit();
         } else {

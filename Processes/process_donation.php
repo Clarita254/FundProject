@@ -1,5 +1,6 @@
 <?php
 require_once('../includes/db_connect.php');
+require_once('../mpesa/mpesa_utils.php'); // Contains STK push functions
 session_start();
 
 function generateUsernameFromFullName($full_name) {
@@ -7,22 +8,22 @@ function generateUsernameFromFullName($full_name) {
     return $base . rand(1000, 9999); // e.g., marynjoki3478
 }
 
-// Collect POST data
+// Collect and validate POST data
 $campaign_id = $_POST['campaign_id'] ?? null;
-$full_name = trim($_POST['full_name'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$amount = (float)($_POST['amount'] ?? 0);
+$full_name   = trim($_POST['full_name'] ?? '');
+$email       = trim($_POST['email'] ?? '');
+$amount      = (float)($_POST['amount'] ?? 0);
 $payment_mode = $_POST['payment_mode'] ?? '';
-$status = 'Completed';
+$phone       = trim($_POST['phone'] ?? '');
+$status = 'Pending';
 
-// Validate
-if (!$campaign_id || $amount <= 0 || empty($payment_mode) || empty($email) || empty($full_name)) {
+if (!$campaign_id || $amount <= 0 || empty($payment_mode) || empty($email) || empty($full_name) || empty($phone)) {
     die("Invalid donation data.");
 }
 
 $isNewUser = false;
 
-// Check if user exists
+// Check if user already exists
 $stmt = $conn->prepare("SELECT user_id, username FROM users WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -31,45 +32,46 @@ $user = $result->fetch_assoc();
 $stmt->close();
 
 if ($user) {
-    // User exists
     $donorId = $user['user_id'];
     $username = $user['username'];
 } else {
-    // Create new user
-    $password = password_hash('default123', PASSWORD_DEFAULT);
     $username = generateUsernameFromFullName($full_name);
+    $hashedPassword = password_hash('default123', PASSWORD_DEFAULT);
     $role = 'donor';
 
-    $insertUser = $conn->prepare("INSERT INTO users (username, email, password, role, change_password) VALUES (?, ?, ?, ?, TRUE)");
-
-    $insertUser->bind_param("ssss", $username, $email, $password, $role);
-    $insertUser->execute();
-    $donorId = $insertUser->insert_id;
-    $insertUser->close();
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, role, change_password) VALUES (?, ?, ?, ?, TRUE)");
+    $stmt->bind_param("ssss", $username, $email, $hashedPassword, $role);
+    $stmt->execute();
+    $donorId = $stmt->insert_id;
+    $stmt->close();
 
     $isNewUser = true;
 }
 
-// Save donor_id in session (for logged-in donor)
+// Save donor session info
 $_SESSION['user_id'] = $donorId;
 $_SESSION['role'] = 'donor';
 
-// Insert donation
-$insertDonation = $conn->prepare("INSERT INTO donations (donor_id, campaign_id, amount, payment_mode, status, donation_date) 
-                                  VALUES (?, ?, ?, ?, ?, NOW())");
-$insertDonation->bind_param("iidss", $donorId, $campaign_id, $amount, $payment_mode, $status);
-$insertDonation->execute();
-$insertDonation->close();
+// Insert pending donation
+$stmt = $conn->prepare("INSERT INTO donations (donor_id, campaign_id, amount, payment_mode, status, donation_date) VALUES (?, ?, ?, ?, ?, NOW())");
+$stmt->bind_param("iidss", $donorId, $campaign_id, $amount, $payment_mode, $status);
+$stmt->execute();
+$donation_id = $stmt->insert_id;
+$stmt->close();
 
-// Update campaign's total
-$updateCampaign = $conn->prepare("UPDATE campaigns SET amount_raised = amount_raised + ? WHERE campaign_id = ?");
-$updateCampaign->bind_param("di", $amount, $campaign_id);
-$updateCampaign->execute();
-$updateCampaign->close();
+// Trigger M-Pesa STK Push (only if payment mode is M-Pesa) //Call STK push and save pending donation
+if ($payment_mode === 'M-Pesa') {
+    $response = initiateStkPush($phone, $amount, $donation_id);
 
-// Pass variables to thankyou page
+    if (!$response['success']) {
+        die("M-Pesa payment initiation failed: " . $response['message']);
+    }
+}
+
+// Set session for thank you page
 $_SESSION['donor_name'] = $full_name;
 $_SESSION['donated_amount'] = $amount;
+
 if ($isNewUser) {
     $_SESSION['is_new_donor'] = true;
     $_SESSION['username_generated'] = $username;

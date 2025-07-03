@@ -1,5 +1,7 @@
 <?php
 session_start();
+header("Refresh: 15; URL=../mpesa/payment_status.php");
+
 
 $donorName = $_SESSION['donor_name'] ?? 'Donor';
 $donatedAmount = $_SESSION['donated_amount'] ?? '0.00';
@@ -28,7 +30,7 @@ $username = $_SESSION['username_generated'] ?? '';
       </div>
     <?php endif; ?>
 
-    <a href="donor_dashboard.php" class="btn btn-primary mt-3">Go to Dashboard</a>
+    <a href="../Dashboards/donorDashboard.php" class="btn btn-primary mt-3">Go to Dashboard</a>
   </div>
 </body>
 
