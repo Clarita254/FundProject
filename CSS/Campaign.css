@@ -131,3 +131,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid #d6e0ea;
 }
+
+  .btn:hover {
+    background-color: #21618c !important;
+  }
+
