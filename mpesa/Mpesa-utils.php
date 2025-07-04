@@ -1,5 +1,5 @@
 <?php
-// mpesa_utils.php - handles M-Pesa token generation and STK Push
+// mpesa_utils.php
 
 function generateAccessToken($consumerKey, $consumerSecret) {
     $credentials = base64_encode($consumerKey . ':' . $consumerSecret);
@@ -19,22 +19,21 @@ function generateAccessToken($consumerKey, $consumerSecret) {
     return $result->access_token ?? null;
 }
 
-/**
- * Triggers STK Push to a phone number
- * 
- * @param string $phone  MSISDN (format: 2547XXXXXXXX)
- * @param float $amount
- * @param int $donation_id Used as AccountReference
- * @return array ['success' => bool, 'message' => string]
- */
 function initiateStkPush($phone, $amount, $donation_id) {
-    $consumerKey = 'OsZjpPFLlXVHmY4b3qeJLVpQmmxOOBC3YMs9BrdGtorLgJi4';  // Replace with your actual key
-    $consumerSecret = 'OkBZIePY2bcUW47mNSteRjExqXnIMP8xQcWG4tEenHAC0HVSYiO5GBwpIRegGAYS';  // Replace with your actual secret
-    $shortcode = '174379'; // Safaricom test paybill
-    $passkey = 'YOUR_PASSKEY'; // Replace with your test/production passkey
-    $timestamp = date('YmdHis');
-    $password = base64_encode($shortcode . $passkey . $timestamp);
+    //  Use your own consumer key and secret from your app
+    $consumerKey = 'Ehu5LsxxuGGCAbWJNF4IRmWb59pUuiKCmzKHa4yRo93VAEgL';
+    $consumerSecret = '1qq7GVSAXNAKFOmbXD4i6acBvNdAomhcJGaS5iSHLa4Os19U1juegA01RPsGSoZ9';
 
+    // Safaricom official test Paybill shortcode
+    $shortcode = '174379';
+
+    //  Safaricom official test passkey (sandbox)
+    $passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
+
+    $timestamp = date('YmdHis');
+    $password = base64_encode($shortcode.$passkey.$timestamp);
+
+    // Get access token
     $accessToken = generateAccessToken($consumerKey, $consumerSecret);
     if (!$accessToken) {
         return ['success' => false, 'message' => 'Failed to generate access token'];
@@ -48,35 +47,34 @@ function initiateStkPush($phone, $amount, $donation_id) {
         'Timestamp' => $timestamp,
         'TransactionType' => 'CustomerPayBillOnline',
         'Amount' => $amount,
-        'PartyA' => $phone,
+        'PartyA' => $phone, // Phone number to prompt STK
         'PartyB' => $shortcode,
         'PhoneNumber' => $phone,
-        'CallBackURL' => 'https://edufund.ke/mpesa/mpesa_callback.php',
-        'AccountReference' => $donation_id, // to help identify in callback
+        'CallBackURL' => 'https://example.com/mpesa/mpesa_callback.php', // Replace with your real callback URL
+        'AccountReference' => "DON-$donation_id",
         'TransactionDesc' => "Donation to campaign #$donation_id"
     ];
 
-    $curl = curl_init();
+    $curl = curl_init($url);
     curl_setopt_array($curl, [
-        CURLOPT_URL => $url,
         CURLOPT_HTTPHEADER => [
+            "Authorization: Bearer $accessToken",
             'Content-Type: application/json',
-            "Authorization: Bearer $accessToken"
         ],
-        CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => json_encode($payload)
+        CURLOPT_POSTFIELDS => json_encode($payload),
+        CURLOPT_RETURNTRANSFER => true,
     ]);
 
     $response = curl_exec($curl);
     curl_close($curl);
 
-    $result = json_decode($response, true);
+    $result = json_decode(json_encode(json_decode($response)), true);
 
-    if (isset($result['ResponseCode']) && $result['ResponseCode'] == '0') {
+    if (isset($result['ResponseCode']) && $result['ResponseCode'] === '0') {
         return ['success' => true, 'message' => 'STK Push initiated successfully'];
     } else {
+        // dump($phone);
         return ['success' => false, 'message' => $result['errorMessage'] ?? 'STK Push failed'];
     }
 }
-?>

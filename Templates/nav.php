@@ -1,6 +1,17 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $currentPage = basename($_SERVER['PHP_SELF']);
 $role = $_SESSION['role'] ?? 'guest';
+
+function navLink($page, $label)
+{
+    global $currentPage;
+    $active = ($currentPage == $page) ? 'active fw-bold text-info' : 'text-white';
+    return "<a class='nav-link $active' href='../Pages/$page'>$label</a>";
+}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-3 sticky-top" style="background-color: #001f3f;">
@@ -13,43 +24,36 @@ $role = $_SESSION['role'] ?? 'guest';
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <!-- Common Links -->
-        <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'Home.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Home.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'AboutUs.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/AboutUs.php">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'Campaign.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Campaign.php">Campaigns</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <?= ($currentPage == 'Leaderboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Pages/Leaderboard.php">Leaderboard</a>
-        </li>
+        <li class="nav-item"><?= navLink('Home.php', 'Home') ?></li>
+        <li class="nav-item"><?= navLink('AboutUs.php', 'About Us') ?></li>
+        <li class="nav-item"><?= navLink('Campaign.php', 'Campaigns') ?></li>
+        <li class="nav-item"><?= navLink('Leaderboard.php', 'Leaderboard') ?></li>
 
-        <!-- School Admin Links -->
-        <?php if ($role === 'schoolAdmin'): ?>
-          <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'schoolAdmindashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/schoolAdmindashboard.php">School Dashboard</a>
-          </li>
+        <!-- Role-specific Links -->
+        <?php
+        switch ($role) {
+            case 'schoolAdmin':
+                echo "<li class='nav-item'><a class='nav-link " . ($currentPage == 'schoolAdmindashboard.php' ? 'active fw-bold text-info' : 'text-white') . "' href='../Dashboards/schoolAdmindashboard.php'>School Dashboard</a></li>";
+                break;
 
-        <!-- Donor Links -->
-        <?php elseif ($role === 'donor'): ?>
-          
-          <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'donorDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/donorDashboard.php">Donor Dashboard</a>
-          </li>
+            case 'donor':
+                echo "<li class='nav-item'><a class='nav-link " . ($currentPage == 'donorDashboard.php' ? 'active fw-bold text-info' : 'text-white') . "' href='../Dashboards/donorDashboard.php'>Donor Dashboard</a></li>";
+                break;
 
-        <!-- System Admin Links -->
-        <?php elseif ($role === 'systemAdmin'): ?>
-          <li class="nav-item">
-            <a class="nav-link <?= ($currentPage == 'systemAdminDashboard.php') ? 'active fw-bold text-info' : 'text-white' ?>" href="../Dashboards/systemAdminDashboard.php">Admin Dashboard</a>
-          </li>
-          
-        <?php endif; ?>
+            case 'systemAdmin':
+                echo "<li class='nav-item'><a class='nav-link " . ($currentPage == 'systemAdminDashboard.php' ? 'active fw-bold text-info' : 'text-white') . "' href='../Dashboards/systemAdminDashboard.php'>Admin Dashboard</a></li>";
+                break;
+
+            default:
+                // Guest role – show nothing extra
+                break;
+        }
+        ?>
       </ul>
 
-      <!-- Auth Buttons -->
+      <!-- Authentication Buttons -->
       <div class="d-flex">
         <?php if (!isset($_SESSION['user_id'])): ?>
           <a href="../Pages/signUp.php" class="btn btn-outline-info me-2">Sign Up</a>
