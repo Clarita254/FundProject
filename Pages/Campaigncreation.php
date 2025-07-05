@@ -30,7 +30,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
     <div class="card shadow-lg border-0 rounded-4 px-4 py-5" style="background: linear-gradient(to right, #e3f2fd, #f1f8ff);">
        <div class="text-center mb-4">
     <h2 class="fw-bold text-white py-3 px-4 rounded text-center shadow"
-        style="background: linear-gradient(to right, #0077cc, #00bfff); font-family:'Segoe UI', sans-serif; font-size: 2rem;">
+        style="background: linear-gradient(to right, #0077cc,rgb(28, 77, 93)); font-family:'Segoe UI', sans-serif; font-size: 2rem;">
         📘 Create New Campaign
     </h2>
 </div>
@@ -44,14 +44,20 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
                 </div>
                 <div class="col-md-6">
                     <label for="campaignCategory" class="form-label fw-semibold">Category</label>
-                    <select class="form-select shadow-sm" id="campaignCategory" name="campaignCategory" required>
-                        <option value="">-- Select Category --</option>
-                        <option value="education">Education</option>
-                        <option value="infrastructure">Infrastructure</option>
-                        <option value="scholarship">Scholarship</option>
-                        <option value="resources">Learning Resources</option>
-                        <option value="other">Other</option>
-                    </select>
+                    <select class="form-select" id="campaignCategory" name="campaignCategory" required>
+    <option value="">-- Select Category --</option>
+    <option value="infrastructure">Infrastructure Development</option>
+    <option value="learning">Learning Resources & Materials</option>
+    <option value="feeding">School Feeding Programs</option>
+    <option value="digital">Digital Learning & ICT</option>
+    <option value="scholarship">Scholarships & Fees Support</option>
+    <option value="special_needs">Special Needs Support</option>
+    <option value="sanitation">Sanitation & Hygiene</option>
+    <option value="emergency">Emergency or Disaster Relief</option>
+    <option value="sports">Sports & Co-curricular</option>
+    <option value="uniforms">School Uniforms & Clothing</option>
+</select>
+
                 </div>
             </div>
 

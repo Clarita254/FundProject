@@ -1,0 +1,78 @@
+/* Blue theme styling for donation form */
+.donation-page {
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1b293a;
+  padding-bottom: 2rem;
+}
+
+.donation-page .donation-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #e6f0fa;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.donation-page h2 {
+  text-align: center;
+  color: #003366;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.donation-page label {
+  font-weight: 600;
+  color: #003366;
+}
+
+.donation-page input,
+.donation-page select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+.donation-page input::placeholder {
+  color: #aab7b8;
+}
+
+.donation-page input:focus,
+.donation-page select:focus {
+  border-color: #003366;
+  box-shadow: 0 0 0 0.2rem rgba(0, 51, 102, 0.2);
+  outline: none;
+}
+
+.donation-page .btn-submit {
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-submit {
+  background-color: #003366;
+  
+}
+
+
+.donation-page .btn-submit:hover {
+  background-color: #001a33;
+}
+
+@media (max-width: 576px) {
+  .donation-page .donation-container {
+    padding: 2rem 1.2rem;
+  }
+}
