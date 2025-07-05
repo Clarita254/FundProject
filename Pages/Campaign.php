@@ -4,14 +4,12 @@ require_once("../includes/db_connect.php");
 
 $userId = $_SESSION['user_id'] ?? null;
 $role = $_SESSION['role'] ?? 'guest';
-<<<<<<< HEAD
-=======
 
-// Collect filters
+// Collect filters from GET parameters
 $category = $_GET['category'] ?? '';
 $search = trim($_GET['search'] ?? '');
 
-// Build dynamic query
+// Build dynamic query based on filters; only show approved campaigns.
 $query = "SELECT * FROM campaigns WHERE status = 'Approved'";
 
 if (!empty($category)) {
@@ -26,9 +24,7 @@ if (!empty($search)) {
 
 $query .= " ORDER BY start_date DESC";
 $result = mysqli_query($conn, $query);
->>>>>>> 9b219996eb9e737e9384e8a7dce5b251dd5f2bf9
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,56 +43,10 @@ $result = mysqli_query($conn, $query);
 
 <?php include_once("../Templates/nav.php"); ?>
 
-<<<<<<< HEAD
-        <!-- Campaigns List -->
-        <div class="campaigns-container">
-            <?php
-            // Adjust query if 'status' or 'start_date' are not in your table
-            $query = "SELECT * FROM campaigns ORDER BY created_at DESC";
-            $result = mysqli_query($conn, $query);
-
-            if ($result && mysqli_num_rows($result) > 0):
-                while ($row = mysqli_fetch_assoc($result)):
-                    $title = htmlspecialchars($row['title']);
-                    $description = htmlspecialchars($row['description']);
-                    $target = (float)$row['target_amount'];
-                    $raised = (float)$row['amount_raised'];
-                    $endDate = date('d M Y', strtotime($row['end_date']));
-                    $daysLeft = ceil((strtotime($row['end_date']) - time()) / 86400);
-                    $image = (!empty($row['image']) && file_exists("../uploads/" . $row['image']))
-                        ? "../uploads/" . $row['image']
-                        : "https://via.placeholder.com/300x200";
-                    $progress = $target > 0 ? min(100, ($raised / $target) * 100) : 0;
-            ?>
-            <div class="campaign-card">
-                <div class="campaign-image" style="background-image: url('<?php echo $image; ?>')"></div>
-                <div class="campaign-content">
-                    <h3 class="campaign-title d-flex justify-content-between align-items-center">
-                        <?php echo $title; ?>
-                        <span class="badge bg-secondary">Active</span>
-                    </h3>
-
-                    <p class="campaign-description"><?php echo $description; ?></p>
-                    <div class="progress mb-2">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $progress; ?>%;" aria-valuenow="<?php echo $progress; ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="raised-amount">Raised: sh<?php echo number_format($raised, 2); ?> of sh<?php echo number_format($target, 2); ?></p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="days-left"><i class="far fa-clock me-1"></i><?php echo $daysLeft > 0 ? $daysLeft . ' days left' : 'Ended'; ?></span>
-                        <a href="Donations.php?campaign_id=<?= $row['id']; ?>" class="btn btn-success donate-btn">Donate</a>
-                    </div>
-                </div>
-            </div>
-            <?php endwhile; else: ?>
-                <p class="text-center mt-4">No campaign records found.</p>
-            <?php endif; ?>
-        </div>
-=======
 <div class="container py-5">
   <h1 class="page-title text-center mb-4" style="color:rgb(6, 40, 75); font-weight: 700; font-family: 'Segoe UI', sans-serif;">
-  <i class="fas fa-bullhorn me-2"></i> Explore Campaigns
-</h1>
-
+    <i class="fas fa-bullhorn me-2"></i> Explore Campaigns
+  </h1>
 
   <!-- Filter Form -->
   <form method="GET" class="mb-4 px-3">
@@ -123,11 +73,9 @@ $result = mysqli_query($conn, $query);
       </div>
       <div class="col-md-4 col-4 d-grid">
         <button type="submit" class="btn" style="background-color: #2980b9; color: #fff; border-radius: 8px;">
-  <i class="fas fa-filter me-1"></i> Apply Filters
-</button>
-
+          <i class="fas fa-filter me-1"></i> Apply Filters
+        </button>
       </div>
->>>>>>> 9b219996eb9e737e9384e8a7dce5b251dd5f2bf9
     </div>
   </form>
 
@@ -136,7 +84,7 @@ $result = mysqli_query($conn, $query);
     <div class="mb-3 px-3">
       <span class="badge bg-secondary">
         Showing results for 
-        <?= !empty($search) ? "search: <strong>$search</strong>" : '' ?>
+        <?= !empty($search) ? "search: <strong>" . htmlspecialchars($search) . "</strong>" : '' ?>
         <?= (!empty($search) && !empty($category)) ? " & " : '' ?>
         <?= !empty($category) ? "category: <strong>" . ucwords(str_replace('_', ' ', $category)) . "</strong>" : '' ?>
       </span>
@@ -147,19 +95,19 @@ $result = mysqli_query($conn, $query);
   <!-- Campaign Cards -->
   <div class="campaigns-container">
     <?php if ($result && mysqli_num_rows($result) > 0): ?>
-      <?php while ($row = mysqli_fetch_assoc($result)): ?>
-        <?php
-          $title = htmlspecialchars($row['campaign_name']);
-          $description = htmlspecialchars($row['description']);
-          $target = (float)$row['target_amount'];
-          $raised = (float)$row['amount_raised'];
-          $endDate = date('d M Y', strtotime($row['end_date']));
-          $daysLeft = ceil((strtotime($row['end_date']) - time()) / 86400);
-          $image = (!empty($row['image_path']) && file_exists("../" . $row['image_path']))
+      <?php while ($row = mysqli_fetch_assoc($result)): 
+        // Prepare campaign variables.
+        $title = htmlspecialchars($row['campaign_name']);
+        $description = htmlspecialchars($row['description']);
+        $target = (float)$row['target_amount'];
+        $raised = (float)$row['amount_raised'];
+        $endDate = date('d M Y', strtotime($row['end_date']));
+        $daysLeft = ceil((strtotime($row['end_date']) - time()) / 86400);
+        $image = (!empty($row['image_path']) && file_exists("../" . $row['image_path']))
               ? "../" . $row['image_path']
               : "https://via.placeholder.com/300x200";
-          $progress = $target > 0 ? min(100, ($raised / $target) * 100) : 0;
-        ?>
+        $progress = $target > 0 ? min(100, ($raised / $target) * 100) : 0;
+      ?>
         <div class="campaign-card">
           <div class="campaign-image" style="background-image: url('<?= $image ?>')"></div>
           <div class="campaign-content">
@@ -174,7 +122,7 @@ $result = mysqli_query($conn, $query);
             <p class="raised-amount">Raised: KES <?= number_format($raised, 2) ?> of KES <?= number_format($target, 2) ?></p>
             <div class="d-flex justify-content-between align-items-center">
               <span class="days-left"><i class="far fa-clock me-1"></i><?= $daysLeft > 0 ? "$daysLeft days left" : 'Ended' ?></span>
-              <a href="Donations.php?campaign_id=<?= $row['campaign_id'] ?>" class="btn btn-success donate-btn">Donate</a>
+              <a href="Donations.php?campaign_id=<?= $row['id'] ?>" class="btn btn-success donate-btn">Donate</a>
             </div>
           </div>
         </div>
