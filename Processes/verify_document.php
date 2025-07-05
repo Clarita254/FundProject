@@ -22,7 +22,7 @@ if (!in_array($action, ['approve', 'reject'])) {
 $status = $action === 'approve' ? 'Approved' : 'Rejected';
 
 // Update document status
-$stmt = $conn->prepare("UPDATE verification_documents SET status = ? WHERE id = ?");
+$stmt = $conn->prepare("UPDATE verification_documents SET status = ?, notified = 0 WHERE id = ?");
 $stmt->bind_param("si", $status, $docId);
 
 if ($stmt->execute()) {
@@ -31,3 +31,4 @@ if ($stmt->execute()) {
 } else {
     echo "Failed to update document.";
 }
+?>

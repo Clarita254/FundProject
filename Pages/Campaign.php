@@ -4,7 +4,6 @@ require_once("../includes/db_connect.php");
 
 $userId = $_SESSION['user_id'] ?? null;
 $role = $_SESSION['role'] ?? 'guest';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,19 +32,20 @@ $role = $_SESSION['role'] ?? 'guest';
         <!-- Campaigns List -->
         <div class="campaigns-container">
             <?php
-            $query = "SELECT * FROM campaigns WHERE status = 'Approved' ORDER BY start_date DESC";
+            // Adjust query if 'status' or 'start_date' are not in your table
+            $query = "SELECT * FROM campaigns ORDER BY created_at DESC";
             $result = mysqli_query($conn, $query);
 
             if ($result && mysqli_num_rows($result) > 0):
                 while ($row = mysqli_fetch_assoc($result)):
-                    $title = htmlspecialchars($row['campaign_name']);
+                    $title = htmlspecialchars($row['title']);
                     $description = htmlspecialchars($row['description']);
                     $target = (float)$row['target_amount'];
                     $raised = (float)$row['amount_raised'];
                     $endDate = date('d M Y', strtotime($row['end_date']));
                     $daysLeft = ceil((strtotime($row['end_date']) - time()) / 86400);
-                    $image = (!empty($row['image_path']) && file_exists("../" . $row['image_path']))
-                        ? "../" . $row['image_path']
+                    $image = (!empty($row['image']) && file_exists("../uploads/" . $row['image']))
+                        ? "../uploads/" . $row['image']
                         : "https://via.placeholder.com/300x200";
                     $progress = $target > 0 ? min(100, ($raised / $target) * 100) : 0;
             ?>
@@ -53,19 +53,9 @@ $role = $_SESSION['role'] ?? 'guest';
                 <div class="campaign-image" style="background-image: url('<?php echo $image; ?>')"></div>
                 <div class="campaign-content">
                     <h3 class="campaign-title d-flex justify-content-between align-items-center">
-  <?php echo $title; ?>
-  <span class="badge 
-    <?php
-      switch (strtolower($row['status'])) {
-        case 'approved': echo 'bg-success'; break;
-        case 'pending': echo 'bg-warning text-dark'; break;
-        case 'rejected': echo 'bg-danger'; break;
-        default: echo 'bg-secondary';
-      }
-    ?>">
-    <?php echo htmlspecialchars($row['status']); ?>
-  </span>
-</h3>
+                        <?php echo $title; ?>
+                        <span class="badge bg-secondary">Active</span>
+                    </h3>
 
                     <p class="campaign-description"><?php echo $description; ?></p>
                     <div class="progress mb-2">
@@ -74,12 +64,12 @@ $role = $_SESSION['role'] ?? 'guest';
                     <p class="raised-amount">Raised: sh<?php echo number_format($raised, 2); ?> of sh<?php echo number_format($target, 2); ?></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="days-left"><i class="far fa-clock me-1"></i><?php echo $daysLeft > 0 ? $daysLeft . ' days left' : 'Ended'; ?></span>
-                        <a href="Donations.php?campaign_id=<?= $row['campaign_id']; ?>" class="btn btn-success donate-btn">Donate</a>
+                        <a href="Donations.php?campaign_id=<?= $row['id']; ?>" class="btn btn-success donate-btn">Donate</a>
                     </div>
                 </div>
             </div>
             <?php endwhile; else: ?>
-                <p class="text-center mt-4">No campaign records .</p>
+                <p class="text-center mt-4">No campaign records found.</p>
             <?php endif; ?>
         </div>
     </div>

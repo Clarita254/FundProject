@@ -19,7 +19,6 @@ $adminName = $_SESSION['username'];
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
   <link rel="stylesheet" href="../CSS/systemAdmindashboard.css">
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -29,7 +28,7 @@ $adminName = $_SESSION['username'];
 <div class="container py-5">
   <h2 class="mb-4 text-primary text-center">👨‍💼 Welcome, <?= htmlspecialchars($adminName) ?>!</h2>
 
-  <!-- Verification Documents -->
+  <!-- ✅ Verification Documents -->
   <div class="mb-5">
     <h4 class="text-secondary">📄 Pending School Verification Documents</h4>
     <table class="table table-striped">
@@ -58,7 +57,6 @@ $adminName = $_SESSION['username'];
           <td><?= date('d M Y H:i', strtotime($doc['upload_time'])) ?></td>
           <td><span class="badge bg-warning text-dark"><?= $doc['status'] ?></span></td>
           <td>
-           
             <a href="../Processes/verify_document.php?action=approve&id=<?= $doc['id'] ?>" class="btn btn-success btn-sm">Approve</a>
             <a href="../Processes/verify_document.php?action=reject&id=<?= $doc['id'] ?>" class="btn btn-danger btn-sm">Reject</a>
           </td>
@@ -70,7 +68,7 @@ $adminName = $_SESSION['username'];
     </table>
   </div>
 
-  <!-- Campaign Approval -->
+  <!-- ✅ Campaign Approval -->
   <div>
     <h4 class="text-secondary">🎯 Campaigns Awaiting Approval</h4>
     <table class="table table-striped">
@@ -101,10 +99,8 @@ $adminName = $_SESSION['username'];
           <td><?= date('d M Y', strtotime($camp['created_at'])) ?></td>
           <td><span class="badge bg-warning text-dark"><?= $camp['status'] ?></span></td>
           <td>
-           
-            <a href="../Processes/verify_campaign.php?action=approve&id=<?= $row['campaign_id'] ?>" class="btn btn-success btn-sm">Approve</a>
-            <a href="../Processes/rejectCampaign.php?id=<?= $row['campaign_id'] ?>" class="btn btn-danger btn-sm">Reject</a>
-
+            <a href="../Processes/verify_campaign.php?action=approve&id=<?= $camp['campaign_id'] ?>" class="btn btn-success btn-sm">Approve</a>
+            <a href="../Processes/rejectCampaign.php?id=<?= $camp['campaign_id'] ?>" class="btn btn-danger btn-sm">Reject</a>
           </td>
         </tr>
         <?php endwhile; else: ?>

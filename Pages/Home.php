@@ -52,36 +52,42 @@
         </div>
     </section>
     
-    <!-- Campaigns Section -->
-    <section class="campaigns">
-        <h2>Featured Campaigns</h2>
-        <div class="campaign-grid">
-            <div class="campaign-card">
-                <div class="campaign-img" style="background-color: #a3b8cc;"></div>
-                <div class="campaign-info">
-                    <h3>Teachers Salary Support</h3>
-                    <p>Support teachers' salaries in underserved public schools.</p>
-                    <a href="#" class="learn-more-btn">Learn More</a>
-                </div>
+  <section class="campaigns">
+    <h2>Featured Campaigns</h2>
+    <div class="campaign-grid">
+        <div class="campaign-card">
+            <div class="campaign-img">
+                <img src="Images/Helpachildlearn.png" alt="Help a Child Learn" />
             </div>
-            <div class="campaign-card">
-                <div class="campaign-img" style="background-color: #a3b8cc;"></div>
-                <div class="campaign-info">
-                    <h3>School Supplies Drive</h3>
-                    <p>Providing materials for underprivileged students.</p>
-                    <a href="#" class="learn-more-btn">Learn More</a>
-                </div>
-            </div>
-            <div class="campaign-card">
-                <div class="campaign-img" style="background-color: #a3b8cc;"></div>
-                <div class="campaign-info">
-                    <h3>Public School Renovation</h3>
-                    <p>Help improve facilities and learning environments in public schools.</p>
-                    <a href="#" class="learn-more-btn">Learn More</a>
-                </div>
+            <div class="campaign-info">
+                <h3>Help a Child Learn</h3>
+                <p>Support a child in need of educational resources.</p>
+                <a href="#" class="learn-more-btn">Learn More</a>
             </div>
         </div>
-    </section>
+        <div class="campaign-card">
+            <div class="campaign-img">
+                <img src="Images/schoolsupplies.png" alt="School Supplies Drive" />
+            </div>
+            <div class="campaign-info">
+                <h3>School Supplies Drive</h3>
+                <p>Providing materials for underprivileged students.</p>
+                <a href="#" class="learn-more-btn">Learn More</a>
+            </div>
+        </div>
+        <div class="campaign-card">
+            <div class="campaign-img">
+                <img src="Images/schoolinfrastructure.png" alt="Public School Renovation" />
+            </div>
+            <div class="campaign-info">
+                <h3>Public School Renovation</h3>
+                <p>Help improve facilities and learning environments in public schools.</p>
+                <a href="#" class="learn-more-btn">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
     
     <!------Include footer-->
    <?php include_once("../Templates/Footer.php"); ?>
