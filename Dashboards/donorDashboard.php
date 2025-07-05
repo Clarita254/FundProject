@@ -3,10 +3,11 @@ session_start();
 require_once("../includes/db_connect.php");
 
 // Access Control: Only donors
-if ($_SESSION['role'] === 'donor' && $_SESSION['is_new_donor'] ?? false) {
+if (isset($_SESSION['is_new_donor']) && $_SESSION['role'] === 'donor') {
     echo "<script>alert('Welcome! Please update your password from your profile.');</script>";
-    unset($_SESSION['is_new_donor']); // Show only once
+    unset($_SESSION['is_new_donor']); // Only show once
 }
+
 
 
 $donorId = $_SESSION['user_id'];

@@ -61,6 +61,11 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.btn-submit {
+  background-color: #003366;
+  
+}
+
 
 .donation-page .btn-submit:hover {
   background-color: #001a33;

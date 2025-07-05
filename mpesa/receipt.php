@@ -21,9 +21,13 @@ $result = $stmt->get_result();
 $donation = $result->fetch_assoc();
 $stmt->close();
 
-if (!$donation || $donation['status'] !== 'Completed') {
-    die("Receipt not available. Donation either failed or is still pending.");
+if (!$donation) {
+    die("Donation not found.");
 }
+
+$status = $donation['status'];
+$isProvisional = $status !== 'Completed';
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +45,13 @@ if (!$donation || $donation['status'] !== 'Completed') {
 <div class="container mt-5">
   <div class="card p-4 shadow">
     <h2 class="mb-4 text-center text-success">Donation Receipt</h2>
+
+    <?php if ($isProvisional): ?>
+  <div class="alert alert-warning">
+    <strong>Note:</strong> This is a provisional receipt. The payment is still being verified by M-Pesa.
+  </div>
+<?php endif; ?>
+
 
     <p><strong>Receipt No:</strong> <?= htmlspecialchars($donation['mpesa_receipt']) ?></p>
     <p><strong>Campaign:</strong> <?= htmlspecialchars($donation['campaign_name']) ?></p>

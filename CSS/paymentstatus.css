@@ -1,0 +1,28 @@
+
+    body {
+      background: #f4f9fc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .status-card {
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+    .status-header {
+      font-weight: bold;
+      color: #003366;
+    }
+    .status-icon {
+      font-size: 48px;
+      margin-bottom: 1rem;
+    }
+    .btn-receipt {
+      background-color: #003366;
+      color: #fff;
+    }
+    .btn-receipt:hover {
+      background-color: #001a33;
+    }
+ 
