@@ -1,0 +1,87 @@
+
+body {
+  background-color: #f4f8fb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #123c4a;
+}
+
+.receipt-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+  max-width: 700px;
+  margin: 50px auto;
+}
+
+.receipt-header {
+  background-color: #003366;
+  color: white;
+  padding: 20px;
+  border-radius: 15px 15px 0 0;
+  text-align: center;
+}
+
+.receipt-header h2 {
+  margin: 0;
+}
+
+.receipt-body p {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.badge-status {
+  font-size: 0.95rem;
+}
+
+.thank-you {
+  color: #003366; /* Dark navy for contrast */
+  font-weight: 600;
+  font-style: normal;
+  font-size: 1.1rem;
+  margin-top: 25px;
+  text-align: center;
+  
+  padding: 12px 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Updated button styles for visibility */
+.btn-group {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.btn-group .btn {
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 0 8px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #004080;
+  border-color: #004080;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #00509e;
+  border-color: #00509e;
+}
+
+.btn-success {
+  background-color: #007f5f;
+  border-color: #007f5f;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #008f6f;
+  border-color: #008f6f;
+}

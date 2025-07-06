@@ -19,15 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
 
-            if ($user['must_change_password']) {
+            // ✅ Apply change password logic only to donors
+            if ($user['role'] === 'donor' && $user['change_password']) {
                 $_SESSION['force_password_change'] = true;
-                header("Location: ../Pages/change_password.php");
+                header("Location: ../Pages/changepassword.php");
                 exit();
             }
 
             // Redirect based on role
             if ($user['role'] === 'donor') {
-            header("Location: ../Dashboards/donorDashboard.php");
+                header("Location: ../Dashboards/donorDashboard.php");
             } elseif ($user['role'] === 'schoolAdmin') {
                 header("Location: ../Dashboards/schoolAdmindashboard.php");
             } elseif ($user['role'] === 'systemAdmin') {

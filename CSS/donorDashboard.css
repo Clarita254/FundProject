@@ -1,3 +1,5 @@
+
+/* ========== GLOBAL STYLES ========== */
 body {
   background-color: #f4f8fb;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -6,54 +8,163 @@ body {
   padding: 0;
 }
 
-h2 {
-  color: #003366;
-  font-weight: 700;
-  margin-bottom: 2rem;
+/* ========== SIDEBAR ========== */
+.sidebar {
+  height: 100vh;
+  background-color: #003366;
+  padding: 20px 0;
+  position: fixed;
+  width: 250px;
+  z-index: 100;
 }
 
-.card {
+.sidebar a {
+  display: block;
+  padding: 15px 25px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: #004080;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+  margin-left: 250px;
+  padding: 30px;
+}
+
+/* ========== DASHBOARD CARD ========== */
+.dashboard-card {
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  padding: 25px;
+}
+
+/* ========== RECENT DONATIONS SECTION ========== */
+.recent-donations-section {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
+}
+
+/* ========== DONATION CARDS ========== */
+.donation-card {
+  background-color: #123a61;
+  color: #ffffff;
   border: none;
   border-radius: 12px;
-  background: #ffffff;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.donation-card:hover {
+  transform: scale(1.015);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #003366;
+.donation-card h6,
+.donation-card small,
+.donation-card i {
+  color: #ffffff;
+}
+
+.donation-card .badge.bg-primary {
+  background-color: #1e90ff; /* Brighter blue for contrast */
+  color: #ffffff;
+}
+
+/* ========== STATUS BADGES (keep original) ========== */
+.badge.bg-success {
+  background-color: #28a745;
+}
+
+.badge.bg-danger {
+  background-color: #dc3545;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+/* ========== SUMMARY WIDGET ========== */
+.summary-widget {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+}
+
+.summary-widget h6 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.85;
   margin-bottom: 0.5rem;
 }
 
-.card-text {
-  font-size: 0.95rem;
-  color: #555f69;
+.summary-widget h4 {
+  font-weight: bold;
+  font-size: 1.4rem;
 }
 
-.btn {
-  margin-top: 10px;
-  font-weight: 500;
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-size: 0.95rem;
+/* ========== NAVY UTIL CLASSES ========== */
+.bg-navy {
+  background-color: #003366 !important;
 }
 
-.container {
-  max-width: 1200px;
+.bg-navy-light {
+  background-color: #e8f0fc !important;
 }
 
-/* Responsive tweaks */
+.border-navy {
+  border-color: #003366 !important;
+}
+
+/* ========== SIDEBAR TOGGLE FOR MOBILE ========== */
+.toggle-sidebar {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .card-body {
-    padding: 1rem;
+  .sidebar {
+    position: absolute;
+    width: 220px;
+    left: -220px;
+    top: 0;
+    height: 100%;
+    z-index: 999;
+    transition: left 0.3s ease;
   }
-  .btn {
-    width: 100%;
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .toggle-sidebar {
+    display: block;
+    background: #003366;
+    color: white;
+    padding: 10px 15px;
+    font-size: 18px;
+    border: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    border-radius: 8px;
   }
 }

@@ -48,7 +48,7 @@ $stmt->close();
 <?php include_once("../Templates/nav.php"); ?>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4 text-primary">Your Donation History</h2>
+    <h2 class="text-center mb-4 text-primary">Donation History</h2>
 
     <?php if (count($donationHistory) > 0): ?>
         <div class="table-responsive">

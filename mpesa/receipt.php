@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
 }
 
 $donorId = $_SESSION['user_id'];
-$donationId = $_GET['donation_id'] ?? null;
+$donationId = $_GET['donation_Id'] ?? null;
 
 // Fetch donation with campaign
 $stmt = $conn->prepare("SELECT d.*, c.campaign_name FROM donations d
@@ -27,7 +27,6 @@ if (!$donation) {
 
 $status = $donation['status'];
 $isProvisional = $status !== 'Completed';
-
 ?>
 
 <!DOCTYPE html>
@@ -36,38 +35,52 @@ $isProvisional = $status !== 'Completed';
   <meta charset="UTF-8">
   <title>Donation Receipt</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-  <a href="receipt_pdf.php?donation_id=<?= $donation['donation_id'] ?>" target="_blank" class="btn btn-outline-success mt-2">
-    Download PDF</a>
-
+  <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
+   <link rel="stylesheet" href="../CSS/receipt.css">
+  
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-  <div class="card p-4 shadow">
-    <h2 class="mb-4 text-center text-success">Donation Receipt</h2>
+<body>
 
-    <?php if ($isProvisional): ?>
-  <div class="alert alert-warning">
-    <strong>Note:</strong> This is a provisional receipt. The payment is still being verified by M-Pesa.
+<div class="receipt-card">
+  <div class="receipt-header">
+    <h2><i class="fas fa-receipt me-2"></i>EduFund Donation Receipt</h2>
   </div>
-<?php endif; ?>
 
+  <div class="receipt-body mt-4">
+    <?php if ($isProvisional): ?>
+      <div class="alert alert-warning">
+        <strong>Note:</strong> This is a provisional receipt. The payment is still being verified by M-Pesa.
+      </div>
+    <?php endif; ?>
 
     <p><strong>Receipt No:</strong> <?= htmlspecialchars($donation['mpesa_receipt']) ?></p>
     <p><strong>Campaign:</strong> <?= htmlspecialchars($donation['campaign_name']) ?></p>
-    <p><strong>Amount Donated:</strong> KES <?= number_format($donation['amount'], 2) ?></p>
+    <p><strong>Amount Donated:</strong> <span class="badge bg-primary">KES <?= number_format($donation['amount'], 2) ?></span></p>
     <p><strong>Payment Mode:</strong> <?= htmlspecialchars($donation['payment_mode']) ?></p>
+    <p><strong>Status:</strong> 
+      <span class="badge <?= $status === 'Completed' ? 'bg-success' : ($status === 'Failed' ? 'bg-danger' : 'bg-warning text-dark') ?> badge-status">
+        <?= htmlspecialchars($status) ?>
+      </span>
+    </p>
     <p><strong>Phone Number:</strong> <?= htmlspecialchars($donation['phone_number']) ?></p>
     <p><strong>Donation Date:</strong> <?= date("F j, Y, g:i a", strtotime($donation['donation_date'])) ?></p>
 
-    <hr>
-    <p class="text-muted">Thank you for supporting education through EduFund.</p>
+    <p class="thank-you">Thank you for supporting education through EduFund.</p>
 
-    <!-- Option to print or download -->
-    <div class="text-center mt-4">
-      <button onclick="window.print()" class="btn btn-outline-primary">Print Receipt</button>
+    <div class="btn-group">
+      <a href="../mpesa/receipt_pdf.php?donation_Id=<?= $donation['donation_Id'] ?>" class="btn btn-success me-2" target="_blank">
+  <i class="fas fa-download me-1"></i>Download PDF
+</a>
+<button onclick="window.print()" class="btn btn-primary">
+  <i class="fas fa-print me-1"></i>Print Receipt
+</button>
+
     </div>
   </div>
 </div>
+
 </body>
 </html>
