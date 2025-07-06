@@ -29,14 +29,11 @@ require_once("../includes/db_connect.php");
         
         <div class="content-section">
             <div class="about-text">
-                <p>EduFund is a crowdfunding platform dedicated to transforming education by connecting donors with schools and educational projects in need. Our hope and prayer is to impact the lives of thousands of students.</p>
-                <p>Our platform provides a transparent way for individuals and organizations to support education directly, ensuring that every shilling donated goes exactly where it's needed most.</p>
-                <p>By bridging the gap between donors and educational institutions, we're creating opportunities for students who might otherwise lack access to quality education resources.</p>
+                <p>EduFund is a crowdfunding platform committed to revolutionizing education by linking generous donors with schools and educational initiatives in need. </p>
+                <p>We offer a transparent and trustworthy way for individuals and organizations to contribute directly to education, guaranteeing that every donation is used exactly as intended.</p>
+                <p>By connecting donors with educational institutions, we are re-opening doors for students who may not have had access to the resources they need for a quality education.</p>
             </div>
             
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
         </div>
         
         <div class="content-section">
@@ -46,7 +43,12 @@ require_once("../includes/db_connect.php");
                 <p>We believe every student deserves equal opportunities to learn and grow, regardless of their socioeconomic background.</p>
             </div>
         </div>
-        
+        <div class="content-section">
+            <h2 class="section-title">OUR VISION</h2>
+            <div class="section-text">
+                <p>To become the leading educational crowdfunding platform in Africa, ensuring that no student is left behind due to lack of funding or resources. We envision a future where every child has access to quality education, supported by a global community that believes in their potential.</p>
+            </div>
+        </div>
         <div class="content-section">
             <h2 class="section-title">OUR VALUES</h2>
             <ul class="values-list">
