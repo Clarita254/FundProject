@@ -1,55 +1,66 @@
-/* Previous styles remain the same */
-
-/* Leaderboard Specific Styles */
+/* Leaderboard Container */
 .leaderboard-container {
-    background: white;
-    border-radius: 8px;
+    background: #f0f4fa; /* soft light-blue background */
+    border-radius: 12px;
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border: 1px solid #d6e0ea;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    border: 1px solid #ccddee;
     overflow-x: auto;
 }
 
+/* Leaderboard Table */
 .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
+/* Table Header */
 .leaderboard-table th {
-    background-color: #003366;
-    color: white;
+    background-color: #00264d; /* deep blue */
+    color: #ffffff;
     padding: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Table Data Cells */
+.leaderboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e6ed;
+    color: #2c3e50;
+}
+
+/* Zebra Stripe Rows */
+.leaderboard-table tr:nth-child(even) {
+    background-color: #f5f9ff; /* very light blue */
+}
+
+/* Hover Effect */
+.leaderboard-table tr:hover {
+    background-color: #d9eaf7; /* soft hover blue */
+}
+
+/* Loading Message */
+.loading-message {
+    text-align: center;
+    color: #003366;
+    font-style: italic;
     font-weight: 500;
 }
 
-.leaderboard-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #d6e0ea;
-}
-
-.leaderboard-table tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
-
-.leaderboard-table tr:hover {
-    background-color: #e9ecef;
-}
-
-.loading-message {
-    text-align: center;
-    color: #6c757d;
-    font-style: italic;
-}
-
-/* Responsive adjustments */
+/* Responsive Table */
 @media (max-width: 768px) {
     .leaderboard-table {
         font-size: 0.9rem;
     }
-    
-    .leaderboard-table th, 
+
+    .leaderboard-table th,
     .leaderboard-table td {
         padding: 0.75rem 0.5rem;
     }

@@ -1,19 +1,19 @@
 <?php
 session_start();
 require_once('../includes/db_connect.php');
-
 header('Content-Type: text/html; charset=UTF-8');
 
-// Allow only donors to access
+// Only allow logged-in donors
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     header("Location: ../Pages/signIn.php");
     exit();
 }
 
+// Handle password change via AJAX POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
-
     $data = json_decode(file_get_contents('php://input'), true);
+
     if (!isset($data['new_password']) || !isset($data['confirm_password'])) {
         echo json_encode(['success' => false, 'message' => 'Missing password fields']);
         exit();
@@ -21,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $newPassword = trim($data['new_password']);
     $confirmPassword = trim($data['confirm_password']);
+
+    if (strlen($newPassword) < 6) {
+        echo json_encode(['success' => false, 'message' => 'Password must be at least 6 characters']);
+        exit();
+    }
 
     if ($newPassword !== $confirmPassword) {
         echo json_encode(['success' => false, 'message' => 'Passwords do not match']);
@@ -30,8 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
     $userId = $_SESSION['user_id'];
 
-    $stmt = $conn->prepare("UPDATE users SET password = ?, must_change_password = 0 WHERE user_id = ?");
+    $stmt = $conn->prepare("UPDATE users SET password = ?, change_password = 0 WHERE user_id = ?");
     $stmt->bind_param("si", $hashedPassword, $userId);
+
     if ($stmt->execute()) {
         unset($_SESSION['force_password_change']);
         echo json_encode(['success' => true, 'message' => 'Password changed successfully']);
@@ -42,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!-- HTML (only visible on GET) -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../CSS/changepassword.css">
 </head>
 <body>
-<div class="container">
-    <h3 class="text-center text-primary mb-4">🔐 Change Your Password</h3>
+<div class="container mt-5" style="max-width: 500px;">
+    <h3 class="text-center mb-4 text-dark" style="color: #003366;">🔐 Change Your Password</h3>
 
-    <div id="responseMessage" class="alert" role="alert"></div>
+    <div id="responseMessage" class="alert d-none" role="alert"></div>
 
     <form id="changePasswordForm">
         <div class="mb-3">
@@ -76,37 +82,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-
         const newPassword = document.getElementById('new_password').value;
         const confirmPassword = document.getElementById('confirm_password').value;
 
         fetch('change_password.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                new_password: newPassword,
-                confirm_password: confirmPassword
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ new_password: newPassword, confirm_password: confirmPassword })
         })
         .then(res => res.json())
         .then(data => {
-            messageBox.style.display = 'block';
+            messageBox.classList.remove('d-none', 'alert-success', 'alert-danger');
             messageBox.textContent = data.message;
-            messageBox.className = 'alert';
 
             if (data.success) {
                 messageBox.classList.add('alert-success');
-                setTimeout(() => {
-                    window.location.href = '../Dashboards/donorDashboard.php';
-                }, 2000);
+                setTimeout(() => window.location.href = '../Dashboards/donorDashboard.php', 2000);
             } else {
                 messageBox.classList.add('alert-danger');
             }
         })
-        .catch(err => {
-            messageBox.style.display = 'block';
-            messageBox.className = 'alert alert-danger';
-            messageBox.textContent = 'Something went wrong.';
+        .catch(() => {
+            messageBox.classList.remove('d-none');
+            messageBox.classList.add('alert', 'alert-danger');
+            messageBox.textContent = 'Something went wrong. Please try again.';
         });
     });
 </script>

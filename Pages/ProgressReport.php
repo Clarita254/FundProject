@@ -29,16 +29,15 @@ $stmt->close();
   <meta charset="UTF-8">
   <title>Submitted Progress Reports</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-   <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
   <link rel="stylesheet" href="../CSS/progressReports.css">
-
 </head>
 <body>
 <?php include_once("../Templates/nav.php"); ?>
 
-<div class="container py-5">
-  <h2 class="text-primary fw-bold mb-4">My Fund Utilization Reports</h2>
+<div class="container py-5 report-container">
+  <h2 class="page-title"><i class="fas fa-chart-line me-2"></i> Fund Utilization Reports</h2>
 
   <?php if (count($progressReports) > 0): ?>
     <div class="row g-4">
@@ -53,8 +52,6 @@ $stmt->close();
               <div class="photo-thumbnails d-flex flex-wrap">
                 <?php foreach (explode(",", $report['photos']) as $photo): ?>
                   <img src="<?= htmlspecialchars($photo) ?>" class="thumbnail me-2 mb-2" alt="Progress Photo">
-
-
                 <?php endforeach; ?>
               </div>
             <?php endif; ?>

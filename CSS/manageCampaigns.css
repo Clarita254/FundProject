@@ -1,0 +1,29 @@
+
+    body {
+      background-color: #f3f7fb;
+    }
+
+    .card {
+      border: 1px solid #d6e0ea;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 51, 102, 0.1);
+    }
+
+    h2.section-title {
+      color: #003366;
+      font-weight: 700;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .btn-sm i {
+      margin-right: 4px;
+    }
+
+    .alert-warning {
+      font-size: 0.9rem;
+    }
+  
