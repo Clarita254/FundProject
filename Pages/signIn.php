@@ -59,7 +59,8 @@ require_once("../includes/db_connect.php");
       <input class="form-check-input" type="checkbox" id="rememberMe">
       <label class="form-check-label" for="rememberMe">Remember me</label>
     </div>
-    <a href="#" class="forgot-password">Forgot Password?</a>
+    <a href="../Pages/forgotPassword.php" class="forgot-password">Forgot Password?</a>
+
   </div>
 
   <!-- Submit -->
@@ -72,6 +73,39 @@ require_once("../includes/db_connect.php");
 </div>
    
 <?php include_once("../Templates/Footer.php"); ?>
+
+<script>
+// Fade in the form on page load
+window.addEventListener("DOMContentLoaded", () => {
+  document.querySelector('.signin-card').classList.add('show');
+});
+
+// Toggle password visibility
+const passwordField = document.getElementById("password");
+const toggleIcon = document.createElement("i");
+toggleIcon.className = "fas fa-eye password-toggle";
+passwordField.parentElement.classList.add("position-relative");
+passwordField.parentElement.appendChild(toggleIcon);
+
+toggleIcon.addEventListener("click", () => {
+  const isPassword = passwordField.getAttribute("type") === "password";
+  passwordField.setAttribute("type", isPassword ? "text" : "password");
+  toggleIcon.classList.toggle("fa-eye-slash", isPassword);
+});
+
+// Ripple effect on Sign In button
+const signinBtn = document.querySelector(".btn-signin");
+signinBtn.addEventListener("click", function (e) {
+  const rect = this.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  this.style.setProperty("--x", `${x}px`);
+  this.style.setProperty("--y", `${y}px`);
+  this.classList.add("ripple");
+
+  setTimeout(() => this.classList.remove("ripple"), 600);
+});
+</script>
 
 </body>
 </html>

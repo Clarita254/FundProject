@@ -11,10 +11,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
 $donorId = $_SESSION['user_id'];
 
 // Fetch all completed donations
-$stmt = $conn->prepare("SELECT d.donation_id, d.amount, d.donation_date, d.mpesa_receipt, c.campaign_name
+$stmt = $conn->prepare("SELECT d.donation_Id, d.amount, d.donation_date, d.mpesa_receipt, c.campaign_name
                         FROM donations d
                         JOIN campaigns c ON d.campaign_id = c.campaign_id
-                        WHERE d.donor_id = ? AND d.status = 'Completed'
+                        WHERE d.donor_Id = ? AND d.status = 'Completed'
                         ORDER BY d.donation_date DESC");
 $stmt->bind_param("i", $donorId);
 $stmt->execute();
@@ -39,7 +39,7 @@ $stmt->close();
 <?php include_once("../Templates/nav.php"); ?>
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-primary text-center">My Donation Receipts</h2>
+    <h2 class="mb-5 text-deep-blue text-center">My Donation Receipts</h2>
 
     <?php if (count($donations) === 0): ?>
         <div class="alert alert-warning">No completed donations found.</div>
@@ -60,12 +60,13 @@ $stmt->close();
             <?php foreach ($donations as $index => $donation): ?>
                 <tr>
                     <td><?= $index + 1 ?></td>
-                    <td><?= htmlspecialchars($donation['campaign_name']) ?></td>
+                   <td><?= htmlspecialchars($donation['campaign_name']) ?></td>
+
                     <td><?= number_format($donation['amount'], 2) ?></td>
                     <td><?= htmlspecialchars($donation['mpesa_receipt']) ?></td>
                     <td><?= date('M j, Y, g:i a', strtotime($donation['donation_date'])) ?></td>
                     <td>
-                        <a href="receipt_pdf.php?donation_id=<?= $donation['donation_id'] ?>" class="btn btn-sm btn-outline-success">
+                        <a href="receipt_pdf.php?donation_Id=<?= $donation['donation_Id'] ?>" class="btn btn-sm btn-outline-success">
     <i class="bi bi-file-earmark-pdf"></i> PDF
 </a>
 

@@ -1,0 +1,118 @@
+body {
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container with dark blue background */
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 40px;
+  background: linear-gradient(to right, #002f4b, #00587a);
+  border-radius: 16px;
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Title centered and more prominent */
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff55;
+  padding-bottom: 12px;
+  margin-bottom: 40px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* Report card with contrast and depth */
+.report-card {
+  background-color: #ffffff;
+  color: #333;
+  padding: 20px;
+  border-radius: 12px;
+  
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease-in-out;
+  height: 100%;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Report card contents */
+.report-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.report-meta {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 8px;
+}
+
+.amount-used {
+  color: #198754;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.report-description {
+  font-size: 15px;
+  color: #333;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* Responsive thumbnails - wider and clean */
+.photo-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.photo-thumbnails img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.custom-filter-btn {
+  background-color: #ffffff;
+  color: #004080;
+  border: 2px solid #004080;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  padding: 10px 16px;
+}
+
+.custom-filter-btn:hover {
+  background-color: #004080;
+  color: #ffffff;
+  border-color: #004080;
+}
+
+
+@media (min-width: 768px) {
+  .photo-thumbnails img {
+    width: 48%;
+  }
+}
+
+@media (min-width: 992px) {
+  .photo-thumbnails img {
+    width: 32%;
+  }
+}

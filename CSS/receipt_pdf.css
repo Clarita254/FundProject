@@ -1,0 +1,51 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f8fb;
+  margin: 0;
+  padding: 0;
+}
+
+.receipt-wrapper {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.receipt-header {
+  background-color: #003366;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.receipt-header img {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.receipt-body {
+  padding: 25px;
+}
+
+.receipt-body p {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.receipt-body strong {
+  color: #003366;
+}
+
+.thank-you {
+  background-color: #e8f0fc;
+  color: #003366;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+}

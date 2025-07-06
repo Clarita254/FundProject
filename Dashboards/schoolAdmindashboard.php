@@ -19,11 +19,13 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   <title>School Admin Dashboard</title>
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
+   <link rel="stylesheet" href="../CSS/Progressform.css">
   <link rel="stylesheet" href="../CSS/schoolAdmindashboard.css">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-  
+
 </head>
 <body>
 
@@ -71,7 +73,7 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
       </a>
     </div>
     <div class="col-md-4 mb-3">
-      <a href="../Pages/ProgressForm.php" class="btn btn-outline-warning w-100">
+      <a href="../Processes/Progressform.php" class="btn btn-outline-warning w-100">
         <i class="fas fa-chart-line me-2"></i>Submit Fund Utilization Report
       </a>
     </div>

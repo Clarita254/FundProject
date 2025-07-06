@@ -1,13 +1,15 @@
 <?php
-// progressReport.php
 session_start();
+require_once("../includes/db_connect.php");
+
+// Ensure only logged-in school admins can submit
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
+    header("Location: ../Pages/signIn.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn = new mysqli("localhost", "your_username", "your_password", "your_database");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
+    $schoolAdminId = $_SESSION['user_id'];
     $schoolName = htmlspecialchars($_POST['school_name']);
     $title = htmlspecialchars($_POST['report_title']);
     $description = htmlspecialchars($_POST['report_description']);
@@ -30,12 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $photoPaths = implode(",", $uploadedPhotos);
 
-    $stmt = $conn->prepare("INSERT INTO progress_reports (school_name, title, description, amount_used, report_date, photos) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssiss", $schoolName, $title, $description, $amountUsed, $date, $photoPaths);
+    $stmt = $conn->prepare("INSERT INTO progress_reports (schoolAdmin_id, school_name, title, description, amount_used, report_date, photos)
+                            VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssdss", $schoolAdminId, $schoolName, $title, $description, $amountUsed, $date, $photoPaths);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
-        echo "<script>alert('Progress report submitted successfully!'); window.location.href='progressReport.php';</script>";
+        echo "<script>alert('Progress report submitted successfully!'); window.location.href='progressReports.php';</script>";
     } else {
         echo "<script>alert('Failed to submit report.');</script>";
     }
@@ -45,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Progress Report</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
-  <link rel="stylesheet" href="../CSS/progressReport.css">
+  <link rel="stylesheet" href="../CSS/progressform.css">
   <link rel="stylesheet" href="../CSS/Footer.css">
    <link rel="stylesheet" href="../CSS/navbar.css">
 

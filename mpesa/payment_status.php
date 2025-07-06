@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
 $donorId = $_SESSION['user_id'];
 
 // Get the most recent donation
-$stmt = $conn->prepare("SELECT donation_id, payment_mode, status FROM donations WHERE donor_id = ? ORDER BY donation_date DESC LIMIT 1");
+$stmt = $conn->prepare("SELECT donation_Id, payment_mode, status FROM donations WHERE donor_Id = ? ORDER BY donation_date DESC LIMIT 1");
 $stmt->bind_param("i", $donorId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -20,14 +20,14 @@ $stmt->close();
 
 // Run STK status check if M-Pesa & status is still Pending
 if ($latest && $latest['payment_mode'] === 'M-Pesa' && $latest['status'] === 'Pending') {
-    queryAndUpdateDonationStatus($conn, $latest['donation_id']);
+    queryAndUpdateDonationStatus($conn, $latest['donation_Id']);
 }
 
 // Fetch updated donation details with campaign name
 $stmt = $conn->prepare("SELECT d.*, c.campaign_name 
                         FROM donations d
                         JOIN campaigns c ON d.campaign_id = c.campaign_id
-                        WHERE d.donor_id = ?
+                        WHERE d.donor_Id = ?
                         ORDER BY d.donation_date DESC
                         LIMIT 1");
 $stmt->bind_param("i", $donorId);
@@ -62,12 +62,12 @@ $stmt->close();
       <div class="status-icon <?= $statusColor ?>" style="font-size: 3rem;"><?= $icon ?></div>
       <h3 class="status-header mt-3">Donation Status</h3>
       <hr>
-      <p><strong>Campaign:</strong> <?= htmlspecialchars($donation['campaign_name']) ?></p>
+      <p><strong>Campaign:</strong> <?= htmlspecialchars($donation['campaign_id']) ?></p>
       <p><strong>Amount Donated:</strong> <span class="text-primary">KES <?= number_format($donation['amount'], 2) ?></span></p>
       <p><strong>Status:</strong> <span class="fw-bold <?= $statusColor ?>"><?= htmlspecialchars($status) ?></span></p>
 
-      <?php if (isset($donation['donation_id'])): ?>
-  <a href="receipt.php?donation_id=<?= $donation['donation_id'] ?>" class="btn btn-receipt mt-3">Download Receipt</a>
+      <?php if (isset($donation['donation_Id'])): ?>
+  <a href="../mpesa/receipt.php?donation_Id=<?= $donation['donation_Id'] ?>" class="btn btn-receipt mt-3">Download Receipt</a>
      <?php endif; ?>
 
       <?php if ($status !== 'Completed'): ?>
