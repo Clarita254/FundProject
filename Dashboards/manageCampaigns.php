@@ -9,15 +9,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
 }
 
 $schoolAdminId = $_SESSION['user_id'];
+$campaigns = []; // Always define the variable
 
 // Fetch campaigns created by this school admin
-$query = "SELECT campaign_id, campaign_name, category, target_amount, status, review_comment FROM campaigns WHERE schoolAdmin_id = ? ORDER BY created_at DESC";
+$query = "SELECT campaign_id, campaign_name, category, target_amount, status, review_comment 
+          FROM campaigns WHERE schoolAdmin_id = ? ORDER BY created_at DESC";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $schoolAdminId);
-$stmt->execute();
-$result = $stmt->get_result();
-$campaigns = $result->fetch_all(MYSQLI_ASSOC);
-$stmt->close();
+
+if ($stmt) {
+    $stmt->bind_param("i", $schoolAdminId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result) {
+        $campaigns = $result->fetch_all(MYSQLI_ASSOC);
+    }
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,12 +36,15 @@ $stmt->close();
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
+<link rel="stylesheet" href="../CSS/manageCampaigns.css">
+  
 </head>
 <body>
+
 <?php include_once("../Templates/nav.php"); ?>
 
 <div class="container py-5">
-  <h2 class="fw-bold mb-4 text-primary text-center">My Campaigns</h2>
+  <h2 class="section-title text-center mb-4"><i class="fas fa-clipboard-list me-2"></i> My Campaigns</h2>
 
   <?php if (count($campaigns) > 0): ?>
     <div class="row">

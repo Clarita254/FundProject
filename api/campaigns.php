@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// ❌ Fallback: Method not allowed
+// Fallback: Method not allowed
 http_response_code(405);
 echo json_encode(["error" => "Method Not Allowed"]);
 exit;

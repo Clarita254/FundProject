@@ -19,9 +19,8 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   <title>School Admin Dashboard</title>
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
-   <link rel="stylesheet" href="../CSS/Progressform.css">
+  <link rel="stylesheet" href="../CSS/Progressform.css">
   <link rel="stylesheet" href="../CSS/schoolAdmindashboard.css">
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -29,83 +28,75 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
 </head>
 <body>
 
-<?php include_once("../Templates/nav.php"); ?>
+<!-- Sidebar toggle button for mobile -->
+<button class="toggle-sidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
 
-<div class="container py-5" style="background: linear-gradient(to bottom right, #eaf6f9, #f5fafd); border-radius: 15px; padding: 40px;">
-  <h2 class="text-center fw-bold mb-4" style="color: #003c58; font-size: 2.2rem;">
-    👋 Welcome, <?= htmlspecialchars($schoolName) ?>!
-  </h2>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <a href="#" class="fw-bold fs-5 text-white px-4 mb-3 d-block">EduFund Admin</a>
+  <a href="../Pages/Campaigncreation.php"><i class="fas fa-plus-circle me-2"></i>Create Campaign</a>
+  <a href="../Pages/Campaign.php"><i class="fas fa-eye me-2"></i>View Campaigns</a>
+  <a href="../Dashboards/manageCampaigns.php"><i class="fas fa-tasks me-2"></i>Manage Campaigns</a>
+  <a href="../Processes/Progressform.php"><i class="fas fa-file-alt me-2"></i>Utilization Report form</a>
+  <a href="../Pages/ProgressReport.php"><i class="fas fa-chart-line me-2"></i>Fund Utilization Reports</a>
+  
+  <a href="../includes/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+</div>
 
-  <?php
-  // Show document approval/rejection notifications
-  $notificationQuery = $conn->prepare("SELECT id, status FROM verification_documents WHERE schoolAdmin_id = ? AND notified = 0 AND status IN ('Approved', 'Rejected')");
-  $notificationQuery->bind_param("i", $schoolAdminId);
-  $notificationQuery->execute();
-  $notificationResult = $notificationQuery->get_result();
+<!-- Main Content -->
+<div class="main-content">
+  <h2 class="fw-bold mb-4 text-primary text-center">Welcome, <?= htmlspecialchars($schoolName) ?>!</h2>
 
-  while ($doc = $notificationResult->fetch_assoc()) {
-      $statusClass = $doc['status'] === 'Approved' ? 'alert-success' : 'alert-danger';
-      echo "<div class='alert $statusClass'>
-              📄 Your uploaded verification document has been <strong>{$doc['status']}</strong>.
-            </div>";
-
-      $updateQuery = $conn->prepare("UPDATE verification_documents SET notified = 1 WHERE id = ?");
-      $updateQuery->bind_param("i", $doc['id']);
-      $updateQuery->execute();
-  }
-  ?>
-
-  <!-- Quick Actions -->
-  <div class="row text-center mb-5">
-    <div class="col-md-4 mb-3">
-      <a href="../Pages/Campaigncreation.php" class="btn btn-outline-success w-100">
-        <i class="fas fa-plus-circle me-2"></i>Create Campaign
-      </a>
-    </div>
-    <div class="col-md-4 mb-3">
-      <a href="../Pages/Campaign.php" class="btn btn-outline-info w-100">
-        <i class="fas fa-eye me-2"></i>View Campaigns
-      </a>
-    </div>
-    <div class="col-md-4 mb-3">
-      <a href="../Dashboards/manageCampaigns.php" class="btn btn-outline-info w-100">
-        <i class="fas fa-tasks me-2"></i>Manage Campaign
-      </a>
-    </div>
-    <div class="col-md-4 mb-3">
-      <a href="../Processes/Progressform.php" class="btn btn-outline-warning w-100">
-        <i class="fas fa-chart-line me-2"></i>Submit Fund Utilization Report
-      </a>
-    </div>
-  </div>
-
-  <!-- Upload Verification Documents -->
-  <div class="dashboard-card mb-4">
-    <h5 class="section-title">School Verification Documents</h5>
-    <form action="../uploads/uploadDocuments.php" method="POST" enctype="multipart/form-data">
-      <div class="mb-3">
-        <label for="verificationDoc" class="form-label">Upload Verification Document (PDF, Image e.g. school identity):</label>
-        <input type="file" name="verificationDoc" class="form-control" required>
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="summary-widget">
+        <h6>Verification Docs</h6>
+        <h4>
+          <?php
+          $count = $conn->query("SELECT COUNT(*) as total FROM verification_documents WHERE schoolAdmin_id = $schoolAdminId")->fetch_assoc();
+          echo $count['total'];
+          ?>
+        </h4>
       </div>
-      <button type="submit" class="btn" style="background-color:#145c72; color: white;">Upload</button>
-    </form>
+    </div>
+    <div class="col-md-4">
+      <div class="summary-widget">
+        <h6>Campaigns Created</h6>
+        <h4>
+          <?php
+          $count = $conn->query("SELECT COUNT(*) as total FROM campaigns WHERE schoolAdmin_id = $schoolAdminId")->fetch_assoc();
+          echo $count['total'];
+          ?>
+        </h4>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="summary-widget">
+        <h6>Reports Submitted</h6>
+        <h4>
+          <?php
+          $count = $conn->query("SELECT COUNT(*) as total FROM progress_reports WHERE schoolAdmin_id = $schoolAdminId")->fetch_assoc();
+          echo $count['total'] ?? 0;
+          ?>
+        </h4>
+      </div>
+    </div>
   </div>
 
-  <!-- Display uploaded document status -->
-  <div class="dashboard-card mb-4">
-    <h5 class="section-title">Verification Document Status</h5>
+  <!-- Latest Verification Document -->
+  <div class="dashboard-card mt-4">
+<h5 class="mb-3"><i class="fas fa-id-card-alt me-2"></i>Latest Verification Document</h5>
     <?php
-    $stmt = $conn->prepare("SELECT file_name, upload_time, status FROM verification_documents WHERE schoolAdmin_id = ? ORDER BY upload_time DESC LIMIT 1");
-    $stmt->bind_param("i", $schoolAdminId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0):
-      $doc = $result->fetch_assoc();
+      $stmt = $conn->prepare("SELECT file_name, upload_time, status FROM verification_documents WHERE schoolAdmin_id = ? ORDER BY upload_time DESC LIMIT 1");
+      $stmt->bind_param("i", $schoolAdminId);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows > 0):
+          $doc = $result->fetch_assoc();
     ?>
     <ul class="list-group">
       <li class="list-group-item"><strong>File:</strong> <?= htmlspecialchars($doc['file_name']) ?></li>
-      <li class="list-group-item"><strong>Status:</strong> 
+      <li class="list-group-item"><strong>Status:</strong>
         <span class="badge <?= $doc['status'] === 'Approved' ? 'bg-success' : ($doc['status'] === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark') ?>">
           <?= htmlspecialchars($doc['status']) ?>
         </span>
@@ -113,52 +104,68 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
       <li class="list-group-item"><strong>Uploaded:</strong> <?= date('d M Y H:i', strtotime($doc['upload_time'])) ?></li>
     </ul>
     <?php else: ?>
-      <p class="text-muted">No verification document uploaded yet.</p>
-    <?php endif; $stmt->close(); ?>
+      <p class="text-muted">No document uploaded yet.</p>
+    <?php endif; ?>
   </div>
 
-  <!-- Campaign Approval Status -->
-  <div class="dashboard-card">
-    <h5 class="section-title">Your Campaigns and Approval Status</h5>
-    <?php
-      $statusQuery = "SELECT campaign_name, status, created_at FROM campaigns WHERE schoolAdmin_id = ?";
-      $stmt = $conn->prepare($statusQuery);
-      $stmt->bind_param("i", $schoolAdminId);
-      $stmt->execute();
-      $result = $stmt->get_result();
+<!-- Campaign Approval Status -->
+<div class="dashboard-card mt-4 ">
+  <h5 class="mb-3"><i class="fas fa-bullhorn me-2"></i>Campaign Status</h5>
 
-      if ($result->num_rows > 0):
-    ?>
-    <table class="table table-bordered mt-3">
-      <thead>
-        <tr>
-          <th>Campaign Title</th>
-          <th>Status</th>
-          <th>Date Created</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php while ($row = $result->fetch_assoc()): ?>
-        <tr>
-          <td><?= htmlspecialchars($row['campaign_name']) ?></td>
-          <td><span class="badge bg-secondary"><?= htmlspecialchars($row['status']) ?></span></td>
-          <td><?= date('d M Y', strtotime($row['created_at'])) ?></td>
-        </tr>
-        <?php endwhile; ?>
-      </tbody>
-    </table>
-    <?php else: ?>
-      <p class="text-muted mt-3">No campaigns found yet.</p>
-    <?php endif; $stmt->close(); ?>
+  <?php
+    $stmt = $conn->prepare("SELECT campaign_name, status, created_at FROM campaigns WHERE schoolAdmin_id = ?");
+    $stmt->bind_param("i", $schoolAdminId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0):
+  ?>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Status</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php while ($row = $result->fetch_assoc()): ?>
+      <?php
+        $status = $row['status'];
+        $badgeClass = match ($status) {
+          'Approved' => 'bg-success',
+          'Rejected' => 'bg-danger',
+          'Pending' => 'bg-warning text-dark',
+          default => 'bg-secondary'
+        };
+      ?>
+      <tr>
+        <td><?= htmlspecialchars($row['campaign_name']) ?></td>
+        <td><span class="badge <?= $badgeClass ?>"><?= htmlspecialchars($status) ?></span></td>
+        <td><?= date('d M Y', strtotime($row['created_at'])) ?></td>
+      </tr>
+      <?php endwhile; ?>
+    </tbody>
+  </table>
+  <?php else: ?>
+    <p class="text-muted">No campaigns yet.</p>
+  <?php endif; ?>
+</div>
+
   </div>
 
   <!-- Logout -->
   <div class="text-center mt-4">
-    <a href="../includes/logout.php" class="btn" style="background-color:#145c72; color: white;">
+    <a href="../includes/logout.php" class="btn btn-danger">
       <i class="fas fa-sign-out-alt me-2"></i>Logout
     </a>
   </div>
 </div>
+
+<script>
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+</script>
 
 <?php include_once("../Templates/Footer.php"); ?>
 </body>
