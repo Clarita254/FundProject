@@ -71,13 +71,13 @@ if ($stmt) {
               <?php endif; ?>
 
               <div class="d-flex justify-content-between mt-3">
-                <a href="../Processes/editCampaign.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-primary btn-sm">
+                <a href="../Processes/editCampaign.php?donation_Id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-primary btn-sm">
                   <i class="fas fa-edit"></i> Edit
                 </a>
-                <a href="../uploads/uploadDocuments.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-info btn-sm">
+                <a href="../uploads/uploadDocuments.php?donation_Id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-info btn-sm">
                   <i class="fas fa-upload"></i> Upload Document
                 </a>
-                <a href="../Processes/view_donations.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-success btn-sm">
+                <a href="../Processes/viewdonations.php?donation_Id=<?= $campaign['campaign_id'] ?>" class="btn btn-outline-success btn-sm">
                   <i class="fas fa-donate"></i> Donations
                 </a>
               </div>
