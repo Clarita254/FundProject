@@ -1,0 +1,35 @@
+/* Back to Dashboard Button */
+.btn-outline-primary {
+  border: 2px solid #003366;
+  color: #003366;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 25px;
+}
+
+.btn-outline-primary:hover {
+  background-color: #003366;
+  color: white;
+}
+
+/* Breadcrumb link style */
+.breadcrumb a {
+  color: #003366;
+  text-decoration: underline;
+}
+
+.breadcrumb a:hover {
+  text-decoration: none;
+  color: #004080;
+}
+
+/* Active Sidebar Link */
+.sidebar a.active {
+  background-color: #004080;
+  font-weight: bold;
+  border-left: 4px solid #00bfff; /* Optional: Adds a visual indicator */
+}
+
+.sidebar a.active i {
+  color: #00bfff; /* Optional: icon highlight */
+}

@@ -7,6 +7,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
     header("Location: ../Pages/signIn.php");
     exit();
 }
+
+// Set breadcrumb title
+$breadcrumbs = ["Create Campaign"];
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +25,21 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
   
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../CSS/navbar.css">
-  <link rel="stylesheet" href="../CSS/footer.css">
-  
+<link rel="stylesheet" href="../CSS/schoolAdminNav.css">
+ 
 </head>
 
 <body>
-<?php include_once("../Templates/nav.php"); ?>
+ <?php include("../Templates/nav.php"); ?>
+
+
+<!-- Sidebar and breadcrumb -->
+<?php include("../Templates/schoolAdminNav.php"); ?>
+
+
+
+
+
 
 <div class="container my-5">
   <div class="card shadow-lg border-0 rounded-4 px-4 py-5" style="background: linear-gradient(to right, #e0f2ff, #f0f9ff);">

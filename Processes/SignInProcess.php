@@ -27,28 +27,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
 
-            if ($user['role'] === 'donor' && $user['change_password']) {
+            // ✅ Redirect donor to change password page if required
+            if ($user['role'] === 'donor' && $user['change_password'] == 1) {
                 $_SESSION['force_password_change'] = true;
-                header("Location: ../Pages/changepassword.php");
+                header("Location: ../Pages/change_password_donor.php");
                 exit();
             }
 
+            // ✅ Role-based redirection
             switch ($user['role']) {
                 case 'donor':
-                    header("Location: ../Dashboards/donorDashboard.php"); break;
+                    header("Location: ../Dashboards/donorDashboard.php");
+                    break;
                 case 'schoolAdmin':
-                    header("Location: ../Dashboards/schoolAdmindashboard.php"); break;
+                    header("Location: ../Dashboards/schoolAdmindashboard.php");
+                    break;
                 case 'systemAdmin':
-                    header("Location: ../Dashboards/systemAdminDashboard.php"); break;
+                    header("Location: ../Dashboards/systemAdminDashboard.php");
+                    break;
                 default:
                     $_SESSION['error'] = "Unauthorized role.";
-                    header("Location: ../Pages/signIn.php"); break;
+                    header("Location: ../Pages/signIn.php");
+                    break;
             }
             exit();
         }
     }
 
-    // If username not found or password invalid
+    // ❌ If user not found or password mismatch
     $_SESSION['error'] = "Invalid username or password. Please try again.";
     header("Location: ../Pages/signIn.php");
     exit();

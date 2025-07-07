@@ -1,12 +1,14 @@
 
     body {
-      background-color: #f3f7fb;
+      background-color:#8db1d6
     }
 
     .card {
-      border: 1px solid #d6e0ea;
-      transition: transform 0.3s ease;
-    }
+  background-color: #f8fbff;
+  border: 1px solid #d6e0ea;
+  transition: transform 0.3s ease;
+}
+
 
     .card:hover {
       transform: translateY(-4px);
@@ -26,4 +28,9 @@
     .alert-warning {
       font-size: 0.9rem;
     }
-  
+
+  .container {
+  background-color: #e6f2ff; /* light blue */
+  border-radius: 12px;
+  padding: 30px;
+}

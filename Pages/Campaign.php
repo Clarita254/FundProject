@@ -2,6 +2,9 @@
 session_start();
 require_once("../includes/db_connect.php");
 
+// Set breadcrumb title
+$breadcrumbs = ["View  Campaign"];
+
 $userId = $_SESSION['user_id'] ?? null;
 $role = $_SESSION['role'] ?? 'guest';
 
@@ -37,12 +40,18 @@ $result = mysqli_query($conn, $query);
   <link rel="stylesheet" href="../CSS/Campaign.css">
   <link rel="stylesheet" href="../CSS/footer.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/schoolAdminNav.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+    
 
 <?php include_once("../Templates/nav.php"); ?>
+<!-- Sidebar and breadcrumb -->
+<?php include("../Templates/schoolAdminNav.php"); ?>
+
+
 
 <div class="container py-5">
   <h1 class="page-title text-center mb-4" style="color:rgb(6, 40, 75); font-weight: 700; font-family: 'Segoe UI', sans-serif;">

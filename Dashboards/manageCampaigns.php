@@ -8,6 +8,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
     exit();
 }
 
+// Set breadcrumb title
+$breadcrumbs = ["Manage Campaign"];
+
 $schoolAdminId = $_SESSION['user_id'];
 
 // Fetch campaigns created by this schoolAdmin
@@ -31,12 +34,16 @@ $stmt->close();
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/schoolAdminNav.css">
 </head>
 <body>
 <?php include_once("../Templates/nav.php"); ?>
+ <!-- Sidebar and breadcrumb -->
+<?php include("../Templates/schoolAdminNav.php"); ?>
+
 
 <div class="container py-5">
-  <div class="bg-white p-4 rounded shadow">
+  <div class=" p-4 rounded shadow">
     <h2 class="text-white bg-dark px-3 py-2 rounded" style="background-color: #003366 !important;">📋 Your Campaigns</h2>
 
     <?php if (isset($_GET['deleted']) && $_GET['deleted'] == 1): ?>
