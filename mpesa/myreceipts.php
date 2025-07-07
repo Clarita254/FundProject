@@ -2,6 +2,8 @@
 require_once('../includes/db_connect.php');
 session_start();
 
+$breadcrumbs = ["Receipts"];
+
 // Ensure donor is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     header("Location: ../Pages/signIn.php");
@@ -37,6 +39,7 @@ $stmt->close();
 </head>
 <body>
 <?php include_once("../Templates/nav.php"); ?>
+<?php include_once("../Templates/breadcrumb.php"); ?>
 
 <div class="container mt-5">
     <h2 class="mb-5 text-deep-blue text-center">My Donation Receipts</h2>

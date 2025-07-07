@@ -2,6 +2,8 @@
 session_start();
 require_once("../includes/db_connect.php");
 
+$breadcrumbs = ["Fund Reports"];
+
 // Ensure donor is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     header("Location: ../Pages/SignIn.php");
@@ -68,6 +70,7 @@ $stmt->close();
 </head>
 <body>
 <?php include_once("../Templates/nav.php"); ?>
+<?php include_once("../Templates/breadcrumb.php"); ?>
 
 <div class="container">
   <h2 class="page-title">Fund Utilization Reports</h2>

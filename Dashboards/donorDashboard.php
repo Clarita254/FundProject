@@ -88,8 +88,15 @@ if ($stmt) {
   <a href="../includes/logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
 </div>
 
+
 <!-- Main Content -->
 <div class="main-content">
+
+<?php
+$breadcrumbs = []; // Add dynamic crumbs here if needed
+include_once("../Templates/breadcrumb.php");
+?>
+
   <h2 class="fw-bold mb-4 text-primary">Welcome, <?= htmlspecialchars($donorName) ?>!</h2>
 
   <!-- Summary Widgets -->

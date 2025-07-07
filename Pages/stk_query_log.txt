@@ -95,3 +95,13 @@ Response: {
                 }
             
 
+[2025-07-07 20:37:09] Entered status query for donation ID: 53
+[2025-07-07 20:37:11] Donation ID: 53
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_07072025213706612717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+

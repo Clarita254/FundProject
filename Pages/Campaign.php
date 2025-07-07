@@ -2,8 +2,9 @@
 session_start();
 require_once("../includes/db_connect.php");
 
-// Set breadcrumb title
-$breadcrumbs = ["View  Campaign"];
+
+
+
 
 $userId = $_SESSION['user_id'] ?? null;
 $role = $_SESSION['role'] ?? 'guest';
@@ -48,8 +49,6 @@ $result = mysqli_query($conn, $query);
     
 
 <?php include_once("../Templates/nav.php"); ?>
-<!-- Sidebar and breadcrumb -->
-<?php include("../Templates/schoolAdminNav.php"); ?>
 
 
 

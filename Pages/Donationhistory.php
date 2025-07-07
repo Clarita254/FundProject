@@ -2,6 +2,9 @@
 session_start();
 require_once('../includes/db_connect.php');
 
+
+$breadcrumbs = ["Donation History"];
+
 // Ensure only donors access this page
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     header("Location: ../Pages/login.php");
@@ -45,7 +48,9 @@ $stmt->close();
     <link rel="stylesheet" href="../CSS/footer.css">
 </head>
 <body>
+  
 <?php include_once("../Templates/nav.php"); ?>
+<?php include_once("../Templates/breadcrumb.php"); ?>
 
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-primary">Donation History</h2>

@@ -165,3 +165,16 @@ Response: {
                 }
             
 
+[2025-07-07 20:37:26] Entered status query for donation ID: 53
+[2025-07-07 20:37:28] Donation ID: 53
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"3ac5-4c88-8708-9bd2f5b3e98d101773",
+            "CheckoutRequestID":"ws_CO_07072025213706612717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
