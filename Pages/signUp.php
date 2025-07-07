@@ -94,21 +94,58 @@ document.getElementById("role").addEventListener("change", (e) => {
 document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const role = document.getElementById("role").value;
+  // Basic validation
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirm_password").value;
+  const role = document.getElementById("role").value;
+
+  if (!username || !email || !password || !confirmPassword || !role) {
+    alert("Please fill in all required fields.");
+    return;
+  }
+
+  // Email format check
+  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if (!emailPattern.test(email)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  // Phone validation (optional but must be valid if filled)
+  if (phone && !/^\+?\d{7,15}$/.test(phone)) {
+    alert("Please enter a valid phone number.");
+    return;
+  }
 
   if (password !== confirmPassword) {
     alert("Passwords do not match");
     return;
   }
 
+  // If School Admin, check extra fields
+  if (role === "schoolAdmin") {
+    const requiredFields = [
+      "school_name", "school_code", "school_type",
+      "location", "county", "rep_name", "rep_role"
+    ];
+    for (const id of requiredFields) {
+      const value = document.getElementById(id).value.trim();
+      if (!value) {
+        alert("Please fill in all school administrator fields.");
+        return;
+      }
+    }
+  }
+
   const payload = {
-    username: document.getElementById("username").value,
-    email: document.getElementById("email").value,
-    phone: document.getElementById("phone").value,
-    password: password,
-    role: role
+    username,
+    email,
+    phone,
+    password,
+    role
   };
 
   if (role === "schoolAdmin") {
@@ -118,7 +155,6 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
       school_type: document.getElementById("school_type").value,
       location: document.getElementById("location").value,
       county: document.getElementById("county").value,
-      date_established: document.getElementById("date_established").value,
       rep_name: document.getElementById("rep_name").value,
       rep_role: document.getElementById("rep_role").value
     });
@@ -142,3 +178,4 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
 
 </body>
 </html>
+<?php
