@@ -63,7 +63,7 @@ require_once("../includes/db_connect.php");
     <div class="campaign-grid">
         <div class="campaign-card">
             <div class="campaign-img">
-                <img src="Images/Helpachildlearn.png" alt="Help a Child Learn" />
+                <img src="../EDUFUNDPROJECT/FundProject/Images/Helpachildlearn.png" alt="Help a Child Learn" />
             </div>
             <div class="campaign-info">
                 <h3>Help a Child Learn</h3>
@@ -73,7 +73,7 @@ require_once("../includes/db_connect.php");
         </div>
         <div class="campaign-card">
             <div class="campaign-img">
-                <img src="Images/schoolsupplies.png" alt="School Supplies Drive" />
+                <img src="..EDUFUNDPROJECT/FundProject/Images/schoolsupplies.png" alt="School Supplies Drive" />
             </div>
             <div class="campaign-info">
                 <h3>School Supplies Drive</h3>
@@ -83,7 +83,7 @@ require_once("../includes/db_connect.php");
         </div>
         <div class="campaign-card">
             <div class="campaign-img">
-                <img src="Images/schoolinfrastructure.png" alt="Public School Renovation" />
+                <img src="../FUNDPROJECT/FundProject/Images/schoolinfrastructure.png" alt="Public School Renovation" />
             </div>
             <div class="campaign-info">
                 <h3>Public School Renovation</h3>

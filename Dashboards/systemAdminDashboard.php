@@ -16,23 +16,52 @@ $adminName = $_SESSION['username'];
 <head>
   <meta charset="UTF-8">
   <title>System Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
-  <link rel="stylesheet" href="../CSS/systemAdmindashboard.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <?php include_once("../Templates/sidebar.php"); ?>
+  <link rel="stylesheet" href="../CSS/dashboard.css"> <!-- Common sidebar + widget style -->
 </head>
 <body>
 
-<?php include_once("../Templates/nav.php"); ?>
+<button class="toggle-sidebar" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+  <i class="fas fa-bars"></i>
+</button>
 
-<div class="container py-5">
-  <h2 class="mb-4 text-primary text-center">👨‍💼 Welcome, <?= htmlspecialchars($adminName) ?>!</h2>
 
-  <!-- ✅ Verification Documents -->
-  <div class="mb-5">
-    <h4 class="text-secondary">📄 Pending School Verification Documents</h4>
+<div class="main-content">
+  <h2 class="mb-4 fw-bold text-primary">👨‍💼 Welcome, <?= htmlspecialchars($adminName) ?>!</h2>
+
+  <!-- Summary Widgets -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-6">
+      <div class="summary-widget">
+        <h6>Total Pending Documents</h6>
+        <?php
+        $docCount = $conn->query("SELECT COUNT(*) AS total FROM verification_documents WHERE status = 'Pending'");
+        $docTotal = $docCount->fetch_assoc()['total'];
+        ?>
+        <h4><?= $docTotal ?></h4>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="summary-widget">
+        <h6>Pending Campaigns</h6>
+        <?php
+        $campCount = $conn->query("SELECT COUNT(*) AS total FROM campaigns WHERE status = 'Pending'");
+        $campTotal = $campCount->fetch_assoc()['total'];
+        ?>
+        <h4><?= $campTotal ?></h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verification Documents Section -->
+  <div class="bg-white rounded-4 p-4 shadow-sm mb-5">
+    <h4 class="fw-bold text-secondary mb-3"><i class="fas fa-file-alt me-2"></i>Pending School Verification Documents</h4>
     <table class="table table-striped">
-      <thead>
+      <thead class="table-dark">
         <tr>
           <th>School</th>
           <th>Document</th>
@@ -68,11 +97,11 @@ $adminName = $_SESSION['username'];
     </table>
   </div>
 
-  <!-- ✅ Campaign Approval -->
-  <div>
-    <h4 class="text-secondary">🎯 Campaigns Awaiting Approval</h4>
+  <!-- Campaign Approval Section -->
+  <div class="bg-white rounded-4 p-4 shadow-sm">
+    <h4 class="fw-bold text-secondary mb-3"><i class="fas fa-bullseye me-2"></i>Campaigns Awaiting Approval</h4>
     <table class="table table-striped">
-      <thead>
+      <thead class="table-dark">
         <tr>
           <th>Campaign</th>
           <th>School</th>
@@ -112,6 +141,11 @@ $adminName = $_SESSION['username'];
 </div>
 
 <?php include_once("../Templates/Footer.php"); ?>
-</body>
 
+<script>
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+</script>
+</body>
 </html>

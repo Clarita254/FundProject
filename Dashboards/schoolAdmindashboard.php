@@ -32,16 +32,31 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
 <button class="toggle-sidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
 
 <!-- Sidebar -->
+<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-  <a href="#" class="fw-bold fs-5 text-white px-4 mb-3 d-block">EduFund Admin</a>
-  <a href="../Pages/Campaigncreation.php"><i class="fas fa-plus-circle me-2"></i>Create Campaign</a>
-  <a href="../Pages/Campaign.php"><i class="fas fa-eye me-2"></i>View Campaigns</a>
-  <a href="../Dashboards/manageCampaigns.php"><i class="fas fa-tasks me-2"></i>Manage Campaigns</a>
-  <a href="../Processes/Progressform.php"><i class="fas fa-file-alt me-2"></i>Utilization Report form</a>
-  <a href="../Pages/ProgressReport.php"><i class="fas fa-chart-line me-2"></i>Fund Utilization Reports</a>
-  
-  <a href="../includes/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+  <a href="../Dashboards/schoolAdmindashboard.php" class="<?= basename($_SERVER['PHP_SELF']) === 'schoolAdmindashboard.php' ? 'active' : '' ?>">
+    <i class="fas fa-home me-2"></i> Dashboard
+  </a>
+  <a href="../Pages/Campaigncreation.php" class="<?= basename($_SERVER['PHP_SELF']) === 'Campaigncreation.php' ? 'active' : '' ?>">
+    <i class="fas fa-plus-circle me-2"></i> Create Campaign
+  </a>
+  <a href="../Pages/Campaign.php" class="<?= basename($_SERVER['PHP_SELF']) === 'Campaign.php' ? 'active' : '' ?>">
+    <i class="fas fa-eye me-2"></i> View Campaigns
+  </a>
+  <a href="../Dashboards/manageCampaigns.php" class="<?= basename($_SERVER['PHP_SELF']) === 'manageCampaigns.php' ? 'active' : '' ?>">
+    <i class="fas fa-tasks me-2"></i> Manage Campaigns
+  </a>
+  <a href="../Processes/Progressform.php" class="<?= basename($_SERVER['PHP_SELF']) === 'Progressform.php' ? 'active' : '' ?>">
+    <i class="fas fa-file-alt me-2"></i> Fund Utilization Form
+  </a>
+  <a href="../Pages/ProgressReport.php" class="<?= basename($_SERVER['PHP_SELF']) === 'ProgressReport.php' ? 'active' : '' ?>">
+    <i class="fas fa-chart-line me-2"></i> Fund Utilization Reports
+  </a>
+  <a href="../includes/logout.php">
+    <i class="fas fa-sign-out-alt me-2"></i> Logout
+  </a>
 </div>
+
 
 <!-- Main Content -->
 <div class="main-content">

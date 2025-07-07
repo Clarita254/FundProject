@@ -6,6 +6,16 @@ require_once("../includes/db_connect.php");
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
+  <!---Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!---Font Awesome---->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+     <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
   <title>User Sign Up</title>
   <link rel="stylesheet" href="../CSS/SignUp.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
@@ -17,36 +27,21 @@ require_once("../includes/db_connect.php");
 
 <div class="signup-page">
   <div class="signup-container">
-    <h2>User Sign Up Form</h2>
+    <h2>Sign Up Form</h2>
 
     <form id="signupForm">
-      <label>Username</label>
-      <input type="text" id="username" required>
+      
+
+
+        <label>School Name</label>
+        <input type="text" id="school_name">
 
       <label>Email</label>
       <input type="email" id="email" required>
 
       <label>Phone</label>
       <input type="tel" id="phone">
-
-      <label>Password</label>
-      <input type="password" id="password" required>
-
-      <label>Confirm Password</label>
-      <input type="password" id="confirm_password" required>
-
-      <label>Role</label>
-      <select id="role" required>
-        <option value="">Select Role</option>
-        <option value="schoolAdmin">School Admin</option>
-        <option value="donor">Donor</option>
-        <option value="systemAdmin">System Admin</option>
-      </select>
-
-      <!-- 🏫 SCHOOL ADMIN EXTRA FIELDS -->
-      <div id="schoolFields" style="display: none;">
-        <label>School Name</label>
-        <input type="text" id="school_name">
+      
 
         <label>School Code</label>
         <input type="text" id="school_code">
@@ -75,6 +70,12 @@ require_once("../includes/db_connect.php");
           <option>Chancellor</option>
           <option>Accountant</option>
         </select>
+
+        <label>Password</label>
+      <input type="password" id="password" required>
+
+      <label>Confirm Password</label>
+      <input type="password" id="confirm_password" required>
       </div>
 
       <button type="submit" class="btn-submit">Sign Up</button>

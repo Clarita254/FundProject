@@ -2,6 +2,12 @@
 session_start();
 require_once("../includes/db_connect.php");
 
+
+
+// Set breadcrumb title
+$breadcrumbs = ["Fund Utilization  Report"];
+
+
 // Ensure only logged-in school admins can access
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
     header("Location: ../Pages/signIn.php");
@@ -32,9 +38,16 @@ $stmt->close();
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
   <link rel="stylesheet" href="../CSS/progressReports.css">
+  <link rel="stylesheet" href="../CSS/schoolAdminNav.css">
 </head>
 <body>
-<?php include_once("../Templates/nav.php"); ?>
+    <?php include_once("../Templates/nav.php"); ?>
+
+
+     <!-- Sidebar and breadcrumb -->
+<?php include("../Templates/schoolAdminNav.php"); ?>
+
+
 
 <div class="container py-5 report-container">
   <h2 class="page-title"><i class="fas fa-chart-line me-2"></i> Fund Utilization Reports</h2>

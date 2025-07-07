@@ -1,11 +1,11 @@
 /* Leaderboard Container */
 .leaderboard-container {
-    background: #f0f4fa; /* soft light-blue background */
+    background: #eaf1f8; /* very soft bluish background */
     border-radius: 12px;
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-    border: 1px solid #ccddee;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    border: 1px solid #c5d8ea;
     overflow-x: auto;
 }
 
@@ -17,11 +17,12 @@
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 51, 102, 0.05);
 }
 
 /* Table Header */
 .leaderboard-table th {
-    background-color: #00264d; /* deep blue */
+    background-color: #003366; /* deep theme blue */
     color: #ffffff;
     padding: 1rem;
     font-weight: 600;
@@ -32,18 +33,18 @@
 /* Table Data Cells */
 .leaderboard-table td {
     padding: 1rem;
-    border-bottom: 1px solid #e0e6ed;
-    color: #2c3e50;
+    border-bottom: 1px solid #dde6f0;
+    color: #1a2e40;
 }
 
 /* Zebra Stripe Rows */
 .leaderboard-table tr:nth-child(even) {
-    background-color: #f5f9ff; /* very light blue */
+    background-color: #f4f9ff; /* very light blue for contrast */
 }
 
 /* Hover Effect */
 .leaderboard-table tr:hover {
-    background-color: #d9eaf7; /* soft hover blue */
+    background-color: #cce0f5; /* soft hover blue */
 }
 
 /* Loading Message */
@@ -52,6 +53,7 @@
     color: #003366;
     font-style: italic;
     font-weight: 500;
+    margin-top: 1rem;
 }
 
 /* Responsive Table */
