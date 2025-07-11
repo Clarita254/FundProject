@@ -1,6 +1,9 @@
 <?php 
 header("Content-Type: application/json");
 require_once("../includes/db_connect.php");
+file_put_contents("debug_post.txt", print_r($_POST, true));
+file_put_contents("debug_files.txt", print_r($_FILES, true));
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);

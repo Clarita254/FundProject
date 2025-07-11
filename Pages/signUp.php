@@ -6,17 +6,18 @@ require_once("../includes/db_connect.php");
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title> Sign Up</title>
 
-  <!---Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!---Font Awesome---->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-     <!-- Google Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-  <title>User Sign Up</title>
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="../CSS/SignUp.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
@@ -30,53 +31,51 @@ require_once("../includes/db_connect.php");
     <h2>Sign Up Form</h2>
 
     <form id="signupForm">
-      
 
 
-        <label>School Name</label>
-        <input type="text" id="school_name">
+      <label>School Name</label>
+      <input type="text" id="school_name" name="school_name" required placeholder="e.g. Nairobi West Primary">
 
-      <label>Email</label>
-      <input type="email" id="email" required>
+      <label>Email (must be .edu domain)</label>
+      <input type="email" id="email" name="email" required placeholder="e.g. info@nairobiwest.edu">
 
-      <label>Phone</label>
-      <input type="tel" id="phone">
-      
+      <label>Phone (10 digits)</label>
+      <input type="tel" id="phone" name="phone" required placeholder="e.g. 0712345678">
 
-        <label>School Code</label>
-        <input type="text" id="school_code">
+      <label>School Code(e.g 11000)</label>
+      <input type="text" id="school_code" name="school_code" required>
 
-        <label>School Type</label>
-        <select id="school_type">
-          <option value="">Select</option>
-          <option>Primary</option>
-          <option>Secondary</option>
-          <option>University</option>
-        </select>
+      <label>School Type</label>
+      <select id="school_type" name="school_type" required>
+        <option value="">Select</option>
+        <option value="Primary">Primary</option>
+        <option value="Secondary">High school</option>
+        <option value="University">University</option>
+      </select>
 
-        <label>Location</label>
-        <input type="text" id="location">
+      <label>Location <small class="text-muted">(e.g., Nairobi West)</small></label>
+      <input type="text" id="location" name="location" required>
 
-        <label>County</label>
-        <input type="text" id="county">
+      <label>County</label>
+      <input type="text" id="county" name="county" required placeholder="e.g. Nairobi">
 
-        <label>Rep Name</label>
-        <input type="text" id="rep_name">
+      <label>Rep Name</label>
+      <input type="text" id="rep_name" name="rep_name" required placeholder="e.g. John Mwangi">
 
-        <label>Rep Role</label>
-        <select id="rep_role">
-          <option value="">Select</option>
-          <option>Headteacher</option>
-          <option>Chancellor</option>
-          <option>Accountant</option>
-        </select>
+      <label>Rep Role</label>
+      <select id="rep_role" name="rep_role" required>
+        <option value="">Select</option>
+        <option value="Headteacher">Headmaster</option>
+        <option value="Deputyteacher">DeputyPrincipal</option>
+        <option value="Chancellor">Chancellor</option>
+        <option value="Accountant">Accountant</option>
+      </select>
 
-        <label>Password</label>
-      <input type="password" id="password" required>
+      <label>Password</label>
+      <input type="password" id="password" name="password" required placeholder="Min 8 chars with Upper, lower, number, symbol">
 
       <label>Confirm Password</label>
-      <input type="password" id="confirm_password" required>
-      </div>
+      <input type="password" id="confirm_password" name="confirm_password" required>
 
       <button type="submit" class="btn-submit">Sign Up</button>
     </form>
@@ -86,96 +85,65 @@ require_once("../includes/db_connect.php");
 <?php include_once("../Templates/Footer.php"); ?>
 
 <script>
-document.getElementById("role").addEventListener("change", (e) => {
-  const role = e.target.value;
-  document.getElementById("schoolFields").style.display = role === "schoolAdmin" ? "block" : "none";
-});
-
 document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Basic validation
-  const username = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirm_password").value;
-  const role = document.getElementById("role").value;
 
-  if (!username || !email || !password || !confirmPassword || !role) {
-    alert("Please fill in all required fields.");
-    return;
-  }
-
-  // Email format check
-  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  // Email validation
+  const emailPattern = /^[^\s@]+@[^\s@]+\.edu$/;
   if (!emailPattern.test(email)) {
-    alert("Please enter a valid email address.");
+    alert("Please enter a valid .edu email without spaces.");
     return;
   }
 
-  // Phone validation (optional but must be valid if filled)
-  if (phone && !/^\+?\d{7,15}$/.test(phone)) {
-    alert("Please enter a valid phone number.");
+  // Phone validation: 10 digits, no special characters
+  const phonePattern = /^\d{10}$/;
+  if (!phonePattern.test(phone)) {
+    alert("Phone number must be exactly 10 digits (e.g., 0712345678), no spaces or symbols.");
     return;
   }
 
+  // Password strength validation
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+  if (!passwordPattern.test(password)) {
+    alert("Password must be at least 8 characters long, with uppercase, lowercase, and a special character.");
+    return;
+  }
+
+  // Confirm password check
   if (password !== confirmPassword) {
-    alert("Passwords do not match");
+    alert("Passwords do not match.");
     return;
   }
 
-  // If School Admin, check extra fields
-  if (role === "schoolAdmin") {
-    const requiredFields = [
-      "school_name", "school_code", "school_type",
-      "location", "county", "rep_name", "rep_role"
-    ];
-    for (const id of requiredFields) {
-      const value = document.getElementById(id).value.trim();
-      if (!value) {
-        alert("Please fill in all school administrator fields.");
-        return;
-      }
-    }
-  }
+  // Prepare form data
+  const formData = new FormData(e.target);
+  const payload = Object.fromEntries(formData.entries());
+  console.log("Payload:", payload);
 
-  const payload = {
-    username,
-    email,
-    phone,
-    password,
-    role
-  };
 
-  if (role === "schoolAdmin") {
-    Object.assign(payload, {
-      school_name: document.getElementById("school_name").value,
-      school_code: document.getElementById("school_code").value,
-      school_type: document.getElementById("school_type").value,
-      location: document.getElementById("location").value,
-      county: document.getElementById("county").value,
-      rep_name: document.getElementById("rep_name").value,
-      rep_role: document.getElementById("rep_role").value
-    });
-  }
+  // Send via fetch to your API
+ const res = await fetch("http://localhost/FundProject/FundProject/api/signup.php", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(payload)
+});
 
-  const res = await fetch("/FundProject/api/signup.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
 
   const data = await res.json();
+
   if (data.success) {
     alert("Signup successful!");
-    window.location.href = "signIn.php";
+    window.location.href = "../Dashboards/schoolAdmindashboard.php";
   } else {
-    alert(data.error || "Signup failed");
+    alert(data.error || "Signup failed. Please try again.");
   }
 });
 </script>
 
 </body>
 </html>
-<?php

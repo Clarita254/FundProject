@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'], $_POS
     const colors = ['#dc3545', '#ffc107', '#28a745'];
     const messages = ['Weak \u{1F534}', 'Moderate \u{1F7E1}', 'Strong \u{1F7E2}'];
 
-    strengthBar.style.width = `${(strength / 4) * 100}%`;
+    strengthBar.style.width = ${(strength / 4) * 100}%;
     strengthBar.style.backgroundColor = colors[strength - 1] || '#ccc';
     strengthMessage.textContent = messages[strength - 1] || 'Too short';
     strengthMessage.style.color = colors[strength - 1] || '#999';
