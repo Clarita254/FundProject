@@ -43,8 +43,7 @@ function initiateStkPush($conn, $phone, $amount, $donation_id) {
         'PartyA' => $phone,
         'PartyB' => $shortcode,
         'PhoneNumber' => $phone,
-       'CallBackURL' => 'https://8b43-105-163-0-127.ngrok-free.app/EDUFUNDPROJECT/FundProject/mpesa/stk_callback.php',
-
+        'CallBackURL'=> "https://8b43-105-163-0-127.ngrok-free.app/EDUFUNDPROJECT/FundProject/mpesa/stk_callback.php",
         'AccountReference' => "DON-$donation_id",
         'TransactionDesc' => "Donation to campaign #$donation_id"
     ];

@@ -105,3 +105,274 @@ Response: {
                 }
             
 
+[2025-07-08 11:58:11] Entered status query for donation ID: 54
+[2025-07-08 11:58:13] Donation ID: 54
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_08072025130031104797606228",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-08 12:03:22] Entered status query for donation ID: 55
+[2025-07-08 12:03:24] Donation ID: 55
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_08072025130319182717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 15:03:52] Entered status query for donation ID: 56
+[2025-07-10 15:03:54] Donation ID: 56
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025160614463745222497",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 15:08:14] Entered status query for donation ID: 57
+[2025-07-10 15:08:16] Donation ID: 57
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025161036969790268032",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 16:10:32] Entered status query for donation ID: 59
+[2025-07-10 16:10:33] Donation ID: 59
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025171253336717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 16:13:57] Entered status query for donation ID: 60
+[2025-07-10 16:13:59] Donation ID: 60
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025171353545717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 16:20:07] Entered status query for donation ID: 61
+[2025-07-10 16:20:09] Donation ID: 61
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025172003434717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 16:25:10] Entered status query for donation ID: 62
+[2025-07-10 16:25:13] Donation ID: 62
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025172506453717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 17:45:41] Entered status query for donation ID: 68
+[2025-07-10 17:45:50] Donation ID: 68
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"2125-44ce-973c-4255e836d09150331",
+            "CheckoutRequestID":"ws_CO_10072025184803209717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-10 17:55:11] Entered status query for donation ID: 69
+[2025-07-10 17:55:19] Donation ID: 69
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"2125-44ce-973c-4255e836d09150435",
+            "CheckoutRequestID":"ws_CO_10072025185507117717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-10 17:55:22] Entered status query for donation ID: 70
+[2025-07-10 17:55:33] Donation ID: 70
+HTTP: 403
+Response: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=20-1839423-0%200NNN%20RT%281752162922117%209740%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U6&incident_id=942000040383421186-9031800889147668&edet=15&cinfo=0b000000&rpinfo=0&mth=POST" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 942000040383421186-9031800889147668</iframe></body></html>
+
+[2025-07-10 17:57:55] Entered status query for donation ID: 71
+[2025-07-10 17:58:04] Donation ID: 71
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"4fa1-4cef-a2ac-ee85b585aad513856",
+            "CheckoutRequestID":"ws_CO_10072025190016651717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-10 18:24:49] Entered status query for donation ID: 72
+[2025-07-10 18:24:50] Donation ID: 72
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025192710628717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 18:27:11] Entered status query for donation ID: 73
+[2025-07-10 18:27:12] Donation ID: 73
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025192931916717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 18:33:26] Entered status query for donation ID: 74
+[2025-07-10 18:33:29] Donation ID: 74
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025193322398717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 18:43:00] Entered status query for donation ID: 75
+[2025-07-10 18:43:01] Donation ID: 75
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_10072025194521071717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-10 18:55:36] Entered status query for donation ID: 75
+[2025-07-10 18:55:37] Donation ID: 75
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"523b-4c6b-ba35-915881b6a63a50526",
+            "CheckoutRequestID":"ws_CO_10072025194521071717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-11 07:08:52] Entered status query for donation ID: 76
+[2025-07-11 07:09:02] Donation ID: 76
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_11072025080849215717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-11 07:09:06] Entered status query for donation ID: 77
+[2025-07-11 07:09:13] Donation ID: 77
+HTTP: 403
+Response: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=54-169827832-0%200NNN%20RT%281752210551714%20538%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U6&incident_id=899000040624643545-964712305428463926&edet=15&cinfo=0b000000&rpinfo=0&mth=POST" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 899000040624643545-964712305428463926</iframe></body></html>
+
+[2025-07-11 08:43:30] Entered status query for donation ID: 81
+[2025-07-11 08:43:41] Donation ID: 81
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"523b-4c6b-ba35-915881b6a63a59579",
+            "CheckoutRequestID":"ws_CO_11072025094551617717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-11 17:46:52] Entered status query for donation ID: 83
+[2025-07-11 17:46:54] Donation ID: 83
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_11072025184649482717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-11 17:50:41] Entered status query for donation ID: 83
+[2025-07-11 17:50:43] Donation ID: 83
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"2125-44ce-973c-4255e836d09166465",
+            "CheckoutRequestID":"ws_CO_11072025184649482717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-11 17:51:52] Entered status query for donation ID: 84
+[2025-07-11 17:51:54] Donation ID: 84
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_11072025185149779717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-11 17:52:58] Entered status query for donation ID: 84
+[2025-07-11 17:53:00] Donation ID: 84
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"55dd-4ca0-9daa-7acfa32d246030231",
+            "CheckoutRequestID":"ws_CO_11072025185149779717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-11 21:50:54] Entered status query for donation ID: 85
+[2025-07-11 21:50:56] Donation ID: 85
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_11072025225316615717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-12 09:37:44] Entered status query for donation ID: 86
+[2025-07-12 09:37:45] Donation ID: 86
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_12072025104005774727384844",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+

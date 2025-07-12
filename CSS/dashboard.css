@@ -1,3 +1,4 @@
+
 /* ========== GLOBAL RESET & BOX-SIZING ========== */
 * {
   box-sizing: border-box;
@@ -27,6 +28,7 @@
   font-weight: 500;
   transition: background 0.2s ease;
 }
+
 .sidebar a:hover,
 .sidebar a.active {
   background-color: #004080;
@@ -46,13 +48,16 @@
   font-size: 18px;
   z-index: 1100;
 }
+
 @media (max-width: 768px) {
   .sidebar {
     left: -250px;
   }
+
   .sidebar.open {
     left: 0;
   }
+
   .toggle-sidebar {
     display: block;
   }
@@ -62,15 +67,30 @@
 .main-content {
   margin-left: 250px;
   padding: 2rem;
-  min-height: 100vh;
   background-color: #f4f8fb;
-  padding-bottom: 4rem;  /* room for footer */
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* vertical spacing between sections */
 }
+
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
     padding: 1.5rem;
   }
+}
+
+/* ========== SECTION BLOCKS (e.g. tables, cards) ========== */
+.section-block {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  overflow-x: auto;
 }
 
 /* ========== SUMMARY WIDGETS ========== */
@@ -80,19 +100,50 @@
   text-align: center;
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .summary-widget:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
+
 .summary-widget h6 {
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
   opacity: 0.85;
 }
+
 .summary-widget h4 {
   font-size: 1.4rem;
   font-weight: 700;
 }
+
+
+/* Section title universal styling */
+.section-block h4,
+h4.fw-bold {
+  color: #003366 !important;
+}
+
+/* Sidebar toggle animation */
+.sidebar {
+  transition: left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    left: -250px;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+

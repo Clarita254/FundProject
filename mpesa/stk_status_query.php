@@ -2,15 +2,12 @@
 require_once('../includes/db_connect.php');
 require_once('Mpesa-utils.php');
 
-
-
-
 // Query and update STK Push status
 function queryAndUpdateDonationStatus($conn, $donation_id) {
 
     file_put_contents('stk_query_log.txt', "[" . date('Y-m-d H:i:s') . "] Entered status query for donation ID: $donation_id\n", FILE_APPEND);
     // Fetch CheckoutRequestID from donations table
-    $stmt = $conn->prepare("SELECT checkout_request_id FROM donations WHERE donation_id = ?");
+    $stmt = $conn->prepare("SELECT checkout_request_id FROM donations WHERE donation_Id = ?");
     $stmt->bind_param("i", $donation_id);
     $stmt->execute();
     $stmt->bind_result($checkoutRequestID);
@@ -70,17 +67,21 @@ function queryAndUpdateDonationStatus($conn, $donation_id) {
     }
 
     $resultCode = $result['ResultCode'];
+    // $merchantCode = $result['ResultCode'];
     $resultDesc = $result['ResultDesc'] ?? 'No description';
+
+    // change these queries to update phone number and empty fields from transaction
+    // $stmt = $conn->prepare("UPDATE donations SET status = 'Completed', mpesa_receipt = ?, phone_number = ? WHERE checkout_request_id = ?");
 
     if ($resultCode == '0') {
         // Success → mark as Completed
-        $stmt = $conn->prepare("UPDATE donations SET status = 'Completed' WHERE donation_id = ?");
+        $stmt = $conn->prepare("UPDATE donations SET status = 'Completed' WHERE donation_Id = ?");
         $stmt->bind_param("i", $donation_id);
         $stmt->execute();
         $stmt->close();
     } elseif ($resultCode == '1032') {
         // Transaction cancelled by user → optional to mark as Failed
-        $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE donation_id = ?");
+        $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE donation_Id = ?");
         $stmt->bind_param("i", $donation_id);
         $stmt->execute();
         $stmt->close();

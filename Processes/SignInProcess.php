@@ -58,4 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['error'] = "Invalid username or password. Please try again.";
     header("Location: ../Pages/signIn.php");
     exit();
+
+    if ($row['suspended']) { //prevent suspended users from accessing their accounts
+    $_SESSION['error'] = "Account suspended. Contact admin.";
+    header("Location: ../Pages/signIn.php");
+    exit();
+}
+
+
 }

@@ -20,9 +20,11 @@ $role = $_SESSION['role'] ?? '';
 
   <?php elseif ($role === 'systemAdmin'): ?>
     <a href="../Dashboards/systemAdminDashboard.php"><i class="fas fa-user-shield me-2"></i> Admin Home</a>
-    <a href=" "><i class="fas fa-check-circle me-2"></i> Verify School </a>
+    <a href=" "><i class="fas fa-check-circle me-2"></i> Verify School documents </a>
     <a href=" "><i class="fas fa-check-double me-2"></i> Approve/reject Campaigns</a>
-    <a href="#"><i class="fas fa-users-cog me-2"></i> Manage Users</a>
+    <a href=" "><i class="fas fa-users-cog me-2"></i>User Management</a>
+    <a href=" "><i class="fas fa-users-cog me-2"></i>Donor Records</a>
+    <a href=" "><i class="fas fa-users-cog me-2"></i>School Records</a>
   <?php endif; ?>
 
   <a href="../includes/logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>

@@ -178,3 +178,144 @@ Response: {
         }
         
 
+[2025-07-08 11:58:28] Entered status query for donation ID: 54
+[2025-07-08 11:58:30] Donation ID: 54
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_08072025130031104797606228",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-08 12:03:40] Entered status query for donation ID: 55
+[2025-07-08 12:03:41] Donation ID: 55
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"3ac5-4c88-8708-9bd2f5b3e98d113492",
+            "CheckoutRequestID":"ws_CO_08072025130319182717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-10 15:04:09] Entered status query for donation ID: 56
+[2025-07-10 15:04:11] Donation ID: 56
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"4fa1-4cef-a2ac-ee85b585aad511868",
+            "CheckoutRequestID":"ws_CO_10072025160614463745222497",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-10 15:08:31] Entered status query for donation ID: 57
+[2025-07-10 15:08:33] Donation ID: 57
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"55dd-4ca0-9daa-7acfa32d246011658",
+            "CheckoutRequestID":"ws_CO_10072025161036969790268032",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-10 18:21:25] Entered status query for donation ID: 65
+No checkout_request_id for donation_id: 65
+[2025-07-10 18:22:00] Entered status query for donation ID: 65
+No checkout_request_id for donation_id: 65
+[2025-07-10 18:25:05] Entered status query for donation ID: 65
+No checkout_request_id for donation_id: 65
+[2025-07-10 18:33:44] Entered status query for donation ID: 67
+[2025-07-10 18:33:47] Donation ID: 67
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"523b-4c6b-ba35-915881b6a63a49828",
+            "CheckoutRequestID":"ws_CO_10072025183800987717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-10 19:04:10] Entered status query for donation ID: 58
+No checkout_request_id for donation_id: 58
+[2025-07-10 19:06:40] Entered status query for donation ID: 58
+No checkout_request_id for donation_id: 58
+[2025-07-10 19:10:03] Entered status query for donation ID: 58
+No checkout_request_id for donation_id: 58
+[2025-07-10 20:31:28] Entered status query for donation ID: 58
+No checkout_request_id for donation_id: 58
+[2025-07-11 00:43:50] Entered status query for donation ID: 73
+[2025-07-11 00:43:54] Donation ID: 73
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"2125-44ce-973c-4255e836d09150773",
+            "CheckoutRequestID":"ws_CO_10072025192931916717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-11 07:04:14] Entered status query for donation ID: 72
+[2025-07-11 07:04:18] Donation ID: 72
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"523b-4c6b-ba35-915881b6a63a50358",
+            "CheckoutRequestID":"ws_CO_10072025192710628717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-11 07:10:24] Entered status query for donation ID: 77
+[2025-07-11 07:10:26] Donation ID: 77
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"55dd-4ca0-9daa-7acfa32d246022246",
+            "CheckoutRequestID":"ws_CO_11072025080902835717808890",
+            "ResultCode": "17",
+            "ResultDesc":"Rule limited."
+        }
+        
+
+[2025-07-11 21:51:18] Entered status query for donation ID: 85
+[2025-07-11 21:51:20] Donation ID: 85
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"4fa1-4cef-a2ac-ee85b585aad533155",
+            "CheckoutRequestID":"ws_CO_11072025225316615717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-12 09:38:08] Entered status query for donation ID: 86
+[2025-07-12 09:38:10] Donation ID: 86
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"aeea-458f-b49c-5b5b470ca8163591",
+            "CheckoutRequestID":"ws_CO_12072025104005774727384844",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+

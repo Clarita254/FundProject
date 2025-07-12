@@ -76,7 +76,7 @@ if ($payment_mode === 'M-Pesa') {
     
     if (!$response['success']) {
         // Optionally: update donation as failed
-        $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE donation_id = ?");
+        $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE donation_Id = ?");
         $stmt->bind_param("i", $donation_id);
         $stmt->execute();
         $stmt->close();

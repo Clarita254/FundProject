@@ -14,7 +14,7 @@ $donationId = $_GET['donation_Id'] ?? null;
 // Fetch donation with campaign
 $stmt = $conn->prepare("SELECT d.*, c.campaign_name FROM donations d
                         JOIN campaigns c ON d.campaign_id = c.campaign_id
-                        WHERE d.donation_id = ? AND d.donor_id = ?");
+                        WHERE d.donation_Id = ? AND d.donor_id = ?");
 $stmt->bind_param("ii", $donationId, $donorId);
 $stmt->execute();
 $result = $stmt->get_result();

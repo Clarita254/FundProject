@@ -145,7 +145,7 @@ include_once("../Templates/breadcrumb.php");
             </div>
             <?php if ($status === 'Completed' && !empty($donation['mpesa_receipt'])): ?>
               <div class="mt-3 text-end">
-                <a href="../mpesa/receipt_pdf.php?donation_Id=<?= $donation['donation_Id'] ?>" class="btn btn-sm btn-outline-light">Download Receipt</a>
+                <a href="../mpesa/receipt_pdf.php?>" class="btn btn-sm btn-outline-light">Download Receipt</a>
               </div>
             <?php endif; ?>
           </div>
