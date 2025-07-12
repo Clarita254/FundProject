@@ -25,6 +25,8 @@ $breadcrumbs = ["Create Campaign"];
   
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/footer.css">
+ 
 <link rel="stylesheet" href="../CSS/schoolAdminNav.css">
  
 </head>

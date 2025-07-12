@@ -1,0 +1,2 @@
+2025-07-12 20:00:00 - Signup.php hit
+Raw input: {"school_name":"Rose of Sharon","email":"info@roseofsharon.edu","phone":"0789654236","school_code":"11189","school_type":"Primary","location":"kabarnet road","county":"Nairobi","rep_name":"Franklin Mutisya","rep_role":"Headteacher","password":"Rose@2025","confirm_password":"Rose@2025"}

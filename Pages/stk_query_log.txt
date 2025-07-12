@@ -376,3 +376,16 @@ Response: {
                 }
             
 
+[2025-07-12 20:44:54] Entered status query for donation ID: 87
+[2025-07-12 20:44:56] Donation ID: 87
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"523b-4c6b-ba35-915881b6a63a83994",
+            "CheckoutRequestID":"ws_CO_12072025214715405786440699",
+            "ResultCode": "2001",
+            "ResultDesc":"The initiator information is invalid."
+        }
+        
+

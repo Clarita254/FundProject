@@ -192,7 +192,11 @@ $schools = $conn->query("SELECT u.user_id, sp.school_name, u.email, COUNT(c.camp
           <td>
             <?php if (!$user['flagged']): ?>
               <a href="../Processes/flag_user.php?id=<?= $user['user_id'] ?>" class="btn btn-sm btn-warning me-1">Flag</a>
-            <?php endif; ?>
+    
+
+            <?php else: ?>
+  <a href="../Processes/unflag_user.php?id=<?= $user['user_id'] ?>" class="btn btn-sm btn-success me-1">Unflag</a>
+   <?php endif; ?>
             <?php if (!$user['suspended']): ?>
               <a href="../Processes/suspend_user.php?id=<?= $user['user_id'] ?>" class="btn btn-sm btn-secondary me-1">Suspend</a>
             <?php endif; ?>

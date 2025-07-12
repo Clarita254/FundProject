@@ -13,13 +13,40 @@ if (!isset($_GET['id'])) {
 }
 
 $school_id = intval($_GET['id']);
-$school = $conn->query("SELECT * FROM users WHERE user_id = $school_id AND role = 'schoolAdmin'")->fetch_assoc();
 
+// Get school details + verification status
+$schoolQuery = "SELECT u.*, sp.school_name, 
+                   (SELECT status FROM verification_documents 
+                    WHERE schoolAdmin_id = u.user_id 
+                    ORDER BY upload_time DESC 
+                    LIMIT 1) AS verification_status
+                FROM users u 
+                JOIN school_profiles sp ON u.user_id = sp.schoolAdmin_id 
+                WHERE u.user_id = $school_id AND u.role = 'schoolAdmin'";
+$school = $conn->query($schoolQuery)->fetch_assoc();
+
+// Get campaigns
 $campaigns = $conn->query("SELECT * FROM campaigns WHERE schoolAdmin_id = $school_id");
-$donations = $conn->query("SELECT d.amount, d.date, c.campaign_name 
+
+// Get donations
+$donations = $conn->query("SELECT d.amount, d.donation_date, c.campaign_name 
                            FROM donations d 
                            JOIN campaigns c ON d.campaign_id = c.campaign_id 
                            WHERE c.schoolAdmin_id = $school_id");
+
+// Get verification documents
+$documents = $conn->query("SELECT file_name, upload_time, status 
+                           FROM verification_documents 
+                           WHERE schoolAdmin_id = $school_id 
+                           ORDER BY upload_time DESC");
+
+// Get totals
+$totals = $conn->query("SELECT 
+                          SUM(c.target_amount) AS total_requested,
+                          SUM(d.amount) AS total_donated
+                        FROM campaigns c
+                        LEFT JOIN donations d ON c.campaign_id = d.campaign_id
+                        WHERE c.schoolAdmin_id = $school_id")->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,16 +54,77 @@ $donations = $conn->query("SELECT d.amount, d.date, c.campaign_name
   <meta charset="UTF-8">
   <title>School Details</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <style>
+    .section-box {
+      background-color: #eaf3fb; /* light blue */
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+
+    .btn-purple {
+  background-color: #330066;
+  color: #fff;
+}
+
+.btn-purple:hover {
+  background-color: #290052;
+}
+
+  </style>
 </head>
 <body class="bg-light">
 <div class="container py-5">
   <h2 class="mb-4 text-primary">🏫 School Details</h2>
-  <div class="bg-white p-4 rounded shadow-sm">
+
+  <!-- School Info -->
+  <div class="section-box">
     <h4><?= htmlspecialchars($school['school_name']) ?></h4>
     <p>Email: <?= htmlspecialchars($school['email']) ?></p>
+    <p>Verification Status: 
+      <span class="badge bg-<?= 
+        $school['verification_status'] === 'Approved' ? 'success' : 
+        ($school['verification_status'] === 'Pending' ? 'warning text-dark' : 'danger') ?>">
+        <?= $school['verification_status'] ?? 'Not Submitted' ?>
+      </span>
+    </p>
   </div>
 
-  <div class="bg-white p-4 rounded shadow-sm mt-4">
+  <!-- Totals Summary -->
+  <div class="section-box">
+    <h5 class="text-secondary">Summary</h5>
+    <ul class="list-group">
+      <li class="list-group-item">Total Campaign Amount Requested: <strong>Ksh <?= number_format($totals['total_requested'] ?? 0, 2) ?></strong></li>
+      <li class="list-group-item">Total Donations Received: <strong>Ksh <?= number_format($totals['total_donated'] ?? 0, 2) ?></strong></li>
+    </ul>
+  </div>
+
+  <!-- Documents -->
+  <div class="section-box">
+    <h5 class="text-secondary">Verification Documents</h5>
+    <table class="table table-bordered">
+      <thead class="table-dark">
+        <tr><th>Document</th><th>Uploaded</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <?php if ($documents->num_rows > 0): ?>
+          <?php while ($doc = $documents->fetch_assoc()): ?>
+          <tr>
+            <td><a href="../uploads/<?= htmlspecialchars($doc['file_name']) ?>" target="_blank">View</a></td>
+            <td><?= date('d M Y H:i', strtotime($doc['upload_time'])) ?></td>
+            <td><?= $doc['status'] ?></td>
+          </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <tr><td colspan="3" class="text-muted text-center">No documents uploaded</td></tr>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Campaigns -->
+  <div class="section-box">
     <h5 class="text-secondary">Campaigns Created</h5>
     <table class="table table-bordered">
       <thead class="table-dark">
@@ -55,7 +143,8 @@ $donations = $conn->query("SELECT d.amount, d.date, c.campaign_name
     </table>
   </div>
 
-  <div class="bg-white p-4 rounded shadow-sm mt-4">
+  <!-- Donations -->
+  <div class="section-box">
     <h5 class="text-secondary">Donations Received</h5>
     <table class="table table-bordered">
       <thead class="table-dark">
@@ -66,14 +155,16 @@ $donations = $conn->query("SELECT d.amount, d.date, c.campaign_name
         <tr>
           <td><?= htmlspecialchars($d['campaign_name']) ?></td>
           <td>Ksh <?= number_format($d['amount'], 2) ?></td>
-          <td><?= date('d M Y', strtotime($d['date'])) ?></td>
+          <td><?= date('d M Y', strtotime($d['donation_date'])) ?></td>
         </tr>
         <?php endwhile; ?>
       </tbody>
     </table>
   </div>
 
-  <a href="systemAdminDashboard.php" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+ <a href="systemAdminDashboard.php" class="btn btn-purple mt-3">← Back to Dashboard</a>
+
+
 </div>
 </body>
 </html>

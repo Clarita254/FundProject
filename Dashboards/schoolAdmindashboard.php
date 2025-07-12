@@ -23,40 +23,22 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   <link rel="stylesheet" href="../CSS/schoolAdmindashboard.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-
 </head>
 <body>
 
-<!-- Sidebar toggle button for mobile -->
+<!-- Sidebar toggle -->
 <button class="toggle-sidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
 
 <!-- Sidebar -->
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-  <a href="../Dashboards/schoolAdmindashboard.php" class="<?= basename($_SERVER['PHP_SELF']) === 'schoolAdmindashboard.php' ? 'active' : '' ?>">
-    <i class="fas fa-home me-2"></i> Dashboard
-  </a>
-  <a href="../Pages/Campaigncreation.php" class="<?= basename($_SERVER['PHP_SELF']) === 'Campaigncreation.php' ? 'active' : '' ?>">
-    <i class="fas fa-plus-circle me-2"></i> Create Campaign
-  </a>
-  <a href="../Pages/Campaign.php" class="<?= basename($_SERVER['PHP_SELF']) === 'Campaign.php' ? 'active' : '' ?>">
-    <i class="fas fa-eye me-2"></i> View Campaigns
-  </a>
-  <a href="../Dashboards/manageCampaigns.php" class="<?= basename($_SERVER['PHP_SELF']) === 'manageCampaigns.php' ? 'active' : '' ?>">
-    <i class="fas fa-tasks me-2"></i> Manage Campaigns
-  </a>
-  <a href="../Processes/Progressform.php" class="<?= basename($_SERVER['PHP_SELF']) === 'Progressform.php' ? 'active' : '' ?>">
-    <i class="fas fa-file-alt me-2"></i> Fund Utilization Form
-  </a>
-  <a href="../Pages/ProgressReport.php" class="<?= basename($_SERVER['PHP_SELF']) === 'ProgressReport.php' ? 'active' : '' ?>">
-    <i class="fas fa-chart-line me-2"></i> Fund Utilization Reports
-  </a>
-  <a href="../includes/logout.php">
-    <i class="fas fa-sign-out-alt me-2"></i> Logout
-  </a>
+  <a href="../Dashboards/schoolAdmindashboard.php" class="active"><i class="fas fa-home me-2"></i> Dashboard</a>
+  <a href="../Pages/Campaigncreation.php"><i class="fas fa-plus-circle me-2"></i> Create Campaign</a>
+  <a href="../Pages/Campaign.php"><i class="fas fa-eye me-2"></i> View Campaigns</a>
+  <a href="../Dashboards/manageCampaigns.php"><i class="fas fa-tasks me-2"></i> Manage Campaigns</a>
+  <a href="../Processes/Progressform.php"><i class="fas fa-file-alt me-2"></i> Fund Utilization Form</a>
+  <a href="../Pages/ProgressReport.php"><i class="fas fa-chart-line me-2"></i> Fund Utilization Reports</a>
+  <a href="../includes/logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
 </div>
-
 
 <!-- Main Content -->
 <div class="main-content">
@@ -66,48 +48,54 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
     <div class="col-md-4">
       <div class="summary-widget">
         <h6>Verification Docs</h6>
-        <h4>
-          <?php
+        <h4><?php
           $count = $conn->query("SELECT COUNT(*) as total FROM verification_documents WHERE schoolAdmin_id = $schoolAdminId")->fetch_assoc();
           echo $count['total'];
-          ?>
-        </h4>
+        ?></h4>
       </div>
     </div>
     <div class="col-md-4">
       <div class="summary-widget">
         <h6>Campaigns Created</h6>
-        <h4>
-          <?php
+        <h4><?php
           $count = $conn->query("SELECT COUNT(*) as total FROM campaigns WHERE schoolAdmin_id = $schoolAdminId")->fetch_assoc();
           echo $count['total'];
-          ?>
-        </h4>
+        ?></h4>
       </div>
     </div>
     <div class="col-md-4">
       <div class="summary-widget">
         <h6>Reports Submitted</h6>
-        <h4>
-          <?php
+        <h4><?php
           $count = $conn->query("SELECT COUNT(*) as total FROM progress_reports WHERE schoolAdmin_id = $schoolAdminId")->fetch_assoc();
           echo $count['total'] ?? 0;
-          ?>
-        </h4>
+        ?></h4>
       </div>
     </div>
   </div>
 
+  <!-- Upload Verification Document -->
+  <div class="dashboard-card mt-4">
+    <h5 class="mb-3"><i class="fas fa-upload me-2"></i> Upload Verification Document</h5>
+    <form action="../uploads/uploadDocuments.php" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <input type="file" name="verification_document" class="form-control" required>
+        <input type="hidden" name="schoolAdmin_id" value="<?= $schoolAdminId ?>">
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fas fa-upload me-1"></i> Upload</button>
+    </form>
+  </div>
+
   <!-- Latest Verification Document -->
   <div class="dashboard-card mt-4">
-<h5 class="mb-3"><i class="fas fa-id-card-alt me-2"></i>Latest Verification Document</h5>
+    <h5 class="mb-3"><i class="fas fa-id-card-alt me-2"></i> Latest Verification Document</h5>
     <?php
-      $stmt = $conn->prepare("SELECT file_name, upload_time, status FROM verification_documents WHERE schoolAdmin_id = ? ORDER BY upload_time DESC LIMIT 1");
-      $stmt->bind_param("i", $schoolAdminId);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      if ($result->num_rows > 0):
-          $doc = $result->fetch_assoc();
+    $stmt = $conn->prepare("SELECT file_name, upload_time, status FROM verification_documents WHERE schoolAdmin_id = ? ORDER BY upload_time DESC LIMIT 1");
+    $stmt->bind_param("i", $schoolAdminId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0):
+      $doc = $result->fetch_assoc();
     ?>
     <ul class="list-group">
       <li class="list-group-item"><strong>File:</strong> <?= htmlspecialchars($doc['file_name']) ?></li>
@@ -123,55 +111,51 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
     <?php endif; ?>
   </div>
 
-<!-- Campaign Approval Status -->
-<div class="dashboard-card mt-4 ">
-  <h5 class="mb-3"><i class="fas fa-bullhorn me-2"></i>Campaign Status</h5>
-
-  <?php
+  <!-- Campaign Status -->
+  <div class="dashboard-card mt-4">
+    <h5 class="mb-3"><i class="fas fa-bullhorn me-2"></i> Campaign Status</h5>
+    <?php
     $stmt = $conn->prepare("SELECT campaign_name, status, created_at FROM campaigns WHERE schoolAdmin_id = ?");
     $stmt->bind_param("i", $schoolAdminId);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0):
-  ?>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Campaign</th>
-        <th>Status</th>
-        <th>Created At</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php while ($row = $result->fetch_assoc()): ?>
-      <?php
-        $status = $row['status'];
-        $badgeClass = match ($status) {
-          'Approved' => 'bg-success',
-          'Rejected' => 'bg-danger',
-          'Pending' => 'bg-warning text-dark',
-          default => 'bg-secondary'
-        };
-      ?>
-      <tr>
-        <td><?= htmlspecialchars($row['campaign_name']) ?></td>
-        <td><span class="badge <?= $badgeClass ?>"><?= htmlspecialchars($status) ?></span></td>
-        <td><?= date('d M Y', strtotime($row['created_at'])) ?></td>
-      </tr>
-      <?php endwhile; ?>
-    </tbody>
-  </table>
-  <?php else: ?>
-    <p class="text-muted">No campaigns yet.</p>
-  <?php endif; ?>
-</div>
-
+    ?>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th>Status</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php while ($row = $result->fetch_assoc()):
+          $status = $row['status'];
+          $badgeClass = match ($status) {
+            'Approved' => 'bg-success',
+            'Rejected' => 'bg-danger',
+            'Pending' => 'bg-warning text-dark',
+            default => 'bg-secondary'
+          };
+        ?>
+        <tr>
+          <td><?= htmlspecialchars($row['campaign_name']) ?></td>
+          <td><span class="badge <?= $badgeClass ?>"><?= htmlspecialchars($status) ?></span></td>
+          <td><?= date('d M Y', strtotime($row['created_at'])) ?></td>
+        </tr>
+        <?php endwhile; ?>
+      </tbody>
+    </table>
+    <?php else: ?>
+      <p class="text-muted">No campaigns yet.</p>
+    <?php endif; ?>
   </div>
 
   <!-- Logout -->
   <div class="text-center mt-4">
     <a href="../includes/logout.php" class="btn btn-danger">
-      <i class="fas fa-sign-out-alt me-2"></i>Logout
+      <i class="fas fa-sign-out-alt me-2"></i> Logout
     </a>
   </div>
 </div>

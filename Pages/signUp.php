@@ -127,7 +127,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
 
 
   // Send via fetch to your API
-  const res = await fetch("../FundProject/api/signup.php", {
+  const res = await fetch("../api/signup.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
