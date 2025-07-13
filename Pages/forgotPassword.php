@@ -9,9 +9,9 @@ if (!isset($_SESSION['forgot_password_throttle'])) {
 }
 $attempts = &$_SESSION['forgot_password_throttle'];
 
-// Clear out old timestamps (older than 15 minutes)
+// Clear out old timestamps (older than 1 minute)
 foreach ($attempts as $i => $timestamp) {
-    if ($timestamp + 900 < $current_time) { // 900 seconds = 15 minutes
+    if ($timestamp + 60 < $current_time) { // 60 seconds = 1 minute
         unset($attempts[$i]);
     }
 }

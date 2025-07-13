@@ -8,9 +8,9 @@ if (!isset($_SESSION['signup_throttle'])) {
 }
 $attempts = &$_SESSION['signup_throttle'];
 
-// Clear out old attempts (older than 10 minutes)
+// Clear out old attempts (older than 1 minute)
 foreach ($attempts as $i => $timestamp) {
-    if ($timestamp + 600 < $current_time) {
+    if ($timestamp + 60 < $current_time) {
         unset($attempts[$i]);
     }
 }
