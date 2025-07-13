@@ -2,18 +2,12 @@
 session_start();
 require_once("../includes/db_connect.php");
 
-
-
-
-
 $userId = $_SESSION['user_id'] ?? null;
 $role = $_SESSION['role'] ?? 'guest';
 
-// Collect filters
 $category = $_GET['category'] ?? '';
 $search = trim($_GET['search'] ?? '');
 
-// Build dynamic query
 $query = "SELECT * FROM campaigns WHERE status = 'Approved'";
 
 if (!empty($category)) {
@@ -47,16 +41,12 @@ $result = mysqli_query($conn, $query);
 </head>
 <body>
     
-
 <?php include_once("../Templates/nav.php"); ?>
-
-
 
 <div class="container py-5">
   <h1 class="page-title text-center mb-4" style="color:rgb(6, 40, 75); font-weight: 700; font-family: 'Segoe UI', sans-serif;">
-  <i class="fas fa-bullhorn me-2"></i> Explore Campaigns
-</h1>
-
+    <i class="fas fa-bullhorn me-2"></i> Explore Campaigns
+  </h1>
 
   <!-- Filter Form -->
   <form method="GET" class="mb-4 px-3">
@@ -83,9 +73,8 @@ $result = mysqli_query($conn, $query);
       </div>
       <div class="col-md-4 col-4 d-grid">
         <button type="submit" class="btn" style="background-color: #2980b9; color: #fff; border-radius: 8px;">
-  <i class="fas fa-filter me-1"></i> Apply Filters
-</button>
-
+          <i class="fas fa-filter me-1"></i> Apply Filters
+        </button>
       </div>
     </div>
   </form>
@@ -120,7 +109,7 @@ $result = mysqli_query($conn, $query);
           $progress = $target > 0 ? min(100, ($raised / $target) * 100) : 0;
         ?>
         <div class="campaign-card">
-          <div class="campaign-image" style="background-image: url('<?= $image ?>')"></div>
+          <div class="campaign-image lazy-bg" data-bg="<?= $image ?>"></div>
           <div class="campaign-content">
             <h3 class="campaign-title d-flex justify-content-between align-items-center">
               <?= $title ?>
@@ -148,5 +137,28 @@ $result = mysqli_query($conn, $query);
 
 <!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Lazy Load Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const lazyBackgrounds = document.querySelectorAll('.lazy-bg');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bg = entry.target.getAttribute('data-bg');
+          entry.target.style.backgroundImage = `url('${bg}')`;
+          entry.target.classList.remove('lazy-bg');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: "0px 0px 200px 0px"
+    });
+
+    lazyBackgrounds.forEach(el => observer.observe(el));
+  });
+</script>
+
 </body>
 </html>

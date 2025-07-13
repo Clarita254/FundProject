@@ -3,7 +3,6 @@ session_start();
 require_once("../includes/db_connect.php");
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,16 +14,13 @@ require_once("../includes/db_connect.php");
     <link rel="stylesheet" href="../CSS/Home.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/footer.css">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
    <!---Include Header---->
-  <?php include_once("../Templates/nav.php"); ?>
+   <?php include_once("../Templates/nav.php"); ?>
 
-  
     <!-- Hero Section -->
-
-
     <section class="hero">
         <h1>Fund Education, Change Lives</h1>
         <p>Join our platform to support students in need.</p>
@@ -58,46 +54,45 @@ require_once("../includes/db_connect.php");
         </div>
     </section>
     
-  <section class="campaigns">
-    <h2>Featured Campaigns</h2>
-    <div class="campaign-grid">
-        <div class="campaign-card">
-            <div class="campaign-img">
-                <img src="../EDUFUNDPROJECT/FundProject/Images/Helpachildlearn.png" alt="Help a Child Learn" />
+    <section class="campaigns">
+        <h2>Featured Campaigns</h2>
+        <div class="campaign-grid">
+            <div class="campaign-card">
+                <div class="campaign-img">
+                    <img src="../EDUFUNDPROJECT/FundProject/Images/Helpachildlearn.png" alt="Help a Child Learn" loading="lazy" />
+                </div>
+                <div class="campaign-info">
+                    <h3>Help a Child Learn</h3>
+                    <p>Support a child in need of educational resources.</p>
+                    <a href="#" class="learn-more-btn">Learn More</a>
+                </div>
             </div>
-            <div class="campaign-info">
-                <h3>Help a Child Learn</h3>
-                <p>Support a child in need of educational resources.</p>
-                <a href="#" class="learn-more-btn">Learn More</a>
+            <div class="campaign-card">
+                <div class="campaign-img">
+                    <img src="..EDUFUNDPROJECT/FundProject/Images/schoolsupplies.png" alt="School Supplies Drive" loading="lazy" />
+                </div>
+                <div class="campaign-info">
+                    <h3>School Supplies Drive</h3>
+                    <p>Providing materials for underprivileged students.</p>
+                    <a href="#" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            <div class="campaign-card">
+                <div class="campaign-img">
+                    <img src="../FUNDPROJECT/FundProject/Images/schoolinfrastructure.png" alt="Public School Renovation" loading="lazy" />
+                </div>
+                <div class="campaign-info">
+                    <h3>Public School Renovation</h3>
+                    <p>Help improve facilities and learning environments in public schools.</p>
+                    <a href="#" class="learn-more-btn">Learn More</a>
+                </div>
             </div>
         </div>
-        <div class="campaign-card">
-            <div class="campaign-img">
-                <img src="..EDUFUNDPROJECT/FundProject/Images/schoolsupplies.png" alt="School Supplies Drive" />
-            </div>
-            <div class="campaign-info">
-                <h3>School Supplies Drive</h3>
-                <p>Providing materials for underprivileged students.</p>
-                <a href="#" class="learn-more-btn">Learn More</a>
-            </div>
-        </div>
-        <div class="campaign-card">
-            <div class="campaign-img">
-                <img src="../FUNDPROJECT/FundProject/Images/schoolinfrastructure.png" alt="Public School Renovation" />
-            </div>
-            <div class="campaign-info">
-                <h3>Public School Renovation</h3>
-                <p>Help improve facilities and learning environments in public schools.</p>
-                <a href="#" class="learn-more-btn">Learn More</a>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
-    
     <!------Include footer-->
-   <?php include_once("../Templates/Footer.php"); ?>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include_once("../Templates/Footer.php"); ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
