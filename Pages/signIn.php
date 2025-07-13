@@ -16,12 +16,15 @@ foreach ($attempts as $i => $timestamp) {
     }
 }
 
-if (count($attempts) >= 5) {
+// Block if 3 or more attempts in the last 60 seconds
+if (count($attempts) >= 3) {
     http_response_code(429);
-    exit("Too many sign-in attempts. Please try again after 5 minutes.");
+    exit("Too many sign-in attempts. Please try again after 1 minute.");
 }
 
 $attempts[] = $current_time;
+// ========= END THROTTLING =========
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -9,13 +9,14 @@ if (!isset($_SESSION['signup_throttle'])) {
 }
 $attempts = &$_SESSION['signup_throttle'];
 
-// Clear old attempts (older than 1 minute)
+// Clear old attempts (older than 1 minute = 60 seconds)
 foreach ($attempts as $i => $timestamp) {
     if ($timestamp + 60 < $current_time) {
         unset($attempts[$i]);
     }
 }
 
+// Block if 3 or more attempts in the last 60 seconds
 if (count($attempts) >= 3) {
     http_response_code(429);
     exit("Too many sign-up attempts. Please try again after 1 minute.");
