@@ -92,4 +92,4 @@ $_SESSION['donated_amount'] = $amount;
 // Redirect
 header("Location: ../Pages/thankyou.php");
 exit();
-?>
+?> 

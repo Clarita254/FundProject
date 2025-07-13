@@ -116,9 +116,12 @@ $result = mysqli_query($conn, $query);
               <span class="badge bg-success"><?= htmlspecialchars($row['status']) ?></span>
             </h3>
             <p class="campaign-description"><?= $description ?></p>
-            <div class="progress mb-2">
-              <div class="progress-bar bg-success" role="progressbar" style="width: <?= $progress ?>%;" aria-valuenow="<?= $progress ?>" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+<div class="progress mb-2">
+  <div class="progress-bar bg-success" role="progressbar" style="width: <?= $progress ?>%;" aria-valuenow="<?= $progress ?>" aria-valuemin="0" aria-valuemax="100">
+    <?= round($progress) ?>%
+  </div>
+</div>
+
             <p class="raised-amount">Raised: KES <?= number_format($raised, 2) ?> of KES <?= number_format($target, 2) ?></p>
             <div class="d-flex justify-content-between align-items-center">
               <span class="days-left"><i class="far fa-clock me-1"></i><?= $daysLeft > 0 ? "$daysLeft days left" : 'Ended' ?></span>

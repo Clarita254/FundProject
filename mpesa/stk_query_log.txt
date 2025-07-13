@@ -319,3 +319,29 @@ Response: {
         }
         
 
+[2025-07-13 11:34:26] Entered status query for donation ID: 88
+[2025-07-13 11:34:28] Donation ID: 88
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"523b-4c6b-ba35-915881b6a63a94322",
+            "CheckoutRequestID":"ws_CO_13072025123634545717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
+[2025-07-13 13:08:45] Entered status query for donation ID: 96
+[2025-07-13 13:08:47] Donation ID: 96
+HTTP: 200
+Response: {
+            "ResponseCode": "0",
+            "ResponseDescription":"The service request has been accepted successsfully",
+            "MerchantRequestID":"523b-4c6b-ba35-915881b6a63a95363",
+            "CheckoutRequestID":"ws_CO_13072025141042177717808890",
+            "ResultCode": "0",
+            "ResultDesc":"The service request is processed successfully."
+        }
+        
+
