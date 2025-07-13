@@ -8,13 +8,27 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     exit();
 }
 
-$donorId = $_SESSION['user_id'];
+// Step 1: Get the actual donor_Id from the donors table using session user_id
+$sessionUserId = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT donor_Id FROM donors WHERE user_id = ?");
+$stmt->bind_param("i", $sessionUserId);
+$stmt->execute();
+$result = $stmt->get_result();
+$donorData = $result->fetch_assoc();
+$stmt->close();
+
+if (!$donorData) {
+    die("Donor profile not found.");
+}
+
+$donorId = $donorData['donor_Id'];
+
+// Step 2: Now fetch the donation using donor_Id
 $donationId = $_GET['donation_Id'] ?? null;
 
-// Fetch donation with campaign
 $stmt = $conn->prepare("SELECT d.*, c.campaign_name FROM donations d
                         JOIN campaigns c ON d.campaign_id = c.campaign_id
-                        WHERE d.donation_Id = ? AND d.donor_id = ?");
+                        WHERE d.donation_Id = ? AND d.donor_Id = ?");
 $stmt->bind_param("ii", $donationId, $donorId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -39,8 +53,7 @@ $isProvisional = $status !== 'Completed';
 
   <link rel="stylesheet" href="../CSS/footer.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
-   <link rel="stylesheet" href="../CSS/receipt.css">
-  
+  <link rel="stylesheet" href="../CSS/receipt.css">
 </head>
 <body>
 
@@ -72,15 +85,15 @@ $isProvisional = $status !== 'Completed';
 
     <div class="btn-group">
       <a href="../mpesa/receipt_pdf.php?donation_Id=<?= $donation['donation_Id'] ?>" class="btn btn-success me-2" target="_blank">
-  <i class="fas fa-download me-1"></i>Download PDF
-</a>
-<button onclick="window.print()" class="btn btn-primary">
-  <i class="fas fa-print me-1"></i>Print Receipt
-</button>
-
+        <i class="fas fa-download me-1"></i>Download PDF
+      </a>
+      <button onclick="window.print()" class="btn btn-primary">
+        <i class="fas fa-print me-1"></i>Print Receipt
+      </button>
     </div>
   </div>
 </div>
 
 </body>
 </html>
+

@@ -1,0 +1,87 @@
+.admin-footer {
+  background: linear-gradient(135deg, #001f3f, #003366); /* Deep blue gradient */
+  color: #ffffff;
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+  font-size: 0.95rem;
+  margin-left: 250px; /* Offset to align with sidebar */
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.admin-footer * {
+  border: none !important; /* Remove any inherited lines or borders */
+}
+
+.admin-footer h5 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #7fdbff; /* Aqua accent for headings */
+}
+
+.admin-footer p,
+.admin-footer a {
+  margin-bottom: 0.5rem;
+  color: #f0f0f0;
+}
+
+.admin-footer .footer-link {
+  color: #f0f0f0;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  padding: 2px 0;
+}
+
+.admin-footer .footer-link:hover {
+  color: #7fdbff;
+  transform: translateX(3px);
+  text-decoration: underline;
+}
+
+.admin-footer svg,
+.admin-footer i {
+  vertical-align: middle;
+  margin-right: 6px;
+  color: #7fdbff;
+}
+
+.admin-footer .footer-bottom,
+.admin-footer .footer-bottom-text {
+  font-size: 0.85rem;
+  color: #ffffff !important; /* Ensure visibility of copyright */
+  text-align: center;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.admin-footer .container {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Animation if needed later */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive footer */
+@media (max-width: 768px) {
+  .admin-footer {
+    margin-left: 0;
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+
+

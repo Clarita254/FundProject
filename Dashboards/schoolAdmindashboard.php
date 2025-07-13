@@ -18,14 +18,14 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   <meta charset="UTF-8">
   <title>School Admin Dashboard</title>
   <link rel="stylesheet" href="../CSS/navbar.css">
-  <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/adminfooter.css">
   <link rel="stylesheet" href="../CSS/Progressform.css">
   <link rel="stylesheet" href="../CSS/schoolAdmindashboard.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-
+  
 <!-- Sidebar toggle -->
 <button class="toggle-sidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
 
@@ -42,6 +42,9 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
 
 <!-- Main Content -->
 <div class="main-content">
+  
+
+
   <h2 class="fw-bold mb-4 text-primary text-center">Welcome, <?= htmlspecialchars($schoolName) ?>!</h2>
 
   <div class="row g-4 mb-4">
@@ -72,6 +75,7 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
         ?></h4>
       </div>
     </div>
+    
   </div>
 
   <!-- Upload Verification Document -->
@@ -160,12 +164,16 @@ $schoolName = $_SESSION['username'] ?? 'School Admin';
   </div>
 </div>
 
+    
+  
+
 <script>
   function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
   }
 </script>
 
-<?php include_once("../Templates/Footer.php"); ?>
+<?php include_once("../Templates/Admindashboard.php"); ?>
+
 </body>
 </html>

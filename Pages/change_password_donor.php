@@ -20,7 +20,7 @@ foreach ($requests as $i => $timestamp) {
 
 if (count($requests) >= 3) {
     http_response_code(429);
-    exit("Too many password change attempts. Please try again after 10 minutes.");
+    exit("Too many password change attempts. Please try again after 1 minutes.");
 }
 
 // Log this attempt

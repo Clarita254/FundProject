@@ -8,9 +8,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     exit();
 }
 
-$donorId = $_SESSION['user_id'];
+$userId = $_SESSION['user_id'];
 
-// Get the most recent donation
+// ✅ Step 1: Get actual donor_Id from donors table
+$stmt = $conn->prepare("SELECT donor_Id FROM donors WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$donorRow = $result->fetch_assoc();
+$stmt->close();
+
+if (!$donorRow) {
+    die("Donor profile not found.");
+}
+$donorId = $donorRow['donor_Id'];
+
+// ✅ Step 2: Get the most recent donation using correct donor_Id
 $stmt = $conn->prepare("SELECT d.*, c.campaign_name 
                         FROM donations d
                         JOIN campaigns c ON d.campaign_id = c.campaign_id
@@ -23,15 +36,12 @@ $result = $stmt->get_result();
 $latest = $result->fetch_assoc();
 $stmt->close();
 
-
-// Run STK status check if M-Pesa & status is still Pending
+// ✅ Step 3: Run STK status query if needed
 if ($latest && $latest['payment_mode'] === 'M-Pesa' && $latest['status'] === 'Pending') {
-
     queryAndUpdateDonationStatus($conn, $latest['donation_Id']);
-
 }
 
-// Fetch updated donation details with campaign name
+// ✅ Step 4: Re-fetch updated donation
 $stmt = $conn->prepare("SELECT d.*, c.campaign_name 
                         FROM donations d
                         JOIN campaigns c ON d.campaign_id = c.campaign_id
@@ -42,14 +52,11 @@ $stmt->bind_param("i", $donorId);
 $stmt->execute();
 $result = $stmt->get_result();
 $donation = $result->fetch_assoc();
-
 $stmt->close();
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Donation Status</title>
@@ -58,48 +65,44 @@ $stmt->close();
     <link rel="stylesheet" href="../CSS/footer.css">
     <link rel="stylesheet" href="../CSS/paymentstatus.css">
 </head>
-
 <body>
-    <?php include_once("../Templates/nav.php"); ?>
 
-    <div class="container mt-5">
-        <?php if ($donation): ?>
-            <div class="status-card mx-auto text-center p-4 shadow-sm bg-white rounded" style="max-width: 600px;">
-                <?php
-                $status = $donation['status'];
-                $statusColor = $status === 'Completed' ? 'text-success' : ($status === 'Failed' ? 'text-danger' : 'text-warning');
-                $icon = $status === 'Completed' ? '✅' : ($status === 'Failed' ? '❌' : '⏳');
-                ?>
+<?php include_once("../Templates/nav.php"); ?>
 
-                <div class="status-icon <?= $statusColor ?>" style="font-size: 3rem;"><?= $icon ?></div>
-                <h3 class="status-header mt-3">Donation Status</h3>
-                <hr>
+<div class="container mt-5">
+    <?php if ($donation): ?>
+        <div class="status-card mx-auto text-center p-4 shadow-sm bg-white rounded" style="max-width: 600px;">
+            <?php
+            $status = $donation['status'];
+            $statusColor = $status === 'Completed' ? 'text-success' : ($status === 'Failed' ? 'text-danger' : 'text-warning');
+            $icon = $status === 'Completed' ? '✅' : ($status === 'Failed' ? '❌' : '⏳');
+            ?>
 
-                <p><strong>Campaign:</strong> <?= htmlspecialchars($donation['campaign_id']) ?></p>
-                <p><strong>Amount Donated:</strong> <span class="text-primary">KES
-                        <?= number_format($donation['amount'], 2) ?></span></p>
-                <p><strong>Status:</strong> <span
-                        class="fw-bold <?= $statusColor ?>"><?= htmlspecialchars($status) ?></span></p>
+            <div class="status-icon <?= $statusColor ?>" style="font-size: 3rem;"><?= $icon ?></div>
+            <h3 class="status-header mt-3">Donation Status</h3>
+            <hr>
 
-                <?php if (isset($donation['donation_Id'])): ?>
-                    <a href="../mpesa/receipt.php?donation_Id=<?= $donation['donation_Id'] ?>"
-                        class="btn btn-receipt mt-3">Download Receipt</a>
-                <?php endif; ?>
+            <p><strong>Campaign:</strong> <?= htmlspecialchars($donation['campaign_name']) ?></p>
+            <p><strong>Amount Donated:</strong> <span class="text-primary">KES <?= number_format($donation['amount'], 2) ?></span></p>
+            <p><strong>Status:</strong> <span class="fw-bold <?= $statusColor ?>"><?= htmlspecialchars($status) ?></span></p>
 
-                <?php if ($status !== 'Completed'): ?>
-                    <div class="alert alert-warning mt-3">
-                        <strong>Note:</strong> This receipt is provisional. The payment is still being verified by M-Pesa.
-                    </div>
-                <?php endif; ?>
-            </div>
-        <?php else: ?>
-            <div class="alert alert-info text-center mt-5">
-                You haven’t made any donations yet.
-            </div>
-        <?php endif; ?>
-    </div>
+            <?php if (!empty($donation['donation_Id'])): ?>
+                <a href="../mpesa/receipt.php?donation_Id=<?= $donation['donation_Id'] ?>" class="btn btn-receipt mt-3">Download Receipt</a>
+            <?php endif; ?>
 
-    <?php include_once("../Templates/Footer.php"); ?>
+            <?php if ($status !== 'Completed'): ?>
+                <div class="alert alert-warning mt-3">
+                    <strong>Note:</strong> This receipt is provisional. The payment is still being verified by M-Pesa.
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info text-center mt-5">
+            You haven’t made any donations yet.
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php include_once("../Templates/Footer.php"); ?>
 </body>
-
 </html>

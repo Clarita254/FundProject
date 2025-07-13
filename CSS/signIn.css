@@ -30,19 +30,32 @@ body::before {
 
 
 /* Card Styling */
+
+.signin-page {
+  padding-top: 120px; /* Add space below fixed navbar */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Keeps form aligned top with space */
+  min-height: 100vh;
+  position: relative;
+}
+
+
 .signin-card {
   background-color: #ffffff;
-  padding: 90px 2.5rem 2.5rem 2.5rem;
-
+  padding: 2.5rem;
   border-radius: 12px;
   width: 100%;
   max-width: 420px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: translateY(0);
   transition: all 0.6s ease;
-  
+  /* REMOVE this line ↓ */
+  /* padding-top: 90px; */
 }
+
+
 .signin-card.show {
   opacity: 1;
   transform: translateY(0);

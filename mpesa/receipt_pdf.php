@@ -11,13 +11,26 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     die("Access denied.");
 }
 
-$donorId = $_SESSION['user_id'];
+$userId = $_SESSION['user_id'];
 $donationId = $_GET['donation_Id'] ?? null;
 
-// Fetch donation and campaign data
+// ✅ Step 1: Fetch actual donor_Id for this user
+$stmt = $conn->prepare("SELECT donor_Id FROM donors WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$donorRow = $result->fetch_assoc();
+$stmt->close();
+
+if (!$donorRow) {
+    die("Donor not found.");
+}
+$donorId = $donorRow['donor_Id'];
+
+// ✅ Step 2: Fetch donation and campaign data using correct donor_Id
 $stmt = $conn->prepare("SELECT d.*, c.campaign_name FROM donations d
                         JOIN campaigns c ON d.campaign_id = c.campaign_id
-                        WHERE d.donation_Id = ? AND d.donor_id = ?");
+                        WHERE d.donation_Id = ? AND d.donor_Id = ?");
 $stmt->bind_param("ii", $donationId, $donorId);
 $stmt->execute();
 $result = $stmt->get_result();

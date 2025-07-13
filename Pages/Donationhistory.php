@@ -2,7 +2,6 @@
 session_start();
 require_once('../includes/db_connect.php');
 
-
 $breadcrumbs = ["Donation History"];
 
 // Ensure only donors access this page
@@ -11,10 +10,25 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     exit();
 }
 
-$donorId = $_SESSION['user_id'];
+$loggedInUserId = $_SESSION['user_id'];
 $donationHistory = [];
+$donorId = null;
 
-// Fetch donation history
+// Get donor_Id using logged-in user_id
+$stmt = $conn->prepare("SELECT donor_Id FROM donors WHERE user_id = ?");
+$stmt->bind_param("i", $loggedInUserId);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    $donorId = $row['donor_Id'];
+}
+$stmt->close();
+
+if (!$donorId) {
+    die("Donor profile not found.");
+}
+
+// Fetch donation history using donor_Id
 $stmt = $conn->prepare("
     SELECT 
         d.donation_date,
@@ -24,7 +38,7 @@ $stmt = $conn->prepare("
         d.status
     FROM donations d
     JOIN campaigns c ON d.campaign_id = c.campaign_id
-    WHERE d.donor_id = ?
+    WHERE d.donor_Id = ?
     ORDER BY d.donation_date DESC
 ");
 $stmt->bind_param("i", $donorId);
@@ -34,7 +48,6 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $donationHistory[] = $row;
 }
-
 $stmt->close();
 ?>
 
@@ -101,3 +114,4 @@ $stmt->close();
 <?php include_once("../Templates/Footer.php"); ?>
 </body>
 </html>
+

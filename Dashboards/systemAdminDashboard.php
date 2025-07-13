@@ -15,11 +15,14 @@ $users = $conn->query("SELECT u.user_id, u.username, u.email, u.role, u.is_suspe
                              EXISTS (SELECT 1 FROM suspicious_activity WHERE user_id = u.user_id AND is_flagged = 1) AS flagged
                       FROM users u");
 
-$donors = $conn->query("SELECT d.donor_id, d.full_name, u.email, COUNT(do.donation_id) AS total_donations, SUM(do.amount) AS total_amount
+$donors = $conn->query("SELECT d.donor_Id, d.full_name, u.email,
+                               COUNT(do.donation_Id) AS total_donations,
+                               SUM(do.amount) AS total_amount
                         FROM donors d
                         LEFT JOIN users u ON d.user_id = u.user_id
-                        LEFT JOIN donations do ON d.donor_id = do.donor_id
-                        GROUP BY d.donor_id, d.full_name, u.email");
+                        LEFT JOIN donations do ON d.donor_Id = do.donor_Id AND do.status = 'Completed'
+                        GROUP BY d.donor_Id, d.full_name, u.email");
+
 
 $schools = $conn->query("SELECT u.user_id, sp.school_name, u.email, COUNT(c.campaign_id) AS total_campaigns,
                          SUM(c.target_amount) AS total_requested,
@@ -40,7 +43,7 @@ $schools = $conn->query("SELECT u.user_id, sp.school_name, u.email, COUNT(c.camp
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS/navbar.css">
-  <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/adminfooter.css">
   <link rel="stylesheet" href="../CSS/dashboard.css"> <!-- Updated dashboard styles -->
 </head>
 <body>
@@ -226,7 +229,8 @@ $schools = $conn->query("SELECT u.user_id, sp.school_name, u.email, COUNT(c.camp
           <td><?= htmlspecialchars($donor['full_name']) ?></td>
           <td><?= htmlspecialchars($donor['email']) ?></td>
           <td><?= $donor['total_donations'] ?></td>
-          <td>Ksh <?= number_format($donor['total_amount'], 2) ?></td>
+         <td>Ksh <?= number_format($donor['total_amount'] ?? 0, 2) ?></td>
+
           <td><a href="../Processes/view_donor_details.php?id=<?= $donor['donor_Id'] ?>" class="btn btn-sm btn-info">View</a></td>
         </tr>
       <?php endwhile; ?>
@@ -264,7 +268,7 @@ $schools = $conn->query("SELECT u.user_id, sp.school_name, u.email, COUNT(c.camp
   </div>
 </div>
 
-<?php include_once("../Templates/Footer.php"); ?>
+<?php include_once("../Templates/Admindashboard.php"); ?>
 
 </body>
 </html>

@@ -4,7 +4,7 @@ require_once("../includes/db_connect.php");
 
 // Ensure donor is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
-    header("Location: ../Pages/Login.php");
+    header("Location: ../Pages/signIn.php");
     exit();
 }
 
@@ -14,33 +14,51 @@ if (isset($_SESSION['is_new_donor'])) {
     unset($_SESSION['is_new_donor']);
 }
 
-$donorId = $_SESSION['user_id'];
+$loggedInUserId = $_SESSION['user_id'];
+$donorId = null;
 $donorName = "Donor";
 $recentDonations = [];
 $totalCompletedAmount = 0;
 $completedDonationCount = 0;
 $lastCompletedDate = 'N/A';
 
-// Fetch donor name
-$nameStmt = $conn->prepare("SELECT username FROM users WHERE user_id = ? AND role = 'donor'");
-if ($nameStmt) {
-    $nameStmt->bind_param("i", $donorId);
-    $nameStmt->execute();
-    $nameStmt->bind_result($donorName);
-    $nameStmt->fetch();
-    $nameStmt->close();
+// Get donor_Id and full_name from donors table using user_id
+$stmt = $conn->prepare("SELECT donor_Id, full_name FROM donors WHERE user_id = ?");
+$stmt->bind_param("i", $loggedInUserId);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    $donorId = $row['donor_Id'];
+    $donorName = $row['full_name'];
+}
+$stmt->close();
+
+if (!$donorId) {
+    die("Donor profile not found.");
 }
 
-// Fetch recent donations
+// Fetch all completed donations for accurate totals
+$stmt = $conn->prepare("SELECT amount, donation_date FROM donations WHERE donor_Id = ? AND status = 'Completed'");
+$stmt->bind_param("i", $donorId);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $totalCompletedAmount += $row['amount'];
+    $completedDonationCount++;
+    $lastCompletedDate = date("d M Y", strtotime($row['donation_date']));
+}
+$stmt->close();
+
+// Fetch 5 most recent donations
 $stmt = $conn->prepare("
-    SELECT d.donation_id, d.donation_date, c.campaign_name, d.amount, d.status, d.mpesa_receipt,
+    SELECT d.donation_Id, d.donation_date, c.campaign_name, d.amount, d.status, d.mpesa_receipt,
            COALESCE(s.school_name, 'N/A') AS school_name
     FROM donations d
     JOIN campaigns c ON d.campaign_id = c.campaign_id
     LEFT JOIN school_profiles s ON c.schoolAdmin_id = s.schoolAdmin_id
-    WHERE d.donor_id = ?
+    WHERE d.donor_Id = ?
     ORDER BY d.donation_date DESC
-    LIMIT 5
+    
 ");
 
 if ($stmt) {
@@ -49,13 +67,6 @@ if ($stmt) {
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $recentDonations[] = $row;
-        if ($row['status'] === 'Completed') {
-            $totalCompletedAmount += $row['amount'];
-            $completedDonationCount++;
-            if ($lastCompletedDate === 'N/A') {
-                $lastCompletedDate = date("d M Y", strtotime($row['donation_date']));
-            }
-        }
     }
     $stmt->close();
 }
@@ -69,7 +80,7 @@ if ($stmt) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../CSS/navbar.css">
-  <link rel="stylesheet" href="../CSS/footer.css">
+  <link rel="stylesheet" href="../CSS/adminfooter.css">
   <link rel="stylesheet" href="../CSS/donorDashboard.css">
 </head>
 <body>
@@ -88,14 +99,12 @@ if ($stmt) {
   <a href="../includes/logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
 </div>
 
-
 <!-- Main Content -->
 <div class="main-content">
-
-<?php
-$breadcrumbs = []; // Add dynamic crumbs here if needed
-include_once("../Templates/breadcrumb.php");
-?>
+  <?php
+  $breadcrumbs = []; // Optional breadcrumbs
+  include_once("../Templates/breadcrumb.php");
+  ?>
 
   <h2 class="fw-bold mb-4 text-primary">Welcome, <?= htmlspecialchars($donorName) ?>!</h2>
 
@@ -128,28 +137,32 @@ include_once("../Templates/breadcrumb.php");
     <?php if (count($recentDonations) > 0): ?>
       <div class="row g-4">
         <?php foreach ($recentDonations as $donation): ?>
-        <?php $status = $donation['status']; ?>
-        <div class="col-md-6">
-          <div class="p-4 rounded-3 donation-card h-100">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <h6 class="mb-1 fw-semibold"><?= htmlspecialchars($donation['campaign_name']) ?></h6>
-                <small><i class="fas fa-school me-1"></i><?= htmlspecialchars($donation['school_name']) ?></small>
+          <?php
+            $status = $donation['status'];
+            $campaignName = htmlspecialchars($donation['campaign_name']);
+            $hideReceipt = (stripos($campaignName, 'digital devices') !== false);
+          ?>
+          <div class="col-md-6">
+            <div class="p-4 rounded-3 donation-card h-100">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="mb-1 fw-semibold"><?= $campaignName ?></h6>
+                  <small><i class="fas fa-school me-1"></i><?= htmlspecialchars($donation['school_name']) ?></small>
+                </div>
+                <div class="text-end">
+                  <span class="badge bg-primary">KES <?= number_format($donation['amount'], 2) ?></span><br>
+                  <span class="badge <?= $status === 'Completed' ? 'bg-success' : ($status === 'Failed' ? 'bg-danger' : 'bg-warning text-dark') ?> mt-2">
+                    <?= htmlspecialchars($status) ?>
+                  </span>
+                </div>
               </div>
-              <div class="text-end">
-                <span class="badge bg-primary">KES <?= number_format($donation['amount'], 2) ?></span><br>
-                <span class="badge <?= $status === 'Completed' ? 'bg-success' : ($status === 'Failed' ? 'bg-danger' : 'bg-warning text-dark') ?> mt-2">
-                  <?= htmlspecialchars($status) ?>
-                </span>
-              </div>
+              <?php if ($status === 'Completed' && !$hideReceipt && !empty($donation['mpesa_receipt'])): ?>
+                <div class="mt-3 text-end">
+                  <a href="../mpesa/receipt_pdf.php?donation_Id=<?= $donation['donation_Id'] ?>" class="btn btn-sm btn-outline-light">Download Receipt</a>
+                </div>
+              <?php endif; ?>
             </div>
-            <?php if ($status === 'Completed' && !empty($donation['mpesa_receipt'])): ?>
-              <div class="mt-3 text-end">
-                <a href="../mpesa/receipt_pdf.php?>" class="btn btn-sm btn-outline-light">Download Receipt</a>
-              </div>
-            <?php endif; ?>
           </div>
-        </div>
         <?php endforeach; ?>
       </div>
     <?php else: ?>
@@ -158,7 +171,7 @@ include_once("../Templates/breadcrumb.php");
   </div>
 </div>
 
-<?php include_once("../Templates/Footer.php"); ?>
+<?php include_once("../Templates/Admindashboard.php"); ?>
 
 <script>
   function toggleSidebar() {
@@ -168,3 +181,6 @@ include_once("../Templates/breadcrumb.php");
 
 </body>
 </html>
+
+
+

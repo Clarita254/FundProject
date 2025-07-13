@@ -18,7 +18,7 @@ foreach ($attempts as $i => $timestamp) {
 
 if (count($attempts) >= 3) {
     http_response_code(429);
-    exit("Too many password reset attempts. Please try again in 15 minutes.");
+    exit("Too many password reset attempts. Please try again in 1 minutes.");
 }
 
 $attempts[] = $current_time;

@@ -19,7 +19,7 @@
           <li><a href="Campaign.php" class="footer-link">Campaigns</a></li>
     
           <li><a href="Leaderboard.php" class="footer-link">Leaderboard</a></li>
-           <li><a href="ProgressForm.php" class="footer-link">Progress Form</a></li>
+           
         </ul>
       </div>
 
