@@ -2,6 +2,27 @@
 session_start();
 require_once("../includes/db_connect.php");
 
+// ========== Throttling block ==========
+$current_time = time();
+if (!isset($_SESSION['forgot_password_throttle'])) {
+    $_SESSION['forgot_password_throttle'] = [];
+}
+$attempts = &$_SESSION['forgot_password_throttle'];
+
+// Clear out old timestamps (older than 15 minutes)
+foreach ($attempts as $i => $timestamp) {
+    if ($timestamp + 900 < $current_time) { // 900 seconds = 15 minutes
+        unset($attempts[$i]);
+    }
+}
+
+if (count($attempts) >= 3) {
+    http_response_code(429);
+    exit("Too many password reset attempts. Please try again in 15 minutes.");
+}
+
+$attempts[] = $current_time;
+// ========== End Throttling ==========
 
 
 // Load Composer's autoloader
@@ -68,8 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
      <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/footer.css">
-
-
 </head>
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">

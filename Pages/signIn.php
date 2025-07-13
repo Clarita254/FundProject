@@ -2,6 +2,28 @@
 <?php
 session_start();
 require_once("../includes/db_connect.php");
+
+// ========= THROTTLING BLOCK =========
+$current_time = time();
+if (!isset($_SESSION['signin_throttle'])) {
+    $_SESSION['signin_throttle'] = [];
+}
+$attempts = &$_SESSION['signin_throttle'];
+
+// Clear old entries (older than 5 minutes = 300 seconds)
+foreach ($attempts as $i => $timestamp) {
+    if ($timestamp + 300 < $current_time) {
+        unset($attempts[$i]);
+    }
+}
+
+if (count($attempts) >= 5) {
+    http_response_code(429);
+    exit("Too many sign-in attempts. Please try again after 5 minutes.");
+}
+
+$attempts[] = $current_time;
+// ========= END THROTTLING =========
 ?>
 
 <!DOCTYPE html>

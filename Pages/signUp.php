@@ -1,6 +1,28 @@
 <?php
 session_start();
 require_once("../includes/db_connect.php");
+// ========= THROTTLING BLOCK =========
+$current_time = time();
+if (!isset($_SESSION['signup_throttle'])) {
+    $_SESSION['signup_throttle'] = [];
+}
+$attempts = &$_SESSION['signup_throttle'];
+
+// Clear out old attempts (older than 10 minutes)
+foreach ($attempts as $i => $timestamp) {
+    if ($timestamp + 600 < $current_time) {
+        unset($attempts[$i]);
+    }
+}
+
+if (count($attempts) >= 3) {
+    http_response_code(429);
+    exit("Too many sign-up attempts. Please try again after 10 minutes.");
+}
+
+$attempts[] = $current_time;
+// ========= END THROTTLING BLOCK =========
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

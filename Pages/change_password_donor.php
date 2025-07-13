@@ -2,6 +2,32 @@
 session_start();
 require_once('../includes/db_connect.php');
 
+// ======= Throttling: max 3 change attempts per 10 minutes =======
+$current_time = time();
+
+if (!isset($_SESSION['change_password_throttle'])) {
+    $_SESSION['change_password_throttle'] = [];
+}
+
+$requests = &$_SESSION['change_password_throttle'];
+
+// Remove entries older than 10 minutes (600 seconds)
+foreach ($requests as $i => $timestamp) {
+    if ($timestamp + 600 < $current_time) {
+        unset($requests[$i]);
+    }
+}
+
+if (count($requests) >= 3) {
+    http_response_code(429);
+    exit("Too many password change attempts. Please try again after 10 minutes.");
+}
+
+// Log this attempt
+$requests[] = $current_time;
+// ======= End of throttling block =======
+
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'donor') {
     header("Location: ../Pages/signIn.php");
     exit();
