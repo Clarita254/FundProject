@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once("../includes/db_connect.php");
+
+// Fetch top 3 approved campaigns (can modify based on criteria)
+$featuredQuery = "SELECT campaign_id, campaign_name, description, image_path FROM campaigns WHERE status = 'Approved' ORDER BY start_date DESC LIMIT 3";
+$featuredResult = mysqli_query($conn, $featuredQuery);
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +19,7 @@ require_once("../includes/db_connect.php");
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/footer.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
    <!---Include Header---->
@@ -24,9 +29,9 @@ require_once("../includes/db_connect.php");
     <section class="hero">
         <h1>Fund Education, Change Lives</h1>
         <p>Join our platform to support students in need.</p>
-        <button>Start a Campaign</button>
+        <a href="../Pages/signUp.php" class="btn btn-primary">Start a Campaign</a>
     </section>
-    
+
     <!-- Info Section -->
     <section class="info-section">
         <h2>How It Works</h2>
@@ -45,54 +50,43 @@ require_once("../includes/db_connect.php");
             </div>
         </div>
     </section>
-    
+
     <!-- Why EduFund Section -->
     <section class="why-edufund">
         <div class="why-content">
             <h2>Why Choose EduFund?</h2>
-            <p>EduFund bridges the gap between under-resourced schools and potential donors by providing a transparent, centralized platform for funding verified educational needs.</p>
+            <p>EduFund is your trusted bridge between generous donors and schools in need. We provide a secure, transparent, and easy-to-use platform that connects under-resourced schools with individuals and organizations ready to make a real difference. Every campaign is carefully verified, ensuring your support goes exactly where it’s needed — empowering students, improving learning environments, and transforming futures through education.
+</p>
         </div>
     </section>
-    
+
+    <!-- Dynamic Featured Campaigns -->
     <section class="campaigns">
         <h2>Featured Campaigns</h2>
         <div class="campaign-grid">
-            <div class="campaign-card">
-                <div class="campaign-img">
-                    <img src="../EDUFUNDPROJECT/FundProject/Images/Helpachildlearn.png" alt="Help a Child Learn" loading="lazy" />
-                </div>
-                <div class="campaign-info">
-                    <h3>Help a Child Learn</h3>
-                    <p>Support a child in need of educational resources.</p>
-                    <a href="#" class="learn-more-btn">Learn More</a>
-                </div>
-            </div>
-            <div class="campaign-card">
-                <div class="campaign-img">
-                    <img src="..EDUFUNDPROJECT/FundProject/Images/schoolsupplies.png" alt="School Supplies Drive" loading="lazy" />
-                </div>
-                <div class="campaign-info">
-                    <h3>School Supplies Drive</h3>
-                    <p>Providing materials for underprivileged students.</p>
-                    <a href="#" class="learn-more-btn">Learn More</a>
-                </div>
-            </div>
-            <div class="campaign-card">
-                <div class="campaign-img">
-                    <img src="../FUNDPROJECT/FundProject/Images/schoolinfrastructure.png" alt="Public School Renovation" loading="lazy" />
-                </div>
-                <div class="campaign-info">
-                    <h3>Public School Renovation</h3>
-                    <p>Help improve facilities and learning environments in public schools.</p>
-                    <a href="#" class="learn-more-btn">Learn More</a>
-                </div>
-            </div>
+            <?php if ($featuredResult && mysqli_num_rows($featuredResult) > 0): ?>
+                <?php while ($row = mysqli_fetch_assoc($featuredResult)): 
+                    $image = (!empty($row['image_path']) && file_exists("../" . $row['image_path'])) ? "../" . $row['image_path'] : "https://via.placeholder.com/300x200";
+                ?>
+                    <div class="campaign-card">
+                        <div class="campaign-img">
+                            <img src="<?= $image ?>" alt="<?= htmlspecialchars($row['campaign_name']) ?>" loading="lazy" />
+                        </div>
+                        <div class="campaign-info">
+                            <h3><?= htmlspecialchars($row['campaign_name']) ?></h3>
+                            <p><?= htmlspecialchars($row['description']) ?></p>
+                            <a href="../Pages/Campaign.php" class="learn-more-btn">Learn More</a>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-muted">No featured campaigns available at the moment.</p>
+            <?php endif; ?>
         </div>
     </section>
 
     <!------Include footer-->
     <?php include_once("../Templates/Footer.php"); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

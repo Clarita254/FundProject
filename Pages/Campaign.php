@@ -38,15 +38,72 @@ $result = mysqli_query($conn, $query);
   <link rel="stylesheet" href="../CSS/schoolAdminNav.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
+
+
     
 <?php include_once("../Templates/nav.php"); ?>
 
-<div class="container py-5">
-  <h1 class="page-title text-center mb-4" style="color:rgb(6, 40, 75); font-weight: 700; font-family: 'Segoe UI', sans-serif;">
-    <i class="fas fa-bullhorn me-2"></i> Explore Campaigns
-  </h1>
+
+<!-- Category Sliding Banner -->
+<div id="categoryBanner" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="3000">
+      <img src="../Images/sport1.jpg" class="d-block w-100" alt="Learners">
+      <div class="carousel-caption">
+        <h5>Fuel the game,Fund the Dream</h5>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="../Images/learners2.jpg" class="d-block w-100" alt="Learning Resources">
+      <div class="carousel-caption">
+        <h5>Empowering Classrooms</h5>
+      </div>
+    </div>
+
+
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="../Images/digital device.jpg" class="d-block w-100" alt="Bridge technology gaps">
+      <div class="carousel-caption">
+        <h5>Bridging the Digital Divide, One Device at a Time.</h5>
+      </div>
+    </div>
+
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="../Images/Helpachildlearn.jpeg" class="d-block w-100" alt="Help children to learn">
+      <div class="carousel-caption">
+        <h5>Empower a mind today — educate a future tomorrow.</h5>
+      </div>
+    </div>
+
+    <div class="carousel-item" data-bs-interval="3000">
+      <img src="../Images/schoolinfrastructure.jpeg" class="d-block w-100" alt="School infrastructure">
+      <div class="carousel-caption">
+        <h5>Build a Better Tomorrow — One Classroom at a Time.</h5>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Optional controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#categoryBanner" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#categoryBanner" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+<section class="explore-campaigns-section py-5">
+  <div class="container">
+    <h1 class="page-title text-center mb-4" style="color:rgb(6, 40, 75); font-weight: 700; font-family: 'Segoe UI', sans-serif;">
+      <i class="fas fa-bullhorn me-2"></i> Explore Campaigns
+    </h1>
+
 
   <!-- Filter Form -->
   <form method="GET" class="mb-4 px-3">
@@ -135,6 +192,7 @@ $result = mysqli_query($conn, $query);
     <?php endif; ?>
   </div>
 </div>
+</section>
 
 <?php include_once("../Templates/Footer.php"); ?>
 
