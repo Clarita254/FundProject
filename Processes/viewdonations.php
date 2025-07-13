@@ -2,6 +2,8 @@
 session_start();
 require_once("../includes/db_connect.php");
 
+
+
 // Only schoolAdmin can access
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
     header("Location: ../Pages/signIn.php");
@@ -11,12 +13,13 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
 $schoolAdminId = $_SESSION['user_id'];
 
 // Campaign ID must be provided
-if (!isset($_GET['id'])) {
+if (!isset($_GET['campaign_id'])) 
+ {
     echo "<script>alert('Campaign ID not specified'); window.location.href='../Dashboards/manageCampaigns.php';</script>";
     exit();
 }
 
-$campaignId = intval($_GET['id']);
+$campaignId = intval($_GET['campaign_id']);
 
 // Ensure campaign belongs to this schoolAdmin
 $checkStmt = $conn->prepare("SELECT campaign_name FROM campaigns WHERE campaign_id = ? AND schoolAdmin_id = ?");
@@ -112,7 +115,12 @@ $donations = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
 $totalAmount = array_sum(array_column($donations, 'amount'));
+
+
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -122,12 +130,60 @@ $totalAmount = array_sum(array_column($donations, 'amount'));
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+  <style>
+  body {
+    background-color: #e9f2fb; /* soft blue background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .donation-title {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+  }
+
+  .donation-title h2 {
+    color: #003366;
+    margin: 0;
+    font-weight: bold;
+  }
+
+
+  .btn-custom {
+  background-color: #003366;
+  color: #ffffff;
+  border: 2px solid #b3d9ff; /* light blue outline */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-custom:hover {
+  background-color: #002855; /* slightly darker on hover */
+  border-color: #80c1ff;     /* slightly more visible border */
+  color: #ffffff;
+}
+
+</style>
+
 </head>
 <body>
-<?php include_once("../Templates/nav_schoolAdmin.php"); ?>
+<?php include_once("../Templates/schoolAdminNav.php"); ?>
 
 <div class="container mt-5">
-  <h2 class="text-primary mb-3">Donations for: <?= htmlspecialchars($campaignTitle) ?></h2>
+<div class="donation-title">
+  <h2>Donations for: <?= htmlspecialchars($campaignTitle) ?></h2>
+</div>
+
+
+<a href="../Dashboards/manageCampaigns.php" class="btn btn-custom mb-3">
+  <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+</a>
+
+
 
   <!-- Filter Form -->
   <form method="GET" class="row g-2 mb-4">
@@ -156,7 +212,8 @@ $totalAmount = array_sum(array_column($donations, 'amount'));
 
   <!-- Total Donations -->
   <div class="mb-3">
-    <h5>Total Donations: <span class="text-success">$<?= number_format($totalAmount, 2) ?></span></h5>
+    <h5>Total Donations: <span class="text-success">KES <?= number_format($totalAmount, 2) ?></span></h5>
+
   </div>
 
   <?php if (count($donations) > 0): ?>
@@ -174,7 +231,8 @@ $totalAmount = array_sum(array_column($donations, 'amount'));
         <?php foreach ($donations as $donation): ?>
           <tr>
             <td><?= htmlspecialchars($donation['donor_name']) ?></td>
-            <td>$<?= number_format($donation['amount'], 2) ?></td>
+           <td>KES <?= number_format($donation['amount'], 2) ?></td>
+
             <td><?= htmlspecialchars($donation['payment_mode']) ?></td>
             <td>
               <span class="badge 

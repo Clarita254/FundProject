@@ -7,7 +7,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'schoolAdmin') {
     exit();
 }
 
-$campaignId = $_GET['donation_Id'] ?? null;
+// ✅  Use of 'donation_Id'
+$campaignId = $_GET['id'] ?? null;
 $schoolAdminId = $_SESSION['user_id'];
 
 if (!$campaignId) {
@@ -34,13 +35,9 @@ if (!$campaign) {
   <title>Edit Campaign</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/footer.css">
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- FontAwesome (optional) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <style>
@@ -82,6 +79,9 @@ if (!$campaign) {
     .btn-update:hover {
       background-color: #002752;
     }
+
+
+
   </style>
 </head>
 
@@ -89,6 +89,7 @@ if (!$campaign) {
 
 <div class="edit-campaign-container">
   <h2 class="edit-title">✏️ Edit Campaign</h2>
+
 
   <form action="../Processes/updateCampaign.php" method="POST">
     <input type="hidden" name="campaign_id" value="<?= $campaign['campaign_id'] ?>">
@@ -118,6 +119,9 @@ if (!$campaign) {
         <i class="fas fa-save me-1"></i> Update Campaign
       </button>
     </div>
+
+
+
   </form>
 </div>
 

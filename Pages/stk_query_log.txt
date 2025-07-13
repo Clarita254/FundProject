@@ -389,3 +389,33 @@ Response: {
         }
         
 
+[2025-07-13 11:34:11] Entered status query for donation ID: 88
+[2025-07-13 11:34:13] Donation ID: 88
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_13072025123634545717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-13 13:04:52] Entered status query for donation ID: 95
+[2025-07-13 13:04:53] Donation ID: 95
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_13072025140715080717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+
+[2025-07-13 13:08:19] Entered status query for donation ID: 96
+[2025-07-13 13:08:21] Donation ID: 96
+HTTP: 500
+Response: {
+                    "requestId":"ws_CO_13072025141042177717808890",
+                    "errorCode": "500.001.1001",
+                    "errorMessage": "The transaction is being processed"
+                }
+            
+

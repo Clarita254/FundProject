@@ -162,7 +162,7 @@ $totals = $conn->query("SELECT
     </table>
   </div>
 
- <a href="systemAdminDashboard.php" class="btn btn-purple mt-3">← Back to Dashboard</a>
+ <a href="../Dashboards/systemAdminDashboard.php" class="btn btn-purple mt-3">← Back to Dashboard</a>
 
 
 </div>

@@ -64,9 +64,13 @@ $stmt->close();
                 <p class="card-text">Target: KES <?= number_format($campaign['target_amount']) ?></p>
                 <p class="card-text"><small>Status: <strong><?= $campaign['status'] ?></strong></small></p>
                 <div class="d-flex justify-content-between">
-                  <a href="../Pages/editCampaign.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-primary btn-sm">
+                  <a href="../Processes/editCampaign.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-primary btn-sm">
                     <i class="fas fa-edit"></i> Edit
                   </a>
+
+                  <a href="../Processes/viewdonations.php?campaign_id=<?= $campaign['campaign_id'] ?>" class="btn btn-secondary btn-sm">
+    <i class="fas fa-donate"></i> Donations
+  </a>
                   <a href="../Processes/deleteCampaign.php?campaign_id=<?= $campaign['campaign_id'] ?>"
                      onclick="return confirm('Are you sure you want to delete this campaign?');"
                      class="btn btn-danger btn-sm">

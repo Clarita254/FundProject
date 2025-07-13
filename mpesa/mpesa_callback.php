@@ -1,10 +1,8 @@
 <?php
-
-file_put_contents("callback_log.txt", "Callback hit at " . date('Y-m-d H:i:s') . PHP_EOL, FILE_APPEND);//To check if M-pesa is hit by safaricom
+file_put_contents("callback_log.txt", "Callback hit at " . date('Y-m-d H:i:s') . PHP_EOL, FILE_APPEND);
 
 require_once('../includes/db_connect.php');
 
-// Read the raw input
 $callbackJSON = file_get_contents('php://input');
 file_put_contents('callback_raw_log.txt', $callbackJSON . PHP_EOL, FILE_APPEND);
 
@@ -15,7 +13,6 @@ if (!$data) {
     exit;
 }
 
-// Extract STK Callback
 $stkCallback = $data['Body']['stkCallback'] ?? null;
 if (!$stkCallback) {
     http_response_code(400);
@@ -23,7 +20,6 @@ if (!$stkCallback) {
     exit;
 }
 
-$merchantRequestID = $stkCallback['MerchantRequestID'];
 $checkoutRequestID = $stkCallback['CheckoutRequestID'];
 $resultCode = $stkCallback['ResultCode'];
 $resultDesc = $stkCallback['ResultDesc'];
@@ -33,9 +29,8 @@ $mpesaReceiptNumber = '';
 $phoneNumber = '';
 
 if ($resultCode === 0) {
-    $callbackMetadata = $stkCallback['CallbackMetadata']['Item'] ?? [];
-
-    foreach ($callbackMetadata as $item) {
+    // Extract values from callback metadata
+    foreach ($stkCallback['CallbackMetadata']['Item'] as $item) {
         if ($item['Name'] === 'Amount') {
             $amount = $item['Value'];
         } elseif ($item['Name'] === 'MpesaReceiptNumber') {
@@ -45,49 +40,38 @@ if ($resultCode === 0) {
         }
     }
 
-    // Update donation as Completed
-    // $stmt = $conn->prepare("UPDATE donations SET status = 'Completed', mpesa_receipt = ?, phone_number = ? WHERE checkout_request_id = ?");
-    $stmt = $conn->prepare("UPDATE donations SET (status, mpesa_receipt, phone_number) VALUES (:status, :mpesa_receipt, :phone_number) WHERE checkout_request_id VALUE (:checkout_request_id)");
-    // if (!$stmt) {
-    //     file_put_contents('callback_errors.txt', "Prepare failed: " . $conn->error . PHP_EOL, FILE_APPEND);
-    // } else {
-        // $stmt->bind_param("sss", "123456", "123456", "123456");
-        $stmt->bind_param(":status","123456");
-        $stmt->bind_param(":mpesa_receipt","123456");
-        $stmt->bind_param(":phone_number","123456");
-        
-        $stmt->execute();
-        // $stmt->bind_param("sss", $mpesaReceiptNumber, $phoneNumber, $checkoutRequestID);
-        if (!$stmt->execute()) {
-            file_put_contents('callback_errors.txt', "Execute failed: " . $stmt->error . PHP_EOL, FILE_APPEND);
-        }
-        $stmt->close();
-    }
-    dump("COMPLETE");
+    // 1. ✅ Update the donations table
+    $stmt = $conn->prepare("UPDATE donations SET status = 'Completed', mpesa_receipt = ?, phone_number = ?, donation_date = NOW() WHERE checkout_request_id = ?");
+    $stmt->bind_param("sss", $mpesaReceiptNumber, $phoneNumber, $checkoutRequestID);
+    $stmt->execute();
+    $stmt->close();
 
-// } else {
-//     // Update donation as Failed
-//     $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE checkout_request_id = ?");
-//     if (!$stmt) {
-//         file_put_contents('callback_errors.txt', "Prepare failed (failure update): " . $conn->error . PHP_EOL, FILE_APPEND);
-//     } else {
-//         $stmt->bind_param("s", $checkoutRequestID);
-//         if (!$stmt->execute()) {
-//             file_put_contents('callback_errors.txt', "Execute failed (failure update): " . $stmt->error . PHP_EOL, FILE_APPEND);
-//         }
-//         $stmt->close();
-//     }
-// }
+    // 2. ✅ Get campaign_id from donation
+    $stmt = $conn->prepare("SELECT campaign_id FROM donations WHERE checkout_request_id = ?");
+    $stmt->bind_param("s", $checkoutRequestID);
+    $stmt->execute();
+    $stmt->bind_result($campaignId);
+    $stmt->fetch();
+    $stmt->close();
 
-// Log summary
+
+} else {
+    // ❌ Update status to failed
+    $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE checkout_request_id = ?");
+    $stmt->bind_param("s", $checkoutRequestID);
+    $stmt->execute();
+    $stmt->close();
+}
+
+// ✅ Final debug log
 $log = "=== Callback @ " . date('Y-m-d H:i:s') . " ===\n";
 $log .= "Result: $resultCode ($resultDesc)\n";
 $log .= "CheckoutRequestID: $checkoutRequestID\n";
 $log .= "Receipt: $mpesaReceiptNumber\n";
-$log .= "Phone: $phoneNumber\n\n";
-
+$log .= "Phone: $phoneNumber\n";
+$log .= "Amount: $amount\n\n";
 file_put_contents('callback_debug_log.txt', $log, FILE_APPEND);
 
-// Respond
+// ✅ Respond to Safaricom
 echo json_encode(['ResultCode' => 0, 'ResultDesc' => 'Callback received successfully']);
 ?>
