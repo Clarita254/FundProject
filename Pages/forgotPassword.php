@@ -9,20 +9,22 @@ if (!isset($_SESSION['forgot_password_throttle'])) {
 }
 $attempts = &$_SESSION['forgot_password_throttle'];
 
-// Clear out old timestamps (older than 1 minute)
+// Clear out old timestamps (older than 1 minute = 60 seconds)
 foreach ($attempts as $i => $timestamp) {
-    if ($timestamp + 60 < $current_time) { // 60 seconds = 1 minute
+    if ($timestamp + 60 < $current_time) {
         unset($attempts[$i]);
     }
 }
 
+// Allow max 3 attempts per 60 seconds
 if (count($attempts) >= 3) {
     http_response_code(429);
-    exit("Too many password reset attempts. Please try again in 15 minutes.");
+    exit("Too many password reset attempts. Please try again after 1 minute.");
 }
 
 $attempts[] = $current_time;
 // ========== End Throttling ==========
+
 
 
 // Load Composer's autoloader
