@@ -35,7 +35,7 @@ require_once("../includes/db_connect.php");
 
 <!-- ✅ Banner with Lazy Loading -->
 <div class="banner">
-    <img src="../Images/about-banner.jpg" alt="About EduFund Banner" loading="lazy">
+    <img src="../assets/banner.jpg" alt="About EduFund Banner" loading="lazy">
 </div>
 
 <!-- Main Content -->
