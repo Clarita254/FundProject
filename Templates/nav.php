@@ -26,7 +26,7 @@ function navLink($page, $label)
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
         <!-- Common Links -->
-        <li class="nav-item"><?= navLink('Home.php', 'Home') ?></li>
+        <li class="nav-item"><?= navLink('index.php', 'Home') ?></li>
         <li class="nav-item"><?= navLink('AboutUs.php', 'About Us') ?></li>
         <li class="nav-item"><?= navLink('Campaign.php', 'Campaigns') ?></li>
         <li class="nav-item"><?= navLink('Leaderboard.php', 'Leaderboard') ?></li>

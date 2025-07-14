@@ -1,2 +1,4 @@
 2025-07-12 20:00:00 - Signup.php hit
 Raw input: {"school_name":"Rose of Sharon","email":"info@roseofsharon.edu","phone":"0789654236","school_code":"11189","school_type":"Primary","location":"kabarnet road","county":"Nairobi","rep_name":"Franklin Mutisya","rep_role":"Headteacher","password":"Rose@2025","confirm_password":"Rose@2025"}
+2025-07-14 00:08:51 - Signup.php hit
+Raw input: {"school_name":"Loreto limuru","email":"info@loretolimuru.edu","phone":"0790727208","school_code":"16567","school_type":"Secondary","location":"Limuru","county":"Kiambu","rep_name":"Mary Wanjiku","rep_role":"Headteacher","password":"Loreto@limuru","confirm_password":"Loreto@limuru"}

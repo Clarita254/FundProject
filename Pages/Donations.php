@@ -14,13 +14,14 @@ $donorName = '';
 $donorEmail = '';
 
 if ($role === 'donor') {
-    $stmt = $conn->prepare("SELECT username AS full_name, email FROM users WHERE user_id = ?");
+    $stmt = $conn->prepare("SELECT d.full_name, u.email FROM donors d JOIN users u ON d.user_id = u.user_id WHERE d.user_id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $stmt->bind_result($donorName, $donorEmail);
     $stmt->fetch();
     $stmt->close();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +42,6 @@ if ($role === 'donor') {
       border-radius: 10px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-
     .btn-submit {
       background-color: #003366;
       color: white;
@@ -49,7 +49,6 @@ if ($role === 'donor') {
       border: none;
       border-radius: 6px;
     }
-
     .btn-submit:hover {
       background-color: #002244;
     }
@@ -71,28 +70,14 @@ if ($role === 'donor') {
         <div class="mb-3">
           <label for="full_name" class="form-label">Full Name</label>
           <input type="text" name="full_name" class="form-control" required>
-          <div class="invalid-feedback">Full name is required.</div>
         </div>
 
         <div class="mb-3">
-          <label for="email" class="form-label">Email (Gmail only e.g maynard.karanja@gmail.com)</label>
-          <input type="text" name="email" class="form-control" required
-       pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
-       title="Email must end with @gmail.com">
-
-          <div class="invalid-feedback">Please enter a valid Gmail address.</div>
-        </div>
-
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phone Number (Format: 2547XXXXXXXX)</label>
-          <input type="text" name="phone" class="form-control" required
-                 pattern="2547[0-9]{8}"
-                 title="Enter a valid phone number starting with 2547...">
-          <div class="invalid-feedback">Enter a valid phone number (e.g., 254712345678).</div>
+          <label for="email" class="form-label">Email (Gmail only)</label>
+          <input type="email" name="email" class="form-control" required pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Email must end with @gmail.com">
         </div>
       <?php else: ?>
-        <!-- Logged-in donor info -->
-        <input type="hidden" name="donor_id" value="<?= htmlspecialchars($userId) ?>">
+        <!-- Logged-in donor -->
         <input type="hidden" name="full_name" value="<?= htmlspecialchars($donorName) ?>">
         <input type="hidden" name="email" value="<?= htmlspecialchars($donorEmail) ?>">
 
@@ -105,20 +90,16 @@ if ($role === 'donor') {
           <label class="form-label">Email</label>
           <input type="text" class="form-control" value="<?= htmlspecialchars($donorEmail) ?>" disabled>
         </div>
-
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phone Number (Format: 2547XXXXXXXX)</label>
-          <input type="text" name="phone" class="form-control" required
-                 pattern="2547[0-9]{8}"
-                 title="Enter a valid phone number starting with 2547...">
-          <div class="invalid-feedback">Enter a valid phone number (e.g., 254712345678).</div>
-        </div>
       <?php endif; ?>
+
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone (2547XXXXXXXX)</label>
+        <input type="text" name="phone" class="form-control" required pattern="2547[0-9]{8}">
+      </div>
 
       <div class="mb-3">
         <label for="amount" class="form-label">Amount (KES)</label>
         <input type="number" name="amount" class="form-control" required min="10">
-        <div class="invalid-feedback">Enter a valid amount of at least KES 10.</div>
       </div>
 
       <div class="mb-3">
@@ -128,7 +109,6 @@ if ($role === 'donor') {
           <option value="M-Pesa">M-Pesa</option>
           <option value="Card">Card</option>
         </select>
-        <div class="invalid-feedback">Please select a payment mode.</div>
       </div>
 
       <div class="text-end">
@@ -141,7 +121,7 @@ if ($role === 'donor') {
 <?php include_once("../Templates/Footer.php"); ?>
 
 <script>
-// Bootstrap custom validation
+// Bootstrap validation
 (() => {
   'use strict';
   const forms = document.querySelectorAll('.needs-validation');
@@ -155,10 +135,7 @@ if ($role === 'donor') {
     }, false);
   });
 })();
-
-
-
-
 </script>
 </body>
 </html>
+

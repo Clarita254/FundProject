@@ -80,7 +80,7 @@ $result = mysqli_query($conn, $query);
     </div>
 
     <div class="carousel-item" data-bs-interval="3000">
-      <img src="../Images/schoolinfrastructure.jpeg" class="d-block w-100" alt="School infrastructure">
+      <img src="../Images/schoolinfrustructure.jpeg" class="d-block w-100" alt="School infrastructure">
       <div class="carousel-caption">
         <h5>Build a Better Tomorrow — One Classroom at a Time.</h5>
       </div>

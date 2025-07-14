@@ -66,7 +66,9 @@ $featuredResult = mysqli_query($conn, $featuredQuery);
         <div class="campaign-grid">
             <?php if ($featuredResult && mysqli_num_rows($featuredResult) > 0): ?>
                 <?php while ($row = mysqli_fetch_assoc($featuredResult)): 
-                    $image = (!empty($row['image_path']) && file_exists("../" . $row['image_path'])) ? "../" . $row['image_path'] : "https://via.placeholder.com/300x200";
+                   $imagePath = "../" . $row['image_path'];
+$image = (!empty($row['image_path']) && file_exists($imagePath)) ? $imagePath : "https://via.placeholder.com/300x200";
+
                 ?>
                     <div class="campaign-card">
                         <div class="campaign-img">

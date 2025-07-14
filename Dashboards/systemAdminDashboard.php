@@ -111,7 +111,7 @@ $schools = $conn->query("SELECT u.user_id, sp.school_name, u.email, COUNT(c.camp
       ?>
         <tr>
           <td><?= htmlspecialchars($doc['school_name']) ?></td>
-          <td><a href="../uploads/<?= htmlspecialchars($doc['file_name']) ?>" target="_blank">View</a></td>
+          <td><a href="../uploads/verificationdocs/<?= htmlspecialchars($doc['file_name']) ?>" target="_blank">View</a></td>
           <td><?= date('d M Y H:i', strtotime($doc['upload_time'])) ?></td>
           <td><span class="badge bg-warning text-dark"><?= $doc['status'] ?></span></td>
           <td>

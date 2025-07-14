@@ -57,7 +57,7 @@ $stmt->close();
         <?php foreach ($campaigns as $campaign): ?>
           <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">
-              <img src="../uploads/<?= htmlspecialchars($campaign['image_path']) ?>" class="card-img-top" alt="Campaign Image">
+            
               <div class="card-body">
                 <h5 class="card-title"><?= htmlspecialchars($campaign['campaign_name']) ?></h5>
                 <p class="card-text small">Category: <?= htmlspecialchars($campaign['category']) ?></p>

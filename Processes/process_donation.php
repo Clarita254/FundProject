@@ -1,15 +1,13 @@
 <?php
 session_start();
 require_once('../includes/db_connect.php');
-require_once('../mpesa/Mpesa-utils.php'); // STK Push function
+require_once('../mpesa/Mpesa-utils.php'); // STK Push utility
 
-// Helper function to generate username
 function generateUsernameFromFullName($full_name) {
     $base = strtolower(preg_replace('/\s+/', '', $full_name));
     return $base . rand(1000, 9999);
 }
 
-// Collect and validate POST data
 $campaign_id  = $_POST['campaign_id'] ?? null;
 $full_name    = trim($_POST['full_name'] ?? '');
 $email        = trim($_POST['email'] ?? '');
@@ -24,7 +22,7 @@ if (!$campaign_id || $amount < 10 || !$payment_mode || !$email || !$full_name ||
 
 $isNewUser = false;
 
-// Check if user already exists in users table
+// Check if user already exists
 $stmt = $conn->prepare("SELECT user_id, username FROM users WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -36,7 +34,7 @@ if ($user) {
     $user_id = $user['user_id'];
     $username = $user['username'];
 } else {
-    // Register user in users table
+    // Create new user
     $username = generateUsernameFromFullName($full_name);
     $hashedPassword = password_hash('default123', PASSWORD_DEFAULT);
     $role = 'donor';
@@ -47,39 +45,52 @@ if ($user) {
     $user_id = $stmt->insert_id;
     $stmt->close();
 
-    // Register donor profile in donors table
-    $stmt = $conn->prepare("INSERT INTO donors (user_id, full_name, username, created_at) VALUES (?, ?, ?, NOW())");
-    $stmt->bind_param("iss", $user_id, $full_name, $username);
-    $stmt->execute();
-    $stmt->close();
-
     $isNewUser = true;
 }
 
-// Retrieve donor_Id from donors table using user_id
+// Ensure donor profile exists
 $stmt = $conn->prepare("SELECT donor_Id FROM donors WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $donorRow = $result->fetch_assoc();
-$donor_Id = $donorRow['donor_Id'] ?? null;
 $stmt->close();
 
-if (!$donor_Id) {
-    die("Error: Donor profile not found.");
+if (!$donorRow) {
+    // Create donor profile
+    $stmtInsert = $conn->prepare("INSERT INTO donors (user_id, full_name, username, created_at) VALUES (?, ?, ?, NOW())");
+    $stmtInsert->bind_param("iss", $user_id, $full_name, $username);
+    $stmtInsert->execute();
+    $stmtInsert->close();
+
+    // Re-fetch donor ID
+    $stmt = $conn->prepare("SELECT donor_Id FROM donors WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $donorRow = $result->fetch_assoc();
+    $stmt->close();
 }
 
-// Insert into donations table using donor_Id from donors table
+$donor_Id = $donorRow['donor_Id'] ?? null;
+
+if (!$donor_Id) {
+    die("Error: Donor profile not found for user_id $user_id.");
+}
+
+// Insert donation
 $stmt = $conn->prepare("INSERT INTO donations (donor_Id, campaign_id, amount, payment_mode, status, donation_date) VALUES (?, ?, ?, ?, ?, NOW())");
 $stmt->bind_param("iidss", $donor_Id, $campaign_id, $amount, $payment_mode, $status);
 $stmt->execute();
 $donation_id = $stmt->insert_id;
 $stmt->close();
 
-// Start session for donor
+// Store session info
 $_SESSION['user_id'] = $user_id;
 $_SESSION['username'] = $username;
 $_SESSION['role'] = 'donor';
+$_SESSION['donor_name'] = $full_name;
+$_SESSION['donated_amount'] = $amount;
 $_SESSION['donation_Id'] = $donation_id;
 
 if ($isNewUser) {
@@ -87,12 +98,12 @@ if ($isNewUser) {
     $_SESSION['username_generated'] = $username;
 }
 
-// M-Pesa STK Push
+// Initiate STK Push
 if ($payment_mode === 'M-Pesa') {
     $response = initiateStkPush($conn, $phone, $amount, $donation_id);
 
     if (!$response['success']) {
-        $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE donation_Id = ?");
+        $stmt = $conn->prepare("UPDATE donations SET status = 'Failed' WHERE donation_id = ?");
         $stmt->bind_param("i", $donation_id);
         $stmt->execute();
         $stmt->close();
@@ -100,11 +111,6 @@ if ($payment_mode === 'M-Pesa') {
     }
 }
 
-// Store for thank you screen
-$_SESSION['donor_name'] = $full_name;
-$_SESSION['donated_amount'] = $amount;
-
-// Redirect
 header("Location: ../Pages/thankyou.php");
 exit();
 ?>

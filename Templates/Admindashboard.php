@@ -29,7 +29,7 @@
       <div class="col-md-4 mb-3">
         <h5>Company</h5>
         <ul class="list-unstyled">
-          <li><a href="../Pages/Home.php" class="footer-link">Home</a></li>
+          <li><a href="../Pages/index.php" class="footer-link">Home</a></li>
           <li><a href="../Pages/AboutUs.php" class="footer-link">About Us</a></li>
           <li><a href="../Pages/signUp.php" class="footer-link">Sign Up</a></li>
           <li><a href="../Pages/signIn.php" class="footer-link">Sign In</a></li>

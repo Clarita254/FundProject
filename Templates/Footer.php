@@ -6,8 +6,8 @@
       <!-- Contact Info -->
       <div class="col-md-4 mb-3">
         <h5>Contact Us</h5>
-        <p><i class="fas fa-phone me-2"></i> +254 712 345 678</p>
-        <p><i class="fas fa-envelope me-2"></i> edufund@gmail.com</p>
+        <p><i class="fas fa-phone me-2"></i> +254 790 727 208</p>
+        <p><i class="fas fa-envelope me-2"></i> Edufund0@gmail.com</p>
         <p><i class="fab fa-linkedin me-2"></i> <a href="https://linkedin.com/edufund" target="_blank" class="footer-link">EduFund LinkedIn</a></p>
         <p><i class="fab fa-instagram me-2"></i> <a href="https://instagram.com/edufund" target="_blank" class="footer-link">@edufund</a></p>
       </div>
@@ -27,7 +27,7 @@
       <div class="col-md-4 mb-3">
         <h5>Company</h5>
         <ul class="list-unstyled">
-          <li><a href="Home.php" class="footer-link">Home</a></li>
+          <li><a href="index.php" class="footer-link">Home</a></li>
           <li><a href="AboutUs.php" class="footer-link">About Us</a></li>
           <li><a href="signUp.php" class="footer-link">Sign Up</a></li>
           <li><a href="signIn.php" class="footer-link">signIn</a></li>
